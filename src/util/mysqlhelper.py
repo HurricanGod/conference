@@ -25,7 +25,7 @@ class Mysql(object):
             connect.commit()
             affect_line = cur.rowcount
         except Exception as e:
-            print("sql执行异常：%s" % e)
+            print("sql执行异常：{e}".format(e=e))
             connect.rollback()
         else:
             connect.close()

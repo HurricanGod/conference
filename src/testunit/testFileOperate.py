@@ -14,3 +14,7 @@ class TestMethodInFileOPerateModule(unittest.TestCase):
             for key, value in i.items():
                 print("key = {k}, value = {v}".format(k=key, v=value))
             break
+
+    def testDownloadSources(self):
+        dic = {}
+        print(type(dic))
