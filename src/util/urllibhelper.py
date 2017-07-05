@@ -63,6 +63,7 @@ class SpiderApi(object):
                 html = requests.post(url, data=dictionary, headers=headers, cookies=cookie)
             else:
                 html = requests.post(url, data=dictionary, headers=headers)
+            print("状态码：{s}".format(s=html.status_code))
             html.raise_for_status()  # 响应状态码大于400将抛出异常
             content_coding = html.encoding  # 获取响应报文数据部分编码
             # 获取html页面里设置的编码
