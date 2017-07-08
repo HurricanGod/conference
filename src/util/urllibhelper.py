@@ -78,7 +78,7 @@ class SpiderApi(object):
             else:
                 html = html.text
         except:
-            print("异常信息：{exception}".format(exception = sys.exc_info()))
+            print("异常信息：{exception}".format(exception=sys.exc_info()))
         return html
 
     @classmethod

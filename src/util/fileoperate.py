@@ -1,4 +1,5 @@
 import configparser
+import json
 import os
 import sys
 
@@ -33,8 +34,8 @@ def getFileNames(directory):
         return None
 
 
-def writeToFile(fileName, content, encoding='utf-8'):
-    with open(fileName, 'w', encoding=encoding)as f:
+def writeToFile(fileName, content, encoding='utf-8', pattern='a'):
+    with open(fileName, pattern, encoding=encoding)as f:
         f.write(content)
 
 
@@ -111,3 +112,14 @@ def readConfig(filename):
         return None
     else:
         return configcontent
+
+
+def writeToJson(dictionary, filename, pattern="a"):
+    with open(filename, pattern, encoding='utf-8') as f:
+        f.write(json.dumps(dictionary, ensure_ascii=False))
+
+
+def readDictionary(filename: str) -> []:
+    with open(filename, encoding='utf-8')as f:
+        content = f.read()
+        return json.loads(content, 'utf-8')

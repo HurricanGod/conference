@@ -1,6 +1,6 @@
 import unittest
 
-from src.spider.analysesources import initConfigForm, pageParsing
+from src.spider.analysesources import initConfigForm, pageParsing, readDictionary
 from src.util.fileoperate import readConfig
 
 
@@ -27,16 +27,45 @@ class TestMethodInFileOPerateModule(unittest.TestCase):
 
     def testPageParsing1(self):
         filename = "../file/config/website1.conf"
+        savename = '../file/log/1.json'
         dicList = readConfig(filename)
-        if len(dicList) == 2:
-            pageParsing(dicList[0], dicList[1])
+        if len(dicList) >= 2:
+            pageParsing(dicList[0], dicList[1], savename)
         else:
-            pageParsing(dicList[0])
+            pageParsing(dicList[0], filename=savename)
 
     def testPageParsing2(self):
         filename = "../file/config/website2.conf"
+        savename = '../file/log/2.json'
         dicList = readConfig(filename)
-        if len(dicList) == 2:
-            pageParsing(dicList[0], dicList[1])
+        print(dicList)
+        if len(dicList) >= 2:
+            pageParsing(dicList[0], dicList[1], savename)
         else:
-            pageParsing(dicList[0])
+            pageParsing(dicList[0], filename=savename)
+
+    def testPageParsing3(self):
+        filename = "../file/config/website3.conf"
+        savename = '../file/log/3.json'
+        dicList = readConfig(filename)
+        print(dicList)
+        if len(dicList) >= 2:
+            pageParsing(dicList[0], dicList[1], savename)
+        else:
+            pageParsing(dicList[0], filename=savename)
+
+    def testPageParsing4(self):
+        filename = "../file/config/website4.conf"
+        savename = '../file/log/4.json'
+        dicList = readConfig(filename)
+        print(dicList)
+        if len(dicList) >= 2:
+            pageParsing(dicList[0], dicList[1], savename)
+        else:
+            pageParsing(dicList[0], filename=savename)
+
+    def testReadDictionary(self):
+        name = '../file/log/3.json'
+        dicts = readDictionary(name)
+        for dic in dicts:
+            print(dic)
