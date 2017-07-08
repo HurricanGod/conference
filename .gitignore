@@ -2,3 +2,5 @@
 
 db
 src/util/__pycache__
+src/file/txt
+src/file/html
