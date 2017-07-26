@@ -80,6 +80,11 @@ def formatReadContent(fileName, encoding='utf-8'):
     return readContent(fileName, encoding)
 
 
+def formatReadlines(fileName, encoding='utf-8'):
+    writeLinesToFile(fileName, readLines(fileName, encoding), encoding)
+    return readLines(fileName, encoding)
+
+
 def readContent(fileName, encoding='utf-8'):
     if os.path.exists(fileName):
         with open(fileName, encoding=encoding) as f:
@@ -112,6 +117,22 @@ def readConfig(filename):
         return None
     else:
         return configcontent
+
+
+def readSectionsInConfig(filename: str)->list:
+    cf = configparser.ConfigParser()
+    flag = True
+    try:
+        cf.read(filename, encoding="utf-8")
+        sections = cf.sections()
+    except:
+        print("throw a exception:\n{e}".format(e=sys.exc_info()))
+        flag = False
+    else:
+        if flag:
+            return sections
+        else:
+            return None
 
 
 def writeToJson(dictionary, filename, pattern="a"):

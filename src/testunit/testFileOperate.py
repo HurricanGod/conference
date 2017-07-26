@@ -29,7 +29,7 @@ class TestMethodInFileOPerateModule(unittest.TestCase):
         filename = "../file/config/website1.conf"
         savename = '../file/log/1.json'
         dicList = readConfig(filename)
-        if len(dicList) >= 2:
+        if len(dicList) > 2:
             pageParsing(dicList[0], dicList[1], savename)
         else:
             pageParsing(dicList[0], filename=savename)
@@ -39,7 +39,7 @@ class TestMethodInFileOPerateModule(unittest.TestCase):
         savename = '../file/log/2.json'
         dicList = readConfig(filename)
         print(dicList)
-        if len(dicList) >= 2:
+        if len(dicList) > 2:
             pageParsing(dicList[0], dicList[1], savename)
         else:
             pageParsing(dicList[0], filename=savename)
@@ -49,7 +49,7 @@ class TestMethodInFileOPerateModule(unittest.TestCase):
         savename = '../file/log/3.json'
         dicList = readConfig(filename)
         print(dicList)
-        if len(dicList) >= 2:
+        if len(dicList) > 2:
             pageParsing(dicList[0], dicList[1], savename)
         else:
             pageParsing(dicList[0], filename=savename)
@@ -59,7 +59,7 @@ class TestMethodInFileOPerateModule(unittest.TestCase):
         savename = '../file/log/4.json'
         dicList = readConfig(filename)
         print(dicList)
-        if len(dicList) >= 2:
+        if len(dicList) > 2:
             pageParsing(dicList[0], dicList[1], savename)
         else:
             pageParsing(dicList[0], filename=savename)

@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from pyquery import PyQuery as Pq
 from src.util.fileoperate import *
 from src.util.urllibhelper import SpiderApi
-import multiprocessing
+from multiprocessing import Process
 
 
 def initConfigForm(form: dict) -> dict:
@@ -174,23 +174,27 @@ def getConferenceUrl(dic: dict, profix=None):
                 dic['website'] = url
 
 
-class HtmlCodeHandler(multiprocessing.Process):
-    def __init__(self, processname, proqueue, cfgdict: dict, configfile, savefile):
+class HtmlCodeHandler(Process):
+    def __init__(self, processname, proqueue, configfile, savefile):
         super().__init__()
-        self.name = processname
-        self.cfgfile = configfile
-        self.savefile = savefile
+        self.name = processname  # 进程名
+        self.cfgfile = configfile  # 配置文件名
+        self.savefile = savefile   # 抓取数据后保存的文件名，以.json为扩展名
         self.proqueue = proqueue
-        self.cfg = cfgdict
+        self.cfglist = readConfig(configfile)  # 读取的*.conf配置文件字典
+        self.cfg = self.cfglist[0]  # *.conf配置文件中第1节的配置信息
 
     def run(self):
-        pass
+        if len(self.cfglist) > 2:
+            self.pageParsing(self.cfg, self.cfglist[1], self.savefile)
+        else:
+            self.pageParsing(self.cfg, filename=self.savefile)
 
     def initConfigForm(self, form: dict) -> dict:
         """
         解析*.conf配置文件[post_data]部分的表单
-        :param form: 从*.conf读取的配置文件信息，以字典的方式存储
-        :return: 解析后的字典
+        :param form: 从*.conf读取的[post_data]节下配置文件信息，以字典的方式存储
+        :return: [post_data]节配置信息解析后的字典
         """
         for key in form.keys():
             v = str(form.get(key))
@@ -225,6 +229,12 @@ class HtmlCodeHandler(multiprocessing.Process):
         return maxblock
 
     def pageParsing(self, cfg: dict, form=None, filename=None):
+        """
+
+        :param cfg: *.conf配置文件中第1节下的字典
+        :param form: post请求需要的表单数据，不填默认为get
+        :param filename: 抓取的目标信息保存的地方，以.json扩展名保存
+        """
         if filename is not None:
             removeFile(filename)
         writeToFile(filename, '[\n')
@@ -263,7 +273,7 @@ class HtmlCodeHandler(multiprocessing.Process):
             index += 1
         for t in primaryInfo:
             if str(cfg.get('profix')) != 'null':
-                getConferenceUrl(t, cfg.get('profix'))
+                self.getConferenceUrl(t, cfg.get('profix'))
             writeToJson(t, filename)
         writeToFile(filename, '\n]')
 
