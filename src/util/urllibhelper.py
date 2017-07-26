@@ -104,16 +104,27 @@ class SpiderApi(object):
 
 
 class Urldeal(object):
+    filterurls = ["http://www.sciencepublishinggroup.com",
+                  "http://www.easychair.org",
+                  'https://easychair.org',
+                  "http://conf.cnki.net",
+                  "http://mp.weixin.qq.com",
+                  "http://www.engii.org/RegistrationSubmission/default.aspx"
+                  ]
+
     @staticmethod
     def isVisitable(url):
         available = False
         headers = SpiderApi.getRequestHeader()
+        statuscode = -1
         try:
             response = requests.get(url, headers=headers, timeout=10)
-            if response.status_code == 200:
+            statuscode = response.status_code
+            if statuscode == 200:
                 available = True
         except:
-            print("异常信息：%s" % sys.exc_info())
+            print("访问url: {u} 得到状态码为 {code}".format(u=url, code=statuscode))
+            print("异常信息：{}".format(sys.exc_info()))
         finally:
             return available
 
@@ -125,3 +136,12 @@ class Urldeal(object):
             return False
         else:
             return True
+
+    @classmethod
+    def shouldbefilterout(cls, url: str):
+        flag = False
+        for element in cls.filterurls:
+            if url.find(element) >= 0:
+                flag = True
+                break
+        return flag
