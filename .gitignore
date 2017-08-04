@@ -4,3 +4,5 @@ db
 src/util/__pycache__
 src/file/txt
 src/file/html
+src/__pycache__
+src/spider/__pycache__

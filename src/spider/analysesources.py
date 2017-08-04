@@ -5,6 +5,7 @@ from pyquery import PyQuery as Pq
 from src.util.fileoperate import *
 from src.util.urllibhelper import SpiderApi
 from multiprocessing import Process
+from multiprocessing import Queue
 
 
 def initConfigForm(form: dict) -> dict:
@@ -76,7 +77,7 @@ def pageParsing(cfg: dict, form=None, filename=None):
         if str(cfg.get('profix')) != 'null':
             getConferenceUrl(t, cfg.get('profix'))
         writeToJson(t, filename)
-        if i != length-1:
+        if i != length - 1:
             writeToFile(filename, ',\n')
         i += 1
     writeToFile(filename, '\n]')
@@ -175,12 +176,12 @@ def getConferenceUrl(dic: dict, profix=None):
 
 
 class HtmlCodeHandler(Process):
-    def __init__(self, processname, proqueue, configfile, savefile):
+    def __init__(self, configfile, savefile, processname, logqueue: Queue):
         super().__init__()
         self.name = processname  # 进程名
         self.cfgfile = configfile  # 配置文件名
-        self.savefile = savefile   # 抓取数据后保存的文件名，以.json为扩展名
-        self.proqueue = proqueue
+        self.savefile = savefile  # 抓取数据后保存的文件名，以.json为扩展名
+        self.logqueue = logqueue
         self.cfglist = readConfig(configfile)  # 读取的*.conf配置文件字典
         self.cfg = self.cfglist[0]  # *.conf配置文件中第1节的配置信息
 
@@ -249,32 +250,46 @@ class HtmlCodeHandler(Process):
             end = int(cfg.get("end"))
         primaryInfo = []
         while index <= end:
-            url = baseurl.format(index)
-            print("http for url = {}".format(url))
-            if way == 'get':
-                html = SpiderApi.getPageSourceCode(url)
-            else:
-                form = self.initConfigForm(form)
-                form_data = {}
-                for key, val in form.items():
-                    if isinstance(val, list):
-                        form_data[key] = val[innerindex]
-                    else:
-                        form_data[key] = val
-                print(form_data)
-                cookieEntry = str(cfg.get("cookie")).split('=')
-                cookie = {cookieEntry[0]: cookieEntry[1]}
-                if cookie != 'null':
-                    html = SpiderApi.getPageSourceCodeByPost(url, form_data, cookie)
+            try:
+                url = baseurl.format(index)
+                self.logqueue.put("http for url = {}".format(url))
+                print("http for url = {}".format(url))
+                if way == 'get':
+                    html = SpiderApi.getPageSourceCode(url)
                 else:
-                    html = SpiderApi.getPageSourceCodeByPost(url, form_data)
-                innerindex += 1
-            primaryInfo += self.extractPrimaryInfoByPQuery(html, cfg)
-            index += 1
+                    form = self.initConfigForm(form)
+                    form_data = {}
+                    for key, val in form.items():
+                        if isinstance(val, list):
+                            form_data[key] = val[innerindex]
+                        else:
+                            form_data[key] = val
+                    self.logqueue.put(form_data)
+                    print(form_data)
+                    cookieEntry = str(cfg.get("cookie")).split('=')
+                    cookie = {cookieEntry[0]: cookieEntry[1]}
+                    if cookie != 'null':
+                        html = SpiderApi.getPageSourceCodeByPost(url, form_data, cookie)
+                    else:
+                        html = SpiderApi.getPageSourceCodeByPost(url, form_data)
+                    innerindex += 1
+                primaryInfo += self.extractPrimaryInfoByPQuery(html, cfg)
+            except Exception as e:
+                self.logqueue.put('\n异常信息：{}\n '.format(e))
+            finally:
+                index += 1
+        i = 0
+        length = len(primaryInfo)  # 获取抓取的会议信息条数
+        # 把会议信息以json格式保存到文件文件里
         for t in primaryInfo:
+            # 配置文件conf里的profix若为null表示待获取的url为完整的url
+            # 若不为null，则为相对路径
             if str(cfg.get('profix')) != 'null':
                 self.getConferenceUrl(t, cfg.get('profix'))
             writeToJson(t, filename)
+            if i != length - 1:
+                writeToFile(filename, ',\n')
+            i += 1
         writeToFile(filename, '\n]')
 
     def extractPrimaryInfoByPQuery(self, html: str, cfg: dict):
