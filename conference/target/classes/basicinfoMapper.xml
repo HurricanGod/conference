@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="basicinfo">
+
+    <insert id="addBasicInfo" parameterType="BasicInfo"
+            useGeneratedKeys="true" keyProperty="basic_id">
+        insert into basic_info(name,gender, age,school,tel)
+        values(#{name},#{gender},#{age},#{school},#{phone})
+    </insert>
+
+    <select id="queryById" parameterType="int" resultType="BasicInfo">
+        select basic_id,name,gender, age,school,tel as phone
+        from basic_info
+        where basic_id = #{id}
+    </select>
+
+    <resultMap id="basicInfoMapper" type="BasicInfo">
+        <id column="basic_info" property="basic_id" />
+        <result column="name" property="name" />
+        <result column="gender" property="gender" />
+        <result column="age" property="age" />
+        <result column="address" property="address" />
+        <result column="email" property="email" />
+        <result column="tel" property="phone" />
+        <result column="school" property="school" />
+        <result column="introduce" property="introduce" />
+    </resultMap>
+
+    <select id="queryByIdAndMapper"  resultMap="basicInfoMapper" parameterType="int">
+        select basic_id,name,gender, age,school,tel
+        from basic_info
+        where basic_id = #{id}
+    </select>
+    <!--
+    模糊查询
+    <select id="queryByLike" resultType="TypeName">
+        select field1,field2,field3 from tablename 
+        where field? like concat('%', #{xxx},'%')
+    </select>
+    -->
+</mapper>
