@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.IConferenceInfoDao">
+    <insert id="addConferenceInfo" parameterType="ConferenceInfo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into conferenceinfo
+        <choose>
+
+            <when test="
+            cnname != null and location != null and
+            website != null and startdate != null and
+            tag != null and enddate != null and
+            enname != null">
+                (cnname, location,startdate,website,enddate,tag,enname)
+                values(#{cnname},#{location},#{startdate},#{website},#{enddate},#{tag},#{enname})
+            </when>
+
+            <when test="
+            cnname != null and location != null and
+            website != null and startdate != null and
+            tag != null and enddate != null and
+            sponsor != null">
+                (cnname, location,startdate,website,enddate,tag,sponsor)
+                values(#{cnname},#{location},#{startdate},#{website},#{enddate},#{tag},#{sponsor})
+            </when>
+
+            <when test="
+            cnname != null and location != null and
+            website != null and startdate != null and
+            tag != null and sponsor != null">
+                (cnname, location,startdate,website,tag,sponsor)
+                values(#{cnname},#{location},#{startdate},#{website},#{tag},#{sponsor})
+            </when>
+
+            <when test="
+            cnname != null and location != null and
+            website != null and startdate != null and
+            tag != null and enddate != null">
+                (cnname, location,startdate,website,enddate,tag)
+                values(#{cnname},#{location},#{startdate},#{website},#{enddate},#{tag})
+            </when>
+
+            <when test="
+            cnname != null and location != null and
+            website != null and startdate != null">
+                (cnname, location,startdate,website)
+                values(#{cnname},#{location},#{startdate},#{website})
+            </when>
+        </choose>
+
+    </insert>
+
+    <select id="queryConferenceInfoByIf" resultType="ConferenceInfo">
+        select id,cnname,tag,location,sponsor,startdate,enddate,website
+        from conferenceinfo
+        <where>
+
+            <if test="location != null">
+                location = #{location}
+            </if>
+
+            <if test="id != null">
+                and id > #{id}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryConferenceInfoByForEach" resultType="ConferenceInfo">
+        select id,cnname,tag,location,sponsor,startdate,enddate,website
+        from conferenceinfo
+        <if test="array.length > 0">
+            where location in
+            <foreach collection="array" open="(" separator="," close=")" item="city">
+                #{city}
+            </foreach>
+        </if>
+
+    </select>
+    
+    <select id="queryConferenceInfoByForEachList" resultType="ConferenceInfo">
+        select id,cnname,tag,location,sponsor,startdate,enddate,website
+        from conferenceinfo
+        <if test="list.size > 0 ">
+            where location in
+            <foreach collection="list" open="(" separator="," close=")" item="city">
+                #{city}
+            </foreach>
+        </if>
+    </select>
+    <!--
+    模糊查询
+    <select id="queryByLike" resultType="TypeName">
+        select field1,field2,field3 from tablename 
+        where field? like concat('%', #{xxx},'%')
+    </select>
+  -->
+</mapper>

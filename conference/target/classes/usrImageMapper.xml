@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.IUsrImageDao">
+
+    <cache eviction="LRU" size="512"/>
+    <!--<cache/>-->
+
+    <insert id="addImage" parameterType="UsrImage" useGeneratedKeys="true" keyProperty="image_id">
+        insert into image(name, url, date, user_id)
+        values(#{image_name}, #{image_url}, #{upload_date}, #{user.id})
+    </insert>
+
+    <select id="queryImageInfoByUserId" resultMap="imageMapper" useCache="true">
+        select name,url,image.id,email,username
+        from image,account
+        where user_id = #{id} and user_id = account.id
+    </select>
+
+    <resultMap id="imageMapper" type="UsrImage">
+        <id column="id" property="image_id"/>
+        <result column="name" property="image_name"/>
+        <result column="url" property="image_url"/>
+        <result column="date" property="upload_date"/>
+        <association property="user" javaType="UserInfo">
+            <id column="id" property="id"/>
+            <result column="username" property="username"/>
+            <result column="pwd" property="pwd"/>
+            <result column="email" property="email"/>
+        </association>
+    </resultMap>
+    <!--
+    模糊查询
+    <select id="queryByLike" resultType="TypeName">
+        select field1,field2,field3 from tablename 
+        where field? like concat('%', #{xxx},'%')
+    </select>
+  -->
+</mapper>
