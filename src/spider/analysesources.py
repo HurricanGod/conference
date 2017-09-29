@@ -118,9 +118,9 @@ def extractPrimaryInfoByPQuery(html: str, cfg: dict):
                     if a is not None:
                         mapper["website"] = a.get("href")
                 if index == cnname:
-                    mapper["cnName"] = str(soup.get_text()).strip().replace("\t", "")
+                    mapper["cnname"] = str(soup.get_text()).strip().replace("\t", "")
                 elif index == enname:
-                    mapper["enName"] = str(soup.get_text()).strip().replace("\t", "")
+                    mapper["enname"] = str(soup.get_text()).strip().replace("\t", "")
                 elif index == tag:
                     mapper["tag"] = str(soup.get_text()).strip().replace("\t", "")
                 elif index == location:
@@ -184,6 +184,11 @@ class HtmlCodeHandler(Process):
         self.logqueue = logqueue
         self.cfglist = readConfig(configfile)  # 读取的*.conf配置文件字典
         self.cfg = self.cfglist[0]  # *.conf配置文件中第1节的配置信息
+
+    @staticmethod
+    def getInstance(configfile, savefile):
+        handler = HtmlCodeHandler(configfile, savefile, "test_process", Queue())
+        return handler
 
     def run(self):
         if len(self.cfglist) > 2:
@@ -329,7 +334,12 @@ class HtmlCodeHandler(Process):
                     if index == cnname:
                         mapper["cnName"] = str(soup.get_text()).strip().replace("\t", "")
                     elif index == enname:
-                        mapper["enName"] = str(soup.get_text()).strip().replace("\t", "")
+                        s = str(soup.get_text()).strip().replace("\t", "")
+                        ii = s.find("\n")
+                        if ii != -1:
+                            mapper["enName"] = s[0: ii]
+                        else:
+                            mapper["enName"] = s
                     elif index == tag:
                         mapper["tag"] = str(soup.get_text()).strip().replace("\t", "")
                     elif index == location:

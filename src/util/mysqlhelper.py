@@ -1,3 +1,5 @@
+from multiprocessing.queues import Queue
+
 import pymysql
 import sys
 
@@ -10,6 +12,7 @@ class Mysql(object):
     password = "admin123?"
     db = "pythondb"
     charset = "utf8"
+    mysqlexecresultqueue = Queue()
 
     def __init__(self):
         pass
@@ -83,3 +86,43 @@ class Mysql(object):
         finally:
             connect.close()
         return affect_line
+
+    @staticmethod
+    def saveObject(obj: object, table: str):
+        dic = obj.__dict__
+        keys = list(dic.keys())
+        for k in keys:
+            if dic.get(k) is None:
+                dic.pop(k)
+        connect = pymysql.connect(host=Mysql.host, port=Mysql.port, user=Mysql.user, passwd=Mysql.password,
+                                  db=Mysql.db, charset=Mysql.charset)
+        cur = connect.cursor()
+        affect_line = 0
+        keys = list(dic.keys())
+        sql = "insert into {} ( ".format(table)
+        for i in range(0, len(keys)):
+            sql += keys[i]
+            if i < len(keys) - 1:
+                sql += ","
+            else:
+                sql += ")"
+        sql += "values("
+        for i in range(0, len(keys)):
+            sql += dic.get(keys[i])
+            if i < len(keys) - 1:
+                sql += ","
+            else:
+                sql += ")"
+        queue = Mysql.mysqlexecresultqueue
+        try:
+            queue.put("执行sql语句：\t{}".format(sql))
+            cur.execute(sql)
+            connect.commit()
+            affect_line = cur.rowcount
+        except Exception as e:
+            print("sql执行异常：{e}".format(e=e))
+            queue.put("执行 {} 时出现异常\n异常原因： {}".format(sql, e))
+            connect.rollback()
+        else:
+            connect.close()
+            return affect_line

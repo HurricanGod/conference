@@ -8,9 +8,9 @@ from multiprocessing import Queue
 
 class TestMethodsInSubPageHandleModule(unittest.TestCase):
     def setUp(self):
-        self.keyfile = "../file/config/keyword1.txt"
-        filename = "../file/config/website1.conf"
-        name = '../file/log/1.json'
+        self.keyfile = "../file/config/keyword2.txt"
+        filename = "../file/config/website2.conf"
+        name = '../file/log/2.json'
         self.logqueue = Queue()
         self.itemqueue = Queue()
         # 读取配置文件

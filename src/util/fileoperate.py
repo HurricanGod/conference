@@ -119,7 +119,7 @@ def readConfig(filename):
         return configcontent
 
 
-def readSectionsInConfig(filename: str)->list:
+def readSectionsInConfig(filename: str) -> list:
     cf = configparser.ConfigParser()
     flag = True
     try:
@@ -144,3 +144,11 @@ def readDictionary(filename: str) -> []:
     with open(filename, encoding='utf-8')as f:
         content = f.read()
         return json.loads(content, 'utf-8')
+
+
+def clearContent(filename: str):
+    if not os.path.exists(filename):
+        print("不存在 {} 文件".format(filename))
+        return
+    with open(filename, mode='r+', encoding='utf-8')as f:
+        f.truncate()

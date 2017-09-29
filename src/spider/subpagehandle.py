@@ -110,8 +110,9 @@ class SubPage():
                       "http://mp.weixin.qq.com",
                       "http://www.engii.org/RegistrationSubmission/default.aspx"]
         for line in contentlist:
-            candidates = []  # 候选词
+            # candidates = []  # 候选词
             for k, v in self.keywordmap.items():
+                candidates = []  # 候选词
                 for kwd in v:
                     index = str(line).find(kwd)
                     if index >= 0:
@@ -128,7 +129,7 @@ class SubPage():
                     elif k == 'location':
                         for punctution in punctuations:
                             if item.find(punctution) >= 0:
-                                item = item.replace(punctution, '')
+                                item = item.replace(punctution, ' ')
                         self.keydic[k] = item
                     elif k == 'sponsor':
                         for punctution in punctuations:
@@ -284,7 +285,7 @@ class SubPage():
                             if item.find(punctution) >= 0:
                                 item = item.replace(punctution, '')
                         self.keydic[k] = item
-                    break
+                    # break
 
     def extractDateByRegular(self, allcontent: str):
         isexit1 = False
@@ -479,14 +480,16 @@ class SubPage():
         tagset2 = set(keytags2)
         candidatetag = tagset1 & tagset2
         print('\n关键词交集为：{}'.format(candidatetag))
-        self.logqueue.put('\n关键词交集为：{}'.format(candidatetag))
-        title = self.keydic.get('cnname')
-        title = title if title is not None else self.keydic.get('enname')
+        # self.logqueue.put('\n关键词交集为：{}'.format(candidatetag))
+        title = self.keydic.get('cnName')
+        title = title if title is not None else self.keydic.get('enName')
         if title is not None:
-            keytags1 = set(jieba.analyse.extract_tags(title))
-            keytags2 = set(jieba.analyse.textrank(title))
+            keytags1 = set(jieba.analyse.extract_tags(title, 3))
+            keytags2 = set(jieba.analyse.textrank(title, 3))
             candidatetag = candidatetag | (keytags1 & keytags2)
-            self.logqueue.put('候选关键词为：{}'.format(candidatetag))
+            if len(candidatetag) == 0:
+                candidatetag = keytags1 | keytags2
+            # self.logqueue.put('候选关键词为：{}'.format(candidatetag))
             print('候选关键词为：{}'.format(candidatetag))
         if self.keydic.get('tag') is None:
             tag = ','.join(candidatetag)

@@ -69,3 +69,13 @@ class TestMethodInFileOPerateModule(unittest.TestCase):
         dicts = readDictionary(name)
         for dic in dicts:
             print(dic)
+
+    def testPageParsing5(self):
+        filename = "../file/config/website5.conf"
+        savename = '../file/log/5.json'
+        dicList = readConfig(filename)
+        print(dicList)
+        if len(dicList) > 2:
+            pageParsing(dicList[0], dicList[1], savename)
+        else:
+            pageParsing(dicList[0], filename=savename)
