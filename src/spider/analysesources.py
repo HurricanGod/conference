@@ -2,7 +2,10 @@ import re
 from bs4 import BeautifulSoup
 
 from pyquery import PyQuery as Pq
+
+from src.dao.crawluritabledao import CrawledURLDao
 from src.util.fileoperate import *
+from src.util.mysqlhelper import Mysql
 from src.util.urllibhelper import SpiderApi
 from multiprocessing import Process
 from multiprocessing import Queue
@@ -283,19 +286,51 @@ class HtmlCodeHandler(Process):
                 self.logqueue.put('\n异常信息：{}\n '.format(e))
             finally:
                 index += 1
-        i = 0
-        length = len(primaryInfo)  # 获取抓取的会议信息条数
-        # 把会议信息以json格式保存到文件文件里
+
+        crawlUrlMap = dict()
+        # crawledURI 为曾经爬取并解析了的URL
+        crawledURI = Mysql.queryData("select uri from CrawledURI")
+
+        URISet = set()
+        # 将已经解析了的 URI 元组转换为集合
+        if len(crawledURI) > 0:
+            for uri in crawledURI:
+                if len(uri) > 0:
+                    URISet.add(uri[0])
+
         for t in primaryInfo:
             # 配置文件conf里的profix若为null表示待获取的url为完整的url
             # 若不为null，则为相对路径
             if str(cfg.get('profix')) != 'null':
                 self.getConferenceUrl(t, cfg.get('profix'))
-            writeToJson(t, filename)
+            url = dict(t).get('website')
+            if url:
+                crawlUrlMap[url] = t
+
+        # 从crawlUrlMap获取本次爬取的URL
+        keys = crawlUrlMap.keys()
+
+        crawlURI = set(keys)
+        self.logqueue.put("进程-{} 本次爬取{}个网址\n".format(self.name, len(crawlURI)))
+        # differenceSet 集合为爬取的URL中之前未解析的
+        differenceSet = crawlURI - URISet
+        # intersectionSet 集合为爬取的URL中之前已经解析的
+        intersectionSet = crawlURI & URISet
+        self.logqueue.put("进程-{} 未解析的URL的数量为：\t{}".format(self.name, len(differenceSet)))
+
+        # 删除 crawlUrlMap 中已经解析过的URL map
+        for uri in intersectionSet:
+            crawlUrlMap.pop(uri)
+        i = 0
+        length = len(crawlUrlMap)  # 获取未被解析的URL数目
+        # 把未被解析的URL会议信息以json格式保存到文件里
+        for value in crawlUrlMap.values():
+            writeToJson(value, filename)
             if i != length - 1:
                 writeToFile(filename, ',\n')
             i += 1
         writeToFile(filename, '\n]')
+        CrawledURLDao.insertURLS(differenceSet)
 
     def extractPrimaryInfoByPQuery(self, html: str, cfg: dict):
         html = self.getHtmlCore(html)

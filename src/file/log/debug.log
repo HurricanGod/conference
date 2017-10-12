@@ -1,19 +1,20 @@
-2017-09-28 23:00:01 main.py DEBUG  
+2017-10-12 23:10:06 main.py INFO  主进程id为：	2420
+2017-10-12 23:10:06 main.py DEBUG  
 file/config/目录下的.conf文件有：
 ['file/config//website1.conf', 'file/config//website2.conf', 'file/config//website3.conf', 'file/config//website4.conf', 'file/config//website5.conf']
 
-2017-09-28 23:00:01 main.py DEBUG  
+2017-10-12 23:10:06 main.py DEBUG  
 file/config/目录下的.txt文件有：
 ['file/config//keyword1.txt', 'file/config//keyword2.txt', 'file/config//keyword3.txt', 'file/config//keyword4.txt', 'file/config//keyword5.txt']
 
-2017-09-28 23:06:05 main.py INFO  所有子进程执行完
-2017-09-29 00:47:00 main.py DEBUG  exception:	not all arguments converted during string formatting
+2017-10-12 23:34:13 main.py INFO  所有子进程执行完
+2017-10-12 23:34:13 main.py INFO  http for url = http://meeting.sciencenet.cn/index.php?s=%2FCategory%2Findex&cid=5&p=1
+2017-10-12 23:34:13 main.py INFO  进程-process0 本次爬取25个网址
 
-2017-09-29 00:47:00 main.py INFO  		抓取数据的进程任务结束
+2017-10-12 23:34:13 main.py INFO  进程-process0 未解析的URL的数量为：	25
+2017-10-12 23:36:16 main.py INFO  		抓取数据的进程任务结束
 
-2017-09-29 00:47:00 main.py DEBUG  		抓取数据的进程任务结束
-
-2017-09-29 00:47:00 main.py INFO  程序总共运行时间为 1:46:59.328363
-2017-09-29 00:47:00 main.py DEBUG  
+2017-10-12 23:36:16 main.py INFO  程序总共运行时间为 0:26:10.330159
+2017-10-12 23:36:16 main.py DEBUG  
 Done!
 

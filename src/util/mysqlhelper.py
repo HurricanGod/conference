@@ -1,7 +1,7 @@
-from multiprocessing.queues import Queue
-
 import pymysql
 import sys
+
+from multiprocessing import Queue
 
 
 class Mysql(object):
@@ -19,6 +19,12 @@ class Mysql(object):
 
     @staticmethod
     def addToDb(sql, params):
+        """
+       往数据库插入一条数据
+       :param sql: sql语句
+       :param params: sql语句中的参数对应的值，params为元组类型
+       :return: 受影响的行
+       """
         connect = pymysql.connect(host=Mysql.host, port=Mysql.port, user=Mysql.user, passwd=Mysql.password,
                                   db=Mysql.db, charset=Mysql.charset)
         cur = connect.cursor()

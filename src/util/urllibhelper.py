@@ -1,8 +1,6 @@
 import random
 import re
 from bs4 import Comment
-from bs4 import BeautifulSoup
-from bs4 import NavigableString
 import requests
 import sys
 
@@ -51,8 +49,9 @@ class SpiderApi(object):
             else:
                 html = start_html.text
         except:
-            print("异常信息：%s" % sys.exc_info())
-        return html
+            print("class SpiderApi.getPageSourceCode()异常信息：{}".format(sys.exc_info()))
+        finally:
+            return html
 
     @classmethod
     def getPageSourceCodeByPost(cls, url, dictionary, cookie=None):
