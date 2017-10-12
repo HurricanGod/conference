@@ -1,4 +1,9 @@
-2017-09-28 23:06:05 main.py INFO  所有子进程执行完
-2017-09-29 00:47:00 main.py INFO  		抓取数据的进程任务结束
+2017-10-12 23:10:06 main.py INFO  主进程id为：	2420
+2017-10-12 23:34:13 main.py INFO  所有子进程执行完
+2017-10-12 23:34:13 main.py INFO  http for url = http://meeting.sciencenet.cn/index.php?s=%2FCategory%2Findex&cid=5&p=1
+2017-10-12 23:34:13 main.py INFO  进程-process0 本次爬取25个网址
 
-2017-09-29 00:47:00 main.py INFO  程序总共运行时间为 1:46:59.328363
+2017-10-12 23:34:13 main.py INFO  进程-process0 未解析的URL的数量为：	25
+2017-10-12 23:36:16 main.py INFO  		抓取数据的进程任务结束
+
+2017-10-12 23:36:16 main.py INFO  程序总共运行时间为 0:26:10.330159

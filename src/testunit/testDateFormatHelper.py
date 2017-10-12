@@ -11,6 +11,11 @@ from src.util.mongodbhelper import MongoDBCRUD
 
 
 def saveObject(obj: object):
+
+    """
+    删除字典中值为None的字典项
+    :param obj:
+    """
     dic = obj.__dict__
     keys = list(dic.keys())
     for k in keys:

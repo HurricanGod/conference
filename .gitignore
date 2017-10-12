@@ -1,12 +1,13 @@
 .idea
 
 db
-src/__pycache__
-src/util/__pycache__
-src/file/txt
-src/file/html
+src/__pycache__/
+src/util/__pycache__/
+src/file/txt/
+src/file/html/
 src/file/log/*.log
 src/file/log/*.json
-src/spider/__pycache__
+src/spider/__pycache__/
 src/testunit/*.log
-src/model
+src/model/
+src/test*.py
