@@ -1,5 +1,9 @@
+import ctypes
 import datetime
 
+from multiprocessing import Value
+
+from src.process.guardprocess import GuardWorkerProcess
 from src.process.worker import Saver
 from src.spider.logmanage import loadLogger
 from src.util.fileoperate import *
@@ -8,6 +12,9 @@ from src.spider.subpagehandle import readKeywordCongig, parseSubPage
 from multiprocessing import Queue
 from multiprocessing import Pool
 import sys
+import time
+
+from src.util.mysqlhelper import Mysql
 
 
 def put(dic: dict):
@@ -52,16 +59,14 @@ if __name__ == '__main__':
     #  用于记录debug级别日志的队列
     debuglogqueue = Queue()
 
-    # for i in range(0, len(confConfigFileNames)):
-    for i in range(0, 1):
+    # for i in range(0, 1):
+    for i in range(0, len(confConfigFileNames)):
         processname = 'process{}'.format(i)
         sourcecodedealProcess = HtmlCodeHandler(confConfigFileNames[i],
                                                 savejsonfilenames[i],
                                                 processname, debuglogqueue)
         processlist.append(sourcecodedealProcess)
         sourcecodedealProcess.start()
-    while not debuglogqueue.empty():
-        logger.debug(debuglogqueue.get())
     for p in processlist:
         p.join()
     logger.info("所有子进程执行完")
@@ -105,14 +110,40 @@ if __name__ == '__main__':
     # 创建进程池
     processpool = Pool(processes=10)
 
-    #  创建1个用于保存解析完成后的会议信息进程, 解析的会议字典满35条保存一次
-    saver = Saver(itemqueue, "saveprocess", 35, resultFileName)
+    #  创建1个用于保存解析完成后的会议信息进程, 解析的会议字典满20条保存一次
+    saver = Saver(itemqueue, "saveprocess", 20, resultFileName)
     #  将 saver 进程设置为守护进程
     # saver.daemon = True
-    saver.start()
+    poolclose = Value(ctypes.c_bool, False)
 
-    # for i in range(0, len(websiteDomains)):
-    for i in range(0, 1):
+    guarder = GuardWorkerProcess(itemqueue, "saveprocess", 20, resultFileName, saver, poolclose)
+    saver.start()
+    guarder.start()
+    logger.info("守护saver的进程： pid = {} is start".format(guarder.pid))
+
+    # 查询所有停用的过滤词
+    stopwordsql = "select word from JiebaStopWord"
+    rows = Mysql.queryData(stopwordsql)
+
+    # 将查询出来的元组转换为字符串和集合
+    f = lambda tup: tup[0] if tup else ""
+    maprows = map(f, rows)
+    content = "\n".join(maprows)
+    filterwords = set(content.split('\n'))
+    # 将停用词写到 stop_words.txt 文件里
+    writeToFile("file/txt/stop_words.txt", content, pattern='w+')
+
+    # 查询关键词到Tag的映射
+    keywords_map_tag_sql = "select `name`,directionName from ResearchDirection,Tags " \
+                           "where rdid = directionId"
+
+    keyword2tagtuple = Mysql.queryData(keywords_map_tag_sql)
+    keyword2tagmap = {}
+    for tup in keyword2tagtuple:
+        keyword2tagmap[tup[0]] = tup[1]
+
+    # for i in range(0, 1):
+    for i in range(0, len(websiteDomains)):
         domain = websiteDomains[i]
         confDictionary1 = websiteConfInfos[i][0]
         confDictionary2 = websiteConfInfos[i][1]
@@ -120,21 +151,25 @@ if __name__ == '__main__':
         params = readKeywordCongig(keywordConfFile)
         for j in range(0, len(itemdics[i])):
             processName = 'process{}'.format(j)
-            print("j = {}".format(j))
-            processpool.apply_async(parseSubPage, (confDictionary2, itemdics[i][j], domain,
-                                                   processName, params[0], params[1]),
+            # print("j = {}".format(j))
+            processpool.apply_async(parseSubPage,
+                                    (confDictionary2, itemdics[i][j], domain, processName,
+                                     params[0], params[1], keyword2tagmap, filterwords),
                                     callback=put)
 
     processpool.close()
     processpool.join()
 
-    # 设置共享内存变量 flag 的值，通知 saver 进程爬取信息进程已经结束
-    saver.flag.value = True
+    # 设置共享内存变量 poolclose 的值，让守护进程通知爬取信息的进程池任务已经结束
+    # 守护进程可以不必守护保存数据进程，并通知保存数据的进程做最后的数据保存工作
+    poolclose.value = True
     print("\n\t抓取数据的进程任务结束\n")
     logger.info("\t\t抓取数据的进程任务结束\n")
 
-    while not saver.finish.value:
-        pass
+    while not guarder.guardIsExit.value:
+        time.sleep(2)
+        print("守护进程:guarder.guardIsExit  = {}, pid = {}"
+              .format(guarder.guardIsExit.value, guarder.pid))
 
     writeToFile(resultFileName, '\n{}\n]')
 

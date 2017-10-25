@@ -260,7 +260,6 @@ class HtmlCodeHandler(Process):
         while index <= end:
             try:
                 url = baseurl.format(index)
-                self.logqueue.put("http for url = {}".format(url))
                 print("http for url = {}".format(url))
                 if way == 'get':
                     html = SpiderApi.getPageSourceCode(url)
@@ -272,7 +271,6 @@ class HtmlCodeHandler(Process):
                             form_data[key] = val[innerindex]
                         else:
                             form_data[key] = val
-                    self.logqueue.put(form_data)
                     print(form_data)
                     cookieEntry = str(cfg.get("cookie")).split('=')
                     cookie = {cookieEntry[0]: cookieEntry[1]}

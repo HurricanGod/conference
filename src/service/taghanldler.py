@@ -1,6 +1,8 @@
 import nltk
+import jieba.analyse
 
 from src.service import bigram_tagger, cfg
+from src.util.commonutils import stringNotContainsChinese
 
 
 class NPExtractor(object):
@@ -59,7 +61,7 @@ class NPExtractor(object):
         return matches
 
     @staticmethod
-    def extractKeywords(sentence: str, top=3, filterwords=None)->set:
+    def extractKeywords(sentence: str, top=3, filterwords=None) -> set:
         """
         提取一段不包含中文字符串的关键词，返回前 top 个词
         filterwords 为过滤词，通过 nltk 提取的关键词中如果
@@ -88,3 +90,43 @@ class NPExtractor(object):
                 number += 1
         return keywords
 
+
+def extractTagFiles(tagkeyword: dict, keydic: dict, filterwords=None):
+    """
+    提取 会议 Tag 字段算法
+    :param tagkeyword: 关键词映射，关键词 → Tag
+    :param keydic: 会议信息字典
+    :param filterwords: 会议 Tag 过滤词
+    """
+    tagString = keydic.get("tag")
+    if tagString is None:
+        # 会议信息未归类尝试获取会议中文名
+        conferenceName = keydic.get("cnName")
+        # 没有中文名测试获取英文名
+        if conferenceName is None:
+            conferenceName = keydic.get("enName")
+
+        # 会议名称不为None
+        if conferenceName is not None:
+            isFind = False
+            # 检查会议名称是否包含关键词集中某个关键词，
+            # 如果包含可以根据这个关键词对会议进行归类
+            # 如果不包含关键词集中的任一关键词则判断会议名称是中文还是英文
+            # 如果是中文采用结巴分词进行关键词提取
+            # 如果是英文则采用NLTK生成关键词
+            for k, v in tagkeyword.items():
+                if str(conferenceName).find(k) != -1:
+                    isFind = True
+                    keydic["tag"] = v
+                    break
+            if not isFind:
+                # 会议名称为英文
+                if stringNotContainsChinese(conferenceName):
+                    keywords = NPExtractor.extractKeywords(conferenceName, filterwords=filterwords)
+                    print("使用 NLTK 提取Tag")
+                    keydic["tag"] = ",".join(keywords)
+
+                else:
+                    jieba.analyse.set_stop_words("file/txt/stop_words.txt")
+                    keywords = jieba.analyse.extract_tags(conferenceName, 5)
+                    keydic["tag"] = ",".join(keywords)
