@@ -1,0 +1,56 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/index/conferences",
+    "pages/index/events",
+    "pages/index/popular",
+    "pages/index/newest",
+    "pages/index/recommended",
+    "pages/index/advertised",
+    "pages/conference/conference",
+    "pages/conference/post",
+    "pages/conference/correct",
+    "pages/conference/send",
+    "pages/explore/explore",
+    "pages/explore/tags",
+    "pages/mine/mine",
+    "pages/mine/setting",
+    "pages/mine/favourites",
+    "pages/mine/likes",
+    "pages/mine/advice",
+    "pages/mine/sponsor",
+    "pages/mine/aboutus",
+    "pages/logs/logs"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "学术会议与学术活动",
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "color": "#6F86A8",
+    "selectedColor": "#666666",
+    "list": [{
+      "iconPath": "pages/example/images/home64.png",
+      "selectedIconPath": "pages/example/images/home64_on.png",
+      "pagePath": "pages/index/index",      
+      "text": "首页"
+    }, {
+      "iconPath": "pages/example/images/explore64.png",
+      "selectedIconPath": "pages/example/images/explore64_on.png",
+      "pagePath": "pages/explore/explore",
+      "text": "发现"
+    }, {
+      "iconPath": "pages/example/images/user64.png",
+      "selectedIconPath": "pages/example/images/user64_on.png",
+      "pagePath": "pages/mine/mine",
+      "text": "我"
+    }]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
+}

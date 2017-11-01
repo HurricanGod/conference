@@ -1,0 +1,86 @@
+<view class="page">
+    <view class="page__hd">
+        <view class="page__title">{{conf.cnName}}</view>
+        <view class="page__desc">网址：{{conf.website}}</view>
+    </view>
+    
+    <view class="page__bd">
+        <view class="weui-panel">
+            <view class="weui-panel__hd">
+                标签：{{conf.tags}}
+            </view>
+            <view class="weui-panel__bd">
+                <view class="weui-media-box weui-media-box_text">
+                    <view class="weui-media-box__title weui-media-box__title_in-text" wx:if="{{bannerImage}}">
+                        <image class="banner" mode="aspectFit" src="{{bannerImage}}"></image>
+                    </view>
+                    <view class="weui-media-box__desc">
+                        <text>时间：{{conf.startDate}} 至 {{conf.endDate}}</text>
+                    </view>
+                    <view class="weui-media-box__desc">
+                        <text>截稿：{{conf.deadline}}</text>
+                    </view>
+                    <view class="weui-media-box__desc">
+                        <text>录用：{{conf.acceptance}}</text>
+                    </view>
+                    <view class="weui-media-box__desc">
+                        <text>网址：{{conf.website}}</text>
+                    </view>
+                    <view class="weui-media-box__desc">
+                        <text>主办：{{conf.sponsor}}</text>
+                    </view>
+                    <view class="weui-media-box__desc">
+                        <text>地点：{{conf.location}}</text>
+                    </view>
+                    <view class="weui-media-box__info">
+                        <view class="weui-media-box__info__meta">更新：</view><view class="weui-media-box__info__meta weui-media-box__info__meta_extra">阅读：</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <view class="weui-cells__title">操作</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell" bindtap="onCopyUrl">
+                <view class="weui-cell__hd">
+                    <image src="../example/images/{{iconCopy}}" class="icon-item"></image>
+                </view>
+                <view class="weui-cell__bd">复制</view>
+                <view class="weui-cell__ft" animation="{{animationCopy}}">{{copies}}</view>
+            </view>
+            <view class="weui-cell" bindtap="onFavourTap">
+                <view class="weui-cell__hd">
+                    <image src="../example/images/{{iconFavour}}" class="icon-item"></image>
+                </view>
+                <view class="weui-cell__bd">收藏</view>
+                <view class="weui-cell__ft">{{favourites}}</view>
+            </view>
+            <view class="weui-cell" bindtap="onLikeTap">
+                <view class="weui-cell__hd">
+                    <image src="../example/images/{{iconLike}}" class="icon-item"></image>
+                </view>
+                <view class="weui-cell__bd">点赞</view>
+                <view class="weui-cell__ft">{{likes}}</view>
+            </view>
+            <navigator url="/pages/conference/correct" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__hd">
+                    <image src="../example/images/edit64.png" class="icon-item"></image>
+                </view>
+                <view class="weui-cell__bd">纠错</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+            </navigator>
+            <navigator url="/pages/conference/send" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__hd">
+                    <image src="../example/images/mail24.png" class="icon-item"></image>
+                </view>
+                <view class="weui-cell__bd">邮件</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+            </navigator>
+        </view>
+
+        <view class="weui-cells__title"></view>
+        <view class="weui-cells weui-cells_after-title" style="padding:5px;">        
+            <button open-type="share" class="weui-btn" type="primary" plain="true">转发</button>
+        </view>
+    </view>
+</view>

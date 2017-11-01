@@ -1,0 +1,80 @@
+<view class="page">
+    <!--view class="page__hd">
+        <view class="page__title">List</view>
+        <view class="page__desc">列表</view>
+    </view-->
+    <view class="page__bd">
+        <!--view class="weui-cells__title">类型</view>
+        <view class="weui-cells weui-cells_after-title">
+            <navigator url="/pages/index/conferences" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__bd">
+                    <view style="display: inline-block; vertical-align: middle">学术会议</view>
+                    <view class="weui-badge" style="margin-left: 5px;">8</view>
+                </view>
+                <view class="weui-cell__ft weui-cell__ft_in-access">532</view>
+            </navigator>
+            <navigator url="/pages/index/events" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__bd">
+                    <view style="display: inline-block; vertical-align: middle">学术活动</view>
+                    <view class="weui-badge" style="margin-left: 5px;">22</view>
+                </view>
+                <view class="weui-cell__ft weui-cell__ft_in-access">212</view>
+            </navigator>
+        </view-->
+
+        <view class="weui-cells__title">精选</view>
+        <view class="weui-cells weui-cells_after-title">
+            <navigator url="/pages/index/popular?tag=深度学习" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__bd">深度学习</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
+                    <view style="display: inline-block;vertical-align:middle; font-size: 17px;">24</view>
+                    <view class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></view>
+                </view>
+            </navigator>
+            <navigator url="/pages/index/popular?tag=中国计算机学会" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__bd">中国计算机学会</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
+                    <view style="display: inline-block;vertical-align:middle; font-size: 17px;">9</view>
+                </view>
+            </navigator>
+            <navigator url="/pages/explore/tags" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__bd">其他热门关键词</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
+                    <view style="display: inline-block;vertical-align:middle; font-size: 17px;">每日更新</view>
+                </view>
+            </navigator>
+        </view>
+
+        <view class="weui-cells__title">推荐</view>
+        <view class="weui-cells weui-cells_after-title">
+            <navigator url="/pages/index/popular?tag=学者推荐" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__hd">
+                    <image src="../example/images/scholar24.png" class="icon-item"></image>
+                </view>
+                <view class="weui-cell__bd">学者推荐</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access">哈工大</view>
+            </navigator>
+            <navigator url="/pages/index/popular?tag=赞助商" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__hd">
+                    <image src="../example/images/dollar24.png" class="icon-item"></image>
+                </view>
+                <view class="weui-cell__bd">赞助商活动</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
+                    <view style="display: inline-block;vertical-align:middle; font-size: 17px;">赠票</view>
+                    <view class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></view>
+                </view>
+            </navigator>
+        </view>
+
+        <view class="weui-cells__title">功能</view>
+        <view class="weui-cells weui-cells_after-title">
+            <navigator url="/pages/conference/post" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__hd">
+                    <image src="../example/images/post24.png" class="icon-item"></image>
+                </view>
+                <view class="weui-cell__bd">我要发布</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+            </navigator>
+        </view>
+    </view>
+</view>

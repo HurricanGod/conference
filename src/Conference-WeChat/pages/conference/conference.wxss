@@ -1,0 +1,4 @@
+/* pages/conference/conference.wxss */
+.banner {
+    height: 100px;
+}
