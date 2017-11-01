@@ -22,7 +22,7 @@
 + **tag**：表示会议的 tag
 + **number**： 表示所有会议中含有 **tag**的会议数量， number越大表示 `Tag` 越热门
 
-![getTag.do图]()
+![getTag.do图](https://github.com/HurricanGod/conference/blob/master/img/getTag.png)
 
 
 
@@ -40,9 +40,9 @@
 
 例：
 
-![getHotConference]()
+![getHotConference](https://github.com/HurricanGod/conference/blob/master/img/getHotConference.png)
 
-![getHotConference1]()
+![getHotConference1](https://github.com/HurricanGod/conference/blob/master/img/getHotConference1.png)
 
 
 
@@ -72,7 +72,7 @@
 
 **返回结果**：**json数组**，每个元素为会议信息对象
 
-![getPopularMeeting]()
+![getPopularMeeting](https://github.com/HurricanGod/conference/blob/master/img/getPopularMeeting.png)
 
 
 
@@ -97,9 +97,9 @@
 
 **startTime**、**top** 和 **offset**  的含义解析：如果传递的**startTime**的值为`2017-11-1` ，**offset** 的值为 `10` ，**top=10**；那么将查询举办日期在`2017-11-1` ~ `2017-11-11`范围内被点赞数前10的会议的Tag
 
-![queryPopTag]()
+![queryPopTag](https://github.com/HurricanGod/conference/blob/master/img/queryPopTag.png)
 
-![queryPopTag.gif]()
+![queryPopTag.gif](https://github.com/HurricanGod/conference/blob/master/img/queryPopTag1.gif)
 
 
 
@@ -121,9 +121,9 @@
 + `page` ：整型（**可选**），未传递此参数默认为0，不传递此参数时可通过`perPageNumber`来控制分页，相当于执行了`limit 0, perPageNumber`这样的分页查询语句
 + `perPageNumber` ：整型（**可选**），不传递此参数默认为8
 
-![queryConferenceByTag]()
+![queryConferenceByTag](https://github.com/HurricanGod/conference/blob/master/img/queryConferenceByTag.gif)
 
-![queryConferenceByTag]()
+![queryConferenceByTag](https://github.com/HurricanGod/conference/blob/master/img/queryConferenceByTag1.gif)
 
 
 
@@ -141,7 +141,7 @@
 - `startTime` ：字符串型（**必选**），格式只能是**yyyy-MM-dd**格式，<a href="#startTime">含义同上</a>
 - `offsetTime` ：整型（**必选**），<a href="#offset">含义参考offset</a>
 
-![queryNumOfConferenceByTag]()
+![queryNumOfConferenceByTag](https://github.com/HurricanGod/conference/blob/master/img/queryNumOfConferenceByTag.gif)
 
 
 
