@@ -11,7 +11,7 @@
 
 `http://localhost:8080/conference/conference/latest.do?days=7&page=1`
 
-
+-----
 
 ### 查询会议的所有 Tag
 
@@ -125,7 +125,7 @@
 
 ![queryConferenceByTag](https://github.com/HurricanGod/conference/blob/master/img/queryConferenceByTag1.gif)
 
-
+-----
 
 ###  根据热门Tag查询会议含有Tag的会议数量
 
