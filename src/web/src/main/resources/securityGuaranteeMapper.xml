@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ISecurityGuaranteeDao">
+
+    <insert id="addSecurityGuarantee" parameterType="SecurityGuarantee"
+            useGeneratedKeys="true" keyProperty="securityid">
+        insert into
+        security_guarantee(question, answer, user_id)
+        values(#{question}, #{answer}, #{user.id})
+    </insert>
+
+
+    <!-- 多对一多表连接查询-->
+    <resultMap id="itemMapper" type="SecurityGuarantee">
+        <id column="securityid" property="securityid"/>
+        <result column="question" property="question"/>
+        <result column="answer" property="answer"/>
+        <association property="user" javaType="UserInfo">
+            <id column="id" property="id"/>
+            <result column="username" property="username"/>
+            <result column="pwd" property="pwd"/>
+            <result column="email" property="email"/>
+        </association>
+    </resultMap>
+    <select id="querySecurityGuaranteeByJoin" resultMap="itemMapper">
+        select secturityid,question,answer,id,username,email
+        from security_guarantee,account
+        where id = security_guarantee.user_id and secturityid = #{sid}
+    </select>
+
+
+    <!--多对一查询单独查询实现,可懒加载 -->
+    <select id="querySecurityGuaranteeBySingle" resultMap="SecurityGuaranteeMapper">
+        select question, answer, user_id
+        from security_guarantee where secturityid = #{0}
+    </select>
+
+    <select id="queryUserInfoById" resultType="UserInfo">
+        select username,email from account where id = #{id}
+    </select>
+
+    <resultMap id="SecurityGuaranteeMapper" type="SecurityGuarantee">
+        <id column="securityid" property="securityid"/>
+        <result column="question" property="question"/>
+        <result column="answer" property="answer"/>
+        <association property="user" javaType="UserInfo"
+                     select="queryUserInfoById" column="user_id">
+            <id column="id" property="id"/>
+            <result column="username" property="username"/>
+            <result column="pwd" property="pwd"/>
+            <result column="email" property="email"/>
+        </association>
+    </resultMap>
+    
+
+</mapper>
