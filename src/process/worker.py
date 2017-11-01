@@ -5,9 +5,11 @@ from multiprocessing import Queue
 
 from multiprocessing import Value
 
+from src.dao.conferenceDao import saveConferenceSet
 from src.spider.logmanage import loadLogger
 from src.util.fileoperate import writeToJson, writeToFile
 from src.util.mongodbhelper import MongoDBCRUD
+from src.util.mysqlhelper import Mysql
 from src.util.typeconverter import Converter
 workerlogger = loadLogger('file/log/customlog.ini')
 
@@ -36,6 +38,7 @@ class Saver(Process):
                     try:
                         count = MongoDBCRUD.query_collection_count("conference")
                         self.savecore(count, currentset)
+                        saveConferenceSet(currentset)
                     except Exception as e:
                         workerlogger.error("发生异常：\n{}\n".format(e))
                         print("操作数据库时发生异常：\n{}\n".format(e))
@@ -62,13 +65,21 @@ class Saver(Process):
                 if len(currentset) >= self.num:
                     try:
                         count = MongoDBCRUD.query_collection_count("conference")
+
+                        # 把新爬取的会议信息保存进MongoDB
                         self.savecore(count, currentset)
+
+                        # 把新爬取的会议信息保存到Mysql
+                        saveConferenceSet(currentset)
                         currentset.clear()
                         workerlogger.debug("\t\t清空集合后，集合个数为:{}\n".format(len(currentset)))
                     except Exception as e:
                         workerlogger.error("操作数据库时出现了异常：\n{}\n".format(e))
                         workerlogger.info("集合中还剩下 {} 条数据\n".format(len(currentset)))
                         print(e)
+                    finally:
+                        while not Mysql.mysqlexecresultqueue.empty():
+                            workerlogger.info(Mysql.mysqlexecresultqueue.get())
         print("saver process exit!")
 
     def savecore(self, count, currentset):

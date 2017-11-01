@@ -1,4 +1,5 @@
 import re
+import traceback
 
 from multiprocessing import Queue
 
@@ -25,37 +26,40 @@ class DateFormatHelper(object):
         if datestr is None:
             return res
         for i in range(0, len(cls.dateformatregexs)):
-            regex = cls.dateformatregexs[i]
-            match = regex.match(datestr)
-            if match is not None:
-                itemstr = match.group()
-                if i == 0:
-                    items = str(itemstr).split(" ")
-                    year = items[len(items) - 1]
-                    month = cls.monthMap.get(str(items[1]).lower())
-                    dayrange = str(items[0])
-                    day = dayrange[0:dayrange.index("-")]
-                    res = year + "-" + month + "-" + day
-                    cls.logqueue.put("convert: {0} ==> {1}".format(datestr, res))
-                elif i == 1:
-                    items = str(itemstr).split(" ")
-                    year = items[len(items) - 1]
-                    month = cls.monthMap.get(str(items[1]).lower())
-                    day = items[0]
-                    res = year + "-" + month + "-" + day
-                    cls.logqueue.put("convert: {0} ==> {1}".format(datestr, res))
-                elif i == 3:
-                    items = str(itemstr).split(" ")
-                    year = items[len(items) - 1]
-                    month = cls.monthMap.get(str(items[0]).lower(), "0")
-                    digit_pattern = re.compile(r'[0-9]+')
-                    digitlist = digit_pattern.findall(items[1])
-                    day = digitlist[0]
-                    res = year + "-" + month + "-" + day
-                    cls.logqueue.put("convert: {0} ==> {1}".format(datestr, res))
-                else:
-                    res = datestr
-                break
+            try:
+                regex = cls.dateformatregexs[i]
+                match = regex.match(datestr)
+                if match is not None:
+                    itemstr = match.group()
+                    if i == 0:
+                        items = str(itemstr).split(" ")
+                        year = items[len(items) - 1]
+                        month = cls.monthMap.get(str(items[1]).lower())
+                        dayrange = str(items[0])
+                        day = dayrange[0:dayrange.index("-")]
+                        res = year + "-" + month + "-" + day
+                        cls.logqueue.put("convert: {0} ==> {1}".format(datestr, res))
+                    elif i == 1:
+                        items = str(itemstr).split(" ")
+                        year = items[len(items) - 1]
+                        month = cls.monthMap.get(str(items[1]).lower())
+                        day = items[0]
+                        res = year + "-" + month + "-" + day
+                        cls.logqueue.put("convert: {0} ==> {1}".format(datestr, res))
+                    elif i == 3:
+                        items = str(itemstr).split(" ")
+                        year = items[len(items) - 1]
+                        month = cls.monthMap.get(str(items[0]).lower(), "0")
+                        digit_pattern = re.compile(r'[0-9]+')
+                        digitlist = digit_pattern.findall(items[1])
+                        day = digitlist[0]
+                        res = year + "-" + month + "-" + day
+                        cls.logqueue.put("convert: {0} ==> {1}".format(datestr, res))
+                    else:
+                        res = datestr
+                    break
+            except Exception as e:
+                print("convertStandardDateFormat方法出现异常：\n{}\n".format(traceback.format_exc()))
         return res
 
 

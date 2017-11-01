@@ -1,9 +1,6 @@
-import re
-from bs4 import BeautifulSoup
 import unittest
-from pyquery import PyQuery as pq
 
-from src.spider.analysesources import initConfigForm, HtmlCodeHandler
+from src.spider.analysesources import HtmlCodeHandler
 from src.util.fileoperate import readConfig
 from src.util.mysqlhelper import Mysql
 

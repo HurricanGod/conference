@@ -8,15 +8,18 @@ from random import randint
 import jieba.analyse
 from pyquery import PyQuery as Pq
 
+from src.service.taghanldler import extractTagFiles
 from src.spider.analysesources import getHtmlCore
 from src.util.fileoperate import *
 from src.util.urllibhelper import SpiderApi
 from src.util.urllibhelper import Urldeal
 
 
-def parseSubPage(subpagecfg: dict, keydic: dict, domainname: str,
-                 processname, keywordmap: dict, othermap: dict):
-    extractKeywords(subpagecfg, keydic, domainname, processname, keywordmap, othermap)
+def parseSubPage(subpagecfg: dict, keydic: dict, domainname: str, processname,
+                 keywordmap: dict, othermap: dict, tagkeyword: dict, filterwords=None):
+
+    extractKeywords(subpagecfg, keydic, domainname, processname,
+                    keywordmap, othermap, tagkeyword, filterwords)
     showkeydic(keydic)
     return keydic
 
@@ -36,8 +39,8 @@ def readKeywordCongig(keyfile: str):
     return (keywordMap, otherMap)
 
 
-def extractKeywords(subpagecfg: dict, keydic: dict, websitedomain: str,
-                    name: str, keywordmap: dict, othermap: dict):
+def extractKeywords(subpagecfg: dict, keydic: dict, websitedomain: str, name: str,
+                    keywordmap: dict, othermap: dict, tagkeyword: dict, filterwords=None):
     url = str(keydic.get('website'))
     if url is not None:
         if url.startswith(websitedomain):
@@ -77,7 +80,7 @@ def extractKeywords(subpagecfg: dict, keydic: dict, websitedomain: str,
                             #     print(ele)
                             matchKeywords(elements, websitedomain, keywordmap, othermap, keydic)
                             extractWebsiteField(lines, tmpsoup, websitedomain, keydic)
-                            extractTagFiles(allcontent, keydic)
+                            extractTagFiles(tagkeyword, keydic, filterwords)
                         break
                     else:
                         html = getHtmlCore(html)
@@ -449,31 +452,6 @@ def extractWebsiteField(contentLines: list, soup: BeautifulSoup, websitedomain: 
             urllist = list(urlset)
             keydic['urls'] = urllist
             keydic['website'] = urllist[randint(0, length - 1)]
-
-
-def extractTagFiles(content: str, keydic: dict):
-    keytags1 = jieba.analyse.extract_tags(content, 10)  # 返回结果为list
-    tags1 = ' '.join(keytags1)
-    keytags2 = jieba.analyse.textrank(content, 10)  # 返回结果为list
-    tags2 = ' '.join(keytags2)
-
-    tagset1 = set(keytags1)
-    tagset2 = set(keytags2)
-    candidatetag = tagset1 & tagset2
-    print('\n关键词交集为：{}'.format(candidatetag))
-    # self.logqueue.put('\n关键词交集为：{}'.format(candidatetag))
-    title = keydic.get('cnName')
-    title = title if title is not None else keydic.get('enName')
-    if title is not None:
-        keytags1 = set(jieba.analyse.extract_tags(title, 3))
-        keytags2 = set(jieba.analyse.textrank(title, 3))
-        candidatetag = candidatetag | (keytags1 & keytags2)
-        if len(candidatetag) == 0:
-            candidatetag = keytags1 | keytags2
-        print('候选关键词为：{}'.format(candidatetag))
-    if keydic.get('tag') is None:
-        tag = ','.join(candidatetag)
-        keydic['tag'] = tag
 
 
 def showkeydic(keydic: dict, resultQueue=None):

@@ -94,17 +94,20 @@ class Mysql(object):
         return affect_line
 
     @staticmethod
-    def saveObject(obj: object, table: str):
+    def saveObject(obj: object, table: str, fields: set):
+        # 获取对象字段字典
         dic = obj.__dict__
         keys = list(dic.keys())
+        # 删除对象字段字典中值为None的键值对
         for k in keys:
             if dic.get(k) is None:
                 dic.pop(k)
+        # 获取要插入到数据库的非None字段
+        keys = list(dic.keys() & fields)
         connect = pymysql.connect(host=Mysql.host, port=Mysql.port, user=Mysql.user, passwd=Mysql.password,
                                   db=Mysql.db, charset=Mysql.charset)
         cur = connect.cursor()
         affect_line = 0
-        keys = list(dic.keys())
         sql = "insert into {} ( ".format(table)
         for i in range(0, len(keys)):
             sql += keys[i]
@@ -114,7 +117,7 @@ class Mysql(object):
                 sql += ")"
         sql += "values("
         for i in range(0, len(keys)):
-            sql += dic.get(keys[i])
+            sql += "%s"
             if i < len(keys) - 1:
                 sql += ","
             else:
@@ -122,13 +125,17 @@ class Mysql(object):
         queue = Mysql.mysqlexecresultqueue
         try:
             queue.put("执行sql语句：\t{}".format(sql))
-            cur.execute(sql)
+            print("执行sql语句：\t{}".format(sql))
+            params = []
+            for i in range(0, len(keys)):
+                params.append(dic.get(keys[i]))
+            cur.execute(sql, tuple(params))
             connect.commit()
             affect_line = cur.rowcount
         except Exception as e:
-            print("sql执行异常：{e}".format(e=e))
-            queue.put("执行 {} 时出现异常\n异常原因： {}".format(sql, e))
+            print("mysql插入数据出现异常：{e}".format(e=e))
+            queue.put("mysql执行语句： {} 时出现异常\n异常原因： {}\n".format(sql, e))
             connect.rollback()
-        else:
+        finally:
             connect.close()
             return affect_line

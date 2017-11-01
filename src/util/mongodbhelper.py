@@ -21,7 +21,7 @@ class MongoDBCRUD(object):
         MongoDBCRUD.execresultqueue.put("往数据库插入一条数据:\n{}\n\n".format(dic))
 
     @classmethod
-    def query(cls, collectionname: str, condition: dict, itemfields: dict, skip=0, limit=50):
+    def query(cls, collectionname: str, condition: dict, itemfields: dict, skip=0, limit=50)->list:
         start = datetime.datetime.now()
         collection = cls.db.get_collection(collectionname)
         datas = collection.find(condition, itemfields).skip(skip).limit(limit)
