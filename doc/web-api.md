@@ -73,7 +73,7 @@ public class ConferenceMsg {
 
 ![getTag.do-request](https://github.com/HurricanGod/conference/blob/master/doc/img/getTag.do-request.png)
 
-![getTag.do图](https://github.com/HurricanGod/conference/blob/master/img/getTag.png)
+![getTag.do图](https://github.com/HurricanGod/conference/blob/master/doc/img/getTag.png)
 
 
 
@@ -105,11 +105,11 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![getHotConference](https://github.com/HurricanGod/conference/blob/master/img/getHotConference.png)
+![getHotConference](https://github.com/HurricanGod/conference/blob/master/doc/img/getHotConference.png)
 
 ![getHotConference.do-response](https://github.com/HurricanGod/conference/blob/master/doc/img/getHotConference.do-response.png)
 
-![getHotConference1](https://github.com/HurricanGod/conference/blob/master/img/getHotConference1.png)
+![getHotConference1](https://github.com/HurricanGod/conference/blob/master/doc/img/getHotConference1.png)
 
 
 
@@ -158,7 +158,7 @@ public class ConferenceMsg {
 
 
 
-![getPopularMeeting](https://github.com/HurricanGod/conference/blob/master/img/getPopularMeeting.png)
+![getPopularMeeting](https://github.com/HurricanGod/conference/blob/master/doc/img/getPopularMeeting.png)
 
 
 
@@ -200,9 +200,9 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![queryPopTag](https://github.com/HurricanGod/conference/blob/master/img/queryPopTag.png)
+![queryPopTag](https://github.com/HurricanGod/conference/blob/master/doc/img/queryPopTag.png)
 
-![queryPopTag.gif](https://github.com/HurricanGod/conference/blob/master/img/queryPopTag1.gif)
+![queryPopTag.gif](https://github.com/HurricanGod/conference/blob/master/doc/img/queryPopTag1.gif)
 
 
 
@@ -234,9 +234,9 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![queryConferenceByTag](https://github.com/HurricanGod/conference/blob/master/img/queryConferenceByTag.gif)
+![queryConferenceByTag](https://github.com/HurricanGod/conference/blob/master/doc/img/queryConferenceByTag.gif)
 
-![queryConferenceByTag](https://github.com/HurricanGod/conference/blob/master/img/queryConferenceByTag1.gif)
+![queryConferenceByTag](https://github.com/HurricanGod/conference/blob/master/doc/img/queryConferenceByTag1.gif)
 
 -----
 
@@ -264,7 +264,7 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![queryNumOfConferenceByTag](https://github.com/HurricanGod/conference/blob/master/img/queryNumOfConferenceByTag.gif)
+![queryNumOfConferenceByTag](https://github.com/HurricanGod/conference/blob/master/doc/img/queryNumOfConferenceByTag.gif)
 
 
 
@@ -412,12 +412,6 @@ public class ConferenceMsg {
 **json对象** ，对象只有1个属性`isSuccess`，类型为**boolean** ，表示会议是否被用户取消收藏
 
 
-
-**网络请求示例** ：
-
-![cancelCollectConference.do-request]()
-
-![cancelCollectConference.do-response]()
 
 
 
