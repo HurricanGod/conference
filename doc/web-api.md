@@ -1,4 +1,4 @@
-## Web接口API
+## 小程序Web接口API
 
 -----
 
@@ -44,9 +44,9 @@ public class ConferenceMsg {
 
 `http://localhost:8080/conference/conference/latest.do?days=7&page=1`
 
-![latest.do-request]()
+![latest.do-request](https://github.com/HurricanGod/conference/blob/master/doc/img/latest.do-request.png)
 
-![latest.do-response]()
+![latest.do-response](https://github.com/HurricanGod/conference/blob/master/doc/img/latest.do-response.png)
 
 -----
 
@@ -71,9 +71,9 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![getTag.do-request]()
+![getTag.do-request](https://github.com/HurricanGod/conference/blob/master/doc/img/getTag.do-request.png)
 
-![getTag.do图](https://github.com/HurricanGod/conference/blob/master/img/getTag.png)
+![getTag.do图](https://github.com/HurricanGod/conference/blob/master/doc/img/getTag.png)
 
 
 
@@ -105,11 +105,11 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![getHotConference](https://github.com/HurricanGod/conference/blob/master/img/getHotConference.png)
+![getHotConference](https://github.com/HurricanGod/conference/blob/master/doc/img/getHotConference.png)
 
-![getHotConference.do-response]()
+![getHotConference.do-response](https://github.com/HurricanGod/conference/blob/master/doc/img/getHotConference.do-response.png)
 
-![getHotConference1](https://github.com/HurricanGod/conference/blob/master/img/getHotConference1.png)
+![getHotConference1](https://github.com/HurricanGod/conference/blob/master/doc/img/getHotConference1.png)
 
 
 
@@ -152,13 +152,13 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![getPopularMeeting-request1]()
+![getPopularMeeting-request1](https://github.com/HurricanGod/conference/blob/master/doc/img/getPopularMeeting-request1.png)
 
-![getPopularMeeting-request2]()
+![getPopularMeeting-request2](https://github.com/HurricanGod/conference/blob/master/doc/img/getPopularMeeting-request2.png)
 
 
 
-![getPopularMeeting](https://github.com/HurricanGod/conference/blob/master/img/getPopularMeeting.png)
+![getPopularMeeting](https://github.com/HurricanGod/conference/blob/master/doc/img/getPopularMeeting.png)
 
 
 
@@ -200,9 +200,9 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![queryPopTag](https://github.com/HurricanGod/conference/blob/master/img/queryPopTag.png)
+![queryPopTag](https://github.com/HurricanGod/conference/blob/master/doc/img/queryPopTag.png)
 
-![queryPopTag.gif](https://github.com/HurricanGod/conference/blob/master/img/queryPopTag1.gif)
+![queryPopTag.gif](https://github.com/HurricanGod/conference/blob/master/doc/img/queryPopTag1.gif)
 
 
 
@@ -234,9 +234,9 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![queryConferenceByTag](https://github.com/HurricanGod/conference/blob/master/img/queryConferenceByTag.gif)
+![queryConferenceByTag](https://github.com/HurricanGod/conference/blob/master/doc/img/queryConferenceByTag.gif)
 
-![queryConferenceByTag](https://github.com/HurricanGod/conference/blob/master/img/queryConferenceByTag1.gif)
+![queryConferenceByTag](https://github.com/HurricanGod/conference/blob/master/doc/img/queryConferenceByTag1.gif)
 
 -----
 
@@ -264,7 +264,7 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![queryNumOfConferenceByTag](https://github.com/HurricanGod/conference/blob/master/img/queryNumOfConferenceByTag.gif)
+![queryNumOfConferenceByTag](https://github.com/HurricanGod/conference/blob/master/doc/img/queryNumOfConferenceByTag.gif)
 
 
 
@@ -292,9 +292,9 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![queryLatestCount.do-request]()
+![queryLatestCount.do-request](https://github.com/HurricanGod/conference/blob/master/doc/img/queryLatestCount.do-request.png)
 
-![queryLatestCount.do-response]()
+![queryLatestCount.do-response](https://github.com/HurricanGod/conference/blob/master/doc/img/queryLatestCount.do-response.png)
 
 
 
@@ -323,9 +323,9 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![collectConference.do-request]()
+![collectConference.do-request](https://github.com/HurricanGod/conference/blob/master/doc/img/collectConference.do-request.png)
 
-![collectConference.do-response]()
+![collectConference.do-response](https://github.com/HurricanGod/conference/blob/master/doc/img/collectConference.do-response.png)
 
 
 
@@ -353,9 +353,9 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![queryCollectedNumber.do-request]()
+![queryCollectedNumber.do-request](https://github.com/HurricanGod/conference/blob/master/doc/img/queryCollectedNumber.do-request.png)
 
-![queryCollectedNumber.do-response]()
+![queryCollectedNumber.do-response](https://github.com/HurricanGod/conference/blob/master/doc/img/queryCollectedNumber.do-response.png)
 
 
 
@@ -384,9 +384,9 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![checkIsCollected.do-request]()
+![checkIsCollected.do-request](https://github.com/HurricanGod/conference/blob/master/doc/img/checkIsCollected.do-request.png)
 
-![checkIsCollected.do-response]()
+![checkIsCollected.do-response](https://github.com/HurricanGod/conference/blob/master/doc/img/checkIsCollected.do-response.png)
 
 
 
@@ -412,12 +412,6 @@ public class ConferenceMsg {
 **json对象** ，对象只有1个属性`isSuccess`，类型为**boolean** ，表示会议是否被用户取消收藏
 
 
-
-**网络请求示例** ：
-
-![cancelCollectConference.do-request]()
-
-![cancelCollectConference.do-response]()
 
 
 
@@ -445,9 +439,9 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![queryMyCollectionCount.do-request]()
+![queryMyCollectionCount.do-request](https://github.com/HurricanGod/conference/blob/master/doc/img/queryMyCollectionCount.do-request.png)
 
-![queryMyCollectionCount.do-response]()
+![queryMyCollectionCount.do-response](https://github.com/HurricanGod/conference/blob/master/doc/img/queryMyCollectionCount.do-response.png)
 
 
 
@@ -479,9 +473,9 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![queryMyCollections.do-request]()
+![queryMyCollections.do-request](https://github.com/HurricanGod/conference/blob/master/doc/img/queryMyCollections.do-request.png)
 
-![queryMyCollections.do-response]()
+![queryMyCollections.do-response](https://github.com/HurricanGod/conference/blob/master/doc/img/queryMyCollections.do-response.png)
 
 
 
@@ -512,9 +506,9 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![admire-request]()
+![admire-request](https://github.com/HurricanGod/conference/blob/master/doc/img/pngadmire-request.png)
 
-![admire-response]()
+![admire-response](https://github.com/HurricanGod/conference/blob/master/doc/img/admire-response.png)
 
 
 
@@ -543,9 +537,9 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![checkIsAdmired-request]()
+![checkIsAdmired-request](https://github.com/HurricanGod/conference/blob/master/doc/img/checkIsAdmired-request.png)
 
-![checkIsAdmired-response]()
+![checkIsAdmired-response](https://github.com/HurricanGod/conference/blob/master/doc/img/checkIsAdmired-response.png)
 
 -----
 
@@ -571,9 +565,9 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![queryCountPraise.do-request]()
+![queryCountPraise.do-request](https://github.com/HurricanGod/conference/blob/master/doc/img/queryCountPraise.do-request.png)
 
-![queryCountPraise.do-response]()
+![queryCountPraise.do-response](https://github.com/HurricanGod/conference/blob/master/doc/img/queryCountPraise.do-response.png)
 
 
 
@@ -602,9 +596,9 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![unPraise.do-request]()
+![unPraise.do-request](https://github.com/HurricanGod/conference/blob/master/doc/img/unPraise.do-request.png)
 
-![unPraise.do-response]()
+![unPraise.do-response](https://github.com/HurricanGod/conference/blob/master/doc/img/unPraise.do-response.png)
 
 
 
@@ -640,9 +634,9 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![queryUserPraisedCount.do-request]()
+![queryUserPraisedCount.do-request](https://github.com/HurricanGod/conference/blob/master/doc/img/queryUserPraisedCount.do-request.png)
 
-![queryUserPraisedCount.do-response]()
+![queryUserPraisedCount.do-response](https://github.com/HurricanGod/conference/blob/master/doc/img/queryUserPraisedCount.do-response.png)
 
 
 
@@ -682,9 +676,9 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![queryPraisedConference.do-request]()
+![queryPraisedConference.do-request](https://github.com/HurricanGod/conference/blob/master/doc/img/queryPraisedConference.do-request.png)
 
-![queryPraisedConference.do-response]()
+![queryPraisedConference.do-response](https://github.com/HurricanGod/conference/blob/master/doc/img/queryPraisedConference.do-response.png)
 
 
 
@@ -721,9 +715,9 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![savePublishConference.do-request]()
+![savePublishConference.do-request](https://github.com/HurricanGod/conference/blob/master/doc/img/savePublishConference.do-request.png)
 
-![savePublishConference.do-response]()
+![savePublishConference.do-response](https://github.com/HurricanGod/conference/blob/master/doc/img/savePublishConference.do-response.png)
 
 
 
@@ -756,9 +750,9 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![submitError.do-request]()
+![submitError.do-request](https://github.com/HurricanGod/conference/blob/master/doc/img/submitError.do-request.png)
 
-![submitError.do-response]()
+![submitError.do-response](https://github.com/HurricanGod/conference/blob/master/doc/img/submitError.do-response.png)
 
 
 
@@ -787,9 +781,9 @@ public class ConferenceMsg {
 
 **网络请求示例** ：
 
-![submitSuggestion.do-request]()
+![submitSuggestion.do-request](https://github.com/HurricanGod/conference/blob/master/doc/img/submitError.do-request.png)
 
-![submitSuggestion.do-response]()
+![submitSuggestion.do-response](https://github.com/HurricanGod/conference/blob/master/doc/img/submitSuggestion.do-response.png)
 
 
 
