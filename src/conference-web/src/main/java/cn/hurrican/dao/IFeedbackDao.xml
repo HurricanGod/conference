@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hurrican.dao.IFeedbackDao">
+
+    <insert id="insertSingleErrorConferenceInfo">
+        insert into
+        ErrorConferenceInfo(conferenceid, errordetail, submitTime)
+        values(#{conferenceid}, #{errordetail}, #{submitTime})
+    </insert>
+
+    <insert id="insertOneFeedbackInfo">
+        insert into
+        Suggestion(uid, description, email, submitTime)
+        values(#{uid}, #{description},#{email}, #{submitTime})
+    </insert>
+
+    <!-- resultType="ErrorConferenceInfoDetail"-->
+
+    <resultMap id="errorInfoMao" type="ErrorConferenceInfoDetail">
+
+        <id property="eid" column="eid"/>
+        <result property="errorDetail" column="errordetail"/>
+
+        <association property="info" javaType="ConferenceInfo">
+            <result column="id" property="id"/>
+            <result column="cnName" property="cnName" />
+            <result column="enName" property="enName" />
+            <result column="tag" property="tag" />
+            <result column="location" property="location" />
+            <result column="sponsor" property="sponsor" />
+            <result column="startdate" property="startdate" />
+            <result column="enddate" property="enddate" />
+            <result column="deadline" property="deadline" />
+            <result column="acceptance" property="acceptance" />
+            <result column="website" property="website" />
+        </association>
+
+    </resultMap>
+
+    <select id="queryUnsolvedErrorConference" resultMap="errorInfoMao">
+        select id, cnName, enName, tag, location, sponsor, startdate,enddate,
+        deadline,acceptance,website, errordetail, eid
+        from ConferenceInfo,ErrorConferenceInfo
+        <where>
+            conferenceid = id and isSolve = 0 and startdate >= #{currentTime}
+        </where>
+        order by id, startdate
+        <if test="skip != null and perPageNumber != null">
+          limit #{skip},#{perPageNumber}
+        </if>
+
+    </select>
+
+    <select id="queryUnsolvedErrorConferenceCount" resultType="java.lang.Integer">
+        select count(*)
+        from ErrorConferenceInfo
+        where isSolve = 0
+    </select>
+
+    <update id="updateUnsolvedErrorConferenceFlag">
+        update ErrorConferenceInfo
+        set isSolve = 1
+        where conferenceid = #{cid}
+    </update>
+
+    <select id="queryUserSuggestion" resultType="FeedbackSuggestion">
+        select email,description
+        from Suggestion
+        <if test="submitTime != null">
+            where submitTime >= #{startTime}
+        </if>
+        <choose>
+            <when test="skip != null and number!= null">
+                limit #{skip},#{number}
+            </when>
+            <when test="number!= null">
+                limit #{number}
+            </when>
+        </choose>
+    </select>
+
+    <select id="queryUserSuggestionCount" resultType="java.lang.Integer">
+        select count(*)
+        from Suggestion
+        <if test="submitTime != null">
+            where submitTime >= #{startTime}
+        </if>
+    </select>
+</mapper>
