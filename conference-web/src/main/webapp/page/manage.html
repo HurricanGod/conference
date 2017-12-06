@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>管理界面</title>
+    <link type="text/css" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../css/icon.css">
+
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/jsutils.js"></script>
+</head>
+<body class="easyui-layout">
+
+<div data-options="region:'north',title:'用户反馈',split:true" style="height:200px;">
+    <div style="background:#fafafa;padding:10px;" id="div">
+        <div style="padding:3px 2px;border-bottom:1px solid #ccc">
+            <table class="table table-striped" >
+                <tr>
+                    <td>
+                        设置每页数据量
+                        <input type=text style="display:none" id="suggestTotal">
+                    </td>
+
+                    <td>
+                        <select class="js-example-basic-single" name="state" id="pageCount"
+                                style="width: 173px; text-align: center">
+                            <option>3</option>
+                            <option>4</option>
+                            <option selected="selected">5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                        </select>
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td>选择页数</td>
+                    <td>
+                        第
+                        <select class="js-example-basic-single" name="state" id="pageNo"
+                                style="width: 139px; text-align: center">
+                        </select>
+                        页
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td>
+                        <button type="button" class="btn btn-success" id="querySuggestBtn">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true">查询</span>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped" id="feedback">
+                <thead>
+                <tr>
+                    <td>用户建议</td>
+                    <td>联系邮箱</td>
+                </tr>
+                </thead>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<div data-options="region:'south',title:'',split:true" style="height:200px;">
+
+</div>
+
+
+</div>
+<div data-options="region:'center',title:'会议纠错'" style="padding:5px;background:#aac5e7;">
+    <div style="background:#fafafa;padding:10px;" >
+        <form id="hotTag" >
+            <table>
+                <tr>
+                    <td>
+                        设置每页数据量
+                        <input type=text style="display:none" id="total">
+                    </td>
+                    <td>
+                        <select class="js-example-basic-single" name="state" id="perPage"
+                                style="width: 173px; text-align: center">
+                            <option>4</option>
+                            <option selected="selected">5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>选择页数</td>
+                    <td>
+                        第
+                        <select class="js-example-basic-single" name="state" id="page"
+                                style="width: 139px; text-align: center">
+                        </select>
+                        页
+                    </td>
+
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <button type="button" class="btn btn-success" id="queryErrorBtn">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true">查询</span>
+                        </button>
+                    </td>
+                </tr>
+
+            </table>
+        </form>
+        <hr>
+
+        <div class="table-responsive">
+            <table class="table table-striped" id="meetings">
+                <thead>
+                <tr>
+                    <td>id</td>
+                    <td>name</td>
+                    <td>tag</td>
+                    <td>举办时间</td>
+                    <td>举办地点</td>
+                    <td>举办方</td>
+                    <td>错误报告</td>
+                </tr>
+                </thead>
+            </table>
+
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        function addPageOption (data){
+
+            var count = data.number;
+            console.log("count = " + count);
+            $("#total").val(count);
+
+            if (count !== undefined) {
+                var select = $("#page");
+
+                for (var i = 0; i < count / 5; i++) {
+                    var option = $("<option></option>").attr("value", (i + 1)).text(i + 1);
+                    option.appendTo(select)
+                }
+            } else {
+                alert("error");
+                window.location.href = "login.html";
+            }
+        }
+
+
+        $.ajax({
+            type :"post",
+            url : "../feedback/queryErrorInfoCount.do",
+            success: addPageOption,
+            complete: function (XMLHttpRequest, textStatus) {
+                console.log("textStatus = " + textStatus);
+            }
+        });
+
+        $.ajax({
+            type :"post",
+            url : "../feedback/querySuggestCount.do",
+            success: function (data) {
+                var count = data.number;
+                console.log("count = " + count);
+                $("#suggestTotal").val(count);
+
+                if (count !== undefined) {
+                    var select = $("#pageNo");
+
+                    for (var i = 0; i < count / 5; i++) {
+                        var option = $("<option></option>").attr("value", (i + 1)).text(i + 1);
+                        option.appendTo(select)
+                    }
+                } else {
+                    alert("error");
+                }
+            }
+        });
+
+
+        $("#perPage").change(function () {
+            var perPageNumber = $(this).find("option:selected").text();
+            console.log("perPageNumber = " + perPageNumber);
+
+            var total = $("#total").val();
+            var len = total / perPageNumber;
+            var pageSelect = $("#page");
+            pageSelect.find("option").remove();
+
+            for (var i = 0; i < len ; i++) {
+                var option = $("<option>" + (i + 1) + "</option>");
+                option.appendTo(pageSelect);
+            }
+        });
+
+
+        $("#pageCount").change(function () {
+            var perPageNumber = $(this).find("option:selected").text();
+            console.log("perPageNumber = " + perPageNumber);
+
+            var total = $("#suggestTotal").val();
+            var len = total / perPageNumber;
+            var pageSelect = $("#pageNo");
+            pageSelect.find("option").remove();
+
+            for (var i = 0; i < len ; i++) {
+                var option = $("<option>" + (i + 1) + "</option>");
+                option.appendTo(pageSelect);
+            }
+        });
+
+        $("#queryErrorBtn").click(function () {
+            var page = $("#page").find("option:selected").text();
+            var perPage = $("#perPage").find("option:selected").text();
+
+            var params = {};
+            params.page = page;
+            params.perPageNumber = perPage;
+
+            function callback (data){
+                if (data instanceof Array){
+                    var length = data.length;
+
+                    var table = $("#meetings");
+                    table.find("tr:gt(0)").remove();
+
+                    for (var i = 0; i < length; i++) {
+                        console.log(data[i]);
+
+                        var eid = data[i].eid;
+                        var id = data[i].conference.id;
+                        var name = data[i].conference.cnName;
+                        var website = data[i].conference.website;
+
+                        if (name == null || name === undefined) {
+                            name = data[i].conference.enName;
+                        }
+
+                        var row = $("<tr></tr>").attr("id", eid);
+
+                        row.appendTo(table);
+
+                        var td1 = $("<td></td>").text(id).attr("value", eid);
+                        var td2 = $("<td></td>");
+                        var url = $('<a style="text-decoration:none"></a>')
+                                .attr("href", website).text(name);
+                        url.appendTo(td2);
+
+                        var td3 = $("<td></td>").text(data[i].conference.tag);
+                        var td4 = $("<td></td>").text(data[i].conference.startdate);
+                        var td5 = $("<td></td>").text(data[i].conference.location);
+                        var td6 = $("<td></td>").text(data[i].conference.sponsor);
+                        var td7 = $("<td></td>").text(data[i].errorDetail);
+
+
+                        td1.appendTo(row);
+                        td2.appendTo(row);
+                        td3.appendTo(row);
+                        td4.appendTo(row);
+                        td5.appendTo(row);
+                        td6.appendTo(row);
+                        td7.appendTo(row);
+                    }
+                }
+            }
+
+            var url = "../feedback/queryErrorInfo.do";
+            sendAjaxRequest(url,params, callback);
+        })
+
+
+        $("#querySuggestBtn").click(function () {
+            var page = $("#pageNo").find("option:selected").text();
+            var perPage = $("#pageCount").find("option:selected").text();
+
+            $.ajax({
+                type :"post",
+                url : "../feedback/querySuggestion.do",
+                data : {page : page, number : perPage},
+                success : function (data) {
+                    if (data instanceof Array){
+                        var table = $("#feedback");
+
+                        var length = data.length;
+
+                        table.find("tr:gt(0)").remove();
+
+                        for (var i = 0; i < length; i++) {
+                            var row = $("<tr></tr>");
+                            row.appendTo(table);
+
+                            var td1 = $("<td></td>").text(data[i].description);
+                            var td2 = $("<td></td>").text(data[i].email);
+
+                            td1.appendTo(row);
+                            td2.appendTo(row);
+                        }
+                    }
+                }
+            })
+
+        });
+    })
+</script>
+</body>
+</html>

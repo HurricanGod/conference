@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>热门会议推荐</title>
+    <link type="text/css" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../css/icon.css">
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/jsutils.js"></script>
+
+</head>
+<body>
+
+<div style="width:630px;background:#fafafa;padding:10px;" id="div">
+    <div style="padding:3px 2px;border-bottom:1px solid #ccc">热门会议推荐</div>
+    <form id="hotTag" >
+        <table>
+            <tr>
+                <td>选择 Tag</td>
+                <td>
+                    <select class="js-example-basic-single" name="state" id="tag"
+                            style="width: 173px; text-align: center">
+
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>设置每页数据量</td>
+                <td>
+                    <select class="js-example-basic-single" name="state" id="perPage"
+                            style="width: 173px; text-align: center">
+                        <option>4</option>
+                        <option selected="selected">5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>起始日期</td>
+                <td>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1"></span>
+                        <input type="text" class="form-control" placeholder="yyyy-MM-dd"
+                               aria-describedby="basic-addon1" id="startDate" value="2017-11-1">
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>选择日期偏移量</td>
+                <td >
+                    <select class="js-example-basic-single" name="state" id="offset"
+                            style="width: 173px; text-align: center">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        <option>13</option>
+                        <option>14</option>
+                        <option>15</option>
+                        <option>20</option>
+                        <option>25</option>
+                        <option>30</option>
+                        <option>35</option>
+                        <option>40</option>
+                        <option>50</option>
+                        <option>60</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>选择页数</td>
+                <td>
+                    <select class="js-example-basic-single" name="state" id="page"
+                            style="width: 173px; text-align: center">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                    </select>
+                </td>
+
+            </tr>
+
+            <tr></tr>
+
+            <tr>
+                <td></td>
+                <td><input type="button" value="获取" id="push"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<hr>
+<div class="jumbotron">
+    <div class="container">
+        <button class="btn btn-primary" type="button" id="tip">
+             <span class="badge" id="num"></span>
+        </button>
+    </div>
+</div>
+<hr>
+<input id="description" style="display: none" />
+<center>
+    <div class="modal fade" id="myModal" tabindex="-1"
+         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    </div>
+</center>
+<table class="table table-striped" id="meetings">
+    <thead>
+        <tr>
+            <td>id</td>
+            <td>会议名称</td>
+            <td>Tag</td>
+            <td>举办日期</td>
+        </tr>
+    </thead>
+</table>
+
+
+<script type="text/javascript">
+    function showWindows(title, cid){
+        var modal_dialog = $("<div></div>").attr("class", "modal-dialog");
+
+        var modal_content = $("<div></div>").attr("class", "modal-content");
+        modal_content.appendTo(modal_dialog);
+
+        var header = $("<div></div>").attr("class", "modal-header");
+        $('<h4 class="modal-title" id="myModalLabel"> ' + title + ' </h4>');
+        header.appendTo(modal_content);
+
+        var body = $('<div class="modal-body"></div>');
+        body.appendTo(modal_content);
+
+        var form_group_div = $('<div class="form-group"></div>');
+        form_group_div.appendTo(body);
+
+        var p = $('<p>描述</p>');
+        var textarea = $('<textarea class="form-control" rows="5" id="area" style="width: 300px"></textarea>');
+        p.appendTo(form_group_div);
+        textarea.appendTo(form_group_div);
+
+
+        var footer = $("<div></div>").attr("class", "modal-footer");
+
+        var closeBtn = $('<button data-dismiss="modal" type="button" class="btn btn-default">关闭</button>');
+        var submitBtn = $('<button type="button" class="btn btn-primary">提交更改</button>');
+
+        submitBtn.click(function () {
+            var description = $("#area").val();
+            console.log("description = " + description);
+            $("#description").val(description);
+            var errorConference = new Object();
+            errorConference.conferenceid = cid;
+            errorConference.errordetail = description;
+            var url = "../feedback/submitError.do";
+
+            function callback(data){
+                successCallBack(data);
+                var myModal = $("#myModal");
+                myModal.children().remove();
+            }
+
+            sendAjaxRequest(url, errorConference, callback);
+        });
+
+        closeBtn.appendTo(footer);
+        submitBtn.appendTo(footer);
+        footer.appendTo(modal_content);
+
+        return modal_dialog;
+    };
+
+    $(function () {
+
+        var startTime = getTodayString;
+        console.log("startTime = " + startTime);
+
+        var offset = 30;
+        var top = 8;
+        $.ajax({
+            type: "post",
+            url: "../push/queryPopTag.do",
+            data:{startTime:startTime, offset:offset, top:top},
+            success: function (data) {
+                var len = data.length;
+                var tagSelect = $("#tag");
+                for (var i = 0; i < len; i++) {
+                    var option = $("<option>" + data[i] + "</option>").attr("value", data[i]);
+                    option.appendTo(tagSelect);
+                }
+            }
+        });
+
+
+
+    });
+
+
+
+    $("#push").click(function(event){
+        event.preventDefault();
+
+        var tag =  $("#tag").find("option:selected").text();
+        console.log("tag = " + tag);
+
+        var offset = $("#offset").find("option:selected").text();
+        console.log("offset = " + offset);
+
+        var page = $("#page").find("option:selected").text();
+        console.log("page = " + page);
+
+        var perPage = $("#perPage").find("option:selected").text();
+        console.log("perPage = " + perPage);
+
+        var startTime = $("#startDate").val();
+        console.log("startTime = " + startTime)
+
+        $.ajax({
+            type: "get",
+            url: "../push/queryConferenceByTag.do",
+            data: {tag:tag, startTime:startTime,
+                offsetTime:offset, page:page,
+                perPageNumber:perPage},
+            success: function (data) {
+
+                var table = $("#meetings");
+
+                table.find("tr:gt(0)").remove();
+
+
+                if(data instanceof Array){
+                    data.forEach(function visit(table,index){
+                        console.log(data[index]);
+
+                        var r = data[index].id;
+                        var row = $("<tr></tr>").attr("id", r);
+
+                        var name = data[index].cnName;
+                        if (name == null) {
+                            name = data[index].enName;
+                        }
+
+                        table = $("#meetings");
+                        table.append(row);
+
+                        var td1 = $("<td></td>").text(r);
+                        var td2 = $("<td></td>");
+
+                        var website = $("<a>" + name + "</a>").attr("href", data[index].website);
+                        website.appendTo(td2);
+
+                        var td3 = $("<td></td>").text(data[index].tag);
+                        var td4 = $("<td></td>").text(data[index].startdate);
+
+                        var td5 = $("<td></td>");
+//
+                        var btn = $('<button data-toggle="modal" data-target="#myModal">' +
+                                '纠错</button>').attr("class", "btn btn-info");
+
+                        btn.appendTo(td5);
+                        btn.click(function () {
+                            var tr = $(this).parent().parent();
+                            var tds = tr.children();
+
+                            var cid = tds.eq(0).text();
+                            console.log("cid = " + cid);
+
+                            var myModal = $("#myModal");
+                            myModal.children().remove();
+                            var div = showWindows("纠错", cid);
+                            myModal.append(div);
+
+
+                        });
+
+                        td1.appendTo(row);
+                        td2.appendTo(row);
+                        td3.appendTo(row);
+                        td4.appendTo(row);
+                        td5.appendTo(row);
+                    });
+                }
+
+            }
+        });
+
+        var tip = "从" + startTime + "开始，这" + offset + " 天内Tag为  "
+                + tag + " 的会议共有 ";
+        $.ajax({
+            type: "post",
+            url: "../push/queryNumOfConferenceByTag.do",
+            data: {tag:tag, startTime:startTime, offsetTime:offset},
+
+            success: function(data){
+                var count = data.count;
+                console.log("data.count = " + count);
+                $("#tip").text(tip + data.count + " 条数据");
+                var len = count / perPage;
+
+                var select = $("#page");
+                select.find("option").remove();
+                for (var i = 0; i < len; i++) {
+                    var option = $("<option>" + (i+1) + "</option>").attr("value", (i+1));
+                    option.appendTo(select);
+                }
+            }
+        });
+
+
+    });
+</script>
+
+</body>
+</html>
