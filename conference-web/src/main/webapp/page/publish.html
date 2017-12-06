@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>我要发布会议</title>
+    <link type="text/css" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../css/icon.css">
+
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/jsutils.js"></script>
+</head>
+<body>
+
+<div style="width:330px;background:#fafafa;padding:10px;" >
+    <div style="padding:3px 2px;border-bottom:1px solid #ccc">我要发布会议</div>
+    <form  method="post">
+        <table class="table table-striped">
+            <tr>
+                <td>会议网址:</td>
+                <td>
+                    <input class="easyui-validatebox" type="text" id="url" data-options="required:true" />
+                </td>
+            </tr>
+            <tr>
+                <td>邮箱:</td>
+                <td>
+                    <input class="easyui-validatebox" type="text" id="email"
+                           data-options="validType:'email',required:true" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <button type="button" class="btn btn-success" id="checkBtn">
+                        点击获取验证码
+                    </button>
+                </td>
+                <td>
+                    <input class="easyui-validatebox" type="text" id="code" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>备注:</td>
+                <td>
+                    <input class="easyui-validatebox" type="text" id="remark" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>举办机构:</td>
+                <td>
+                    <input class="easyui-validatebox" type="text" id="organization" />
+                </td>
+            </tr>
+            <tr>
+                <td id="res"></td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="button" class="btn btn-success" id="submit">提交</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
+
+<script>
+    $(function () {
+        $("#submit").click(function () {
+            var object = {};
+            object.uri = $("#url").val();
+            object.email = $("#email").val();
+            object.description = $("#remark").val();
+            object.organization = $("#organization").val();
+
+            var url = "../publish/savePublishConference.do";
+
+            function callback(data){
+                successCallBack(data);
+                alert("您发布的会议已进入审核阶段！审核通过后我们会在第一时间通知您，请留意邮件");
+                window.location.href = "../index.html";
+            }
+
+            sendAjaxRequest(url,object,callback);
+
+        });
+
+        $("#checkBtn").click(function () {
+            var email = $("#email").val();
+
+            $.ajax({
+                type : "post",
+                url : "../publish/checkEmail.do",
+                data : {email:email}
+            });
+        })
+    });
+</script>
+</body>
+</html>

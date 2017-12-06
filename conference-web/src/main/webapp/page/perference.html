@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>会议</title>
+    <link type="text/css" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../css/icon.css">
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+</head>
+<body>
+
+<div style="width:630px;background:#fafafa;padding:10px;" id="div">
+    <div style="padding:3px 2px;border-bottom:1px solid #ccc">热门会议推荐</div>
+    <form id="hotTag">
+        <table>
+            <tr>
+                <td>选择 uid</td>
+                <td>
+                    <select class="js-example-basic-single" name="state" id="uid">
+                    </select>
+                </td>
+            </tr>
+
+        </table>
+    </form>
+</div>
+
+<hr>
+<div class="table-responsive">
+    <table class="table table-striped" id="meetings">
+        <thead>
+        <tr>
+            <td>id</td>
+            <td>name</td>
+            <td>tag</td>
+            <td>举办时间</td>
+            <td>点赞</td>
+            <td>收藏</td>
+        </tr>
+        </thead>
+    </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                第
+                <select class="js-example-basic-single" name="state" id="next"
+                        style="width: 50px; text-align: center">
+                </select>
+                页
+                <button type="button" class="btn btn-success" id="nextPageBtn">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true">查询</span>
+                </button>
+            </li>
+            <li>
+                相对今天的日期偏移量：
+                <select class="js-example-basic-single" name="state" id="offset" style="width: 100px">
+
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                    <option>13</option>
+                    <option>14</option>
+                    <option>15</option>
+                    <option>16</option>
+                    <option>17</option>
+                    <option>18</option>
+                    <option>19</option>
+                    <option>20</option>
+                    <option>21</option>
+                    <option>22</option>
+                    <option>23</option>
+                    <option>24</option>
+                    <option>25</option>
+                    <option>26</option>
+                    <option>27</option>
+                    <option>28</option>
+                    <option>29</option>
+                </select>
+            </li>
+        </ul>
+    </nav>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#nextPageBtn").click(function (event) {
+            event.preventDefault();
+            var page = $("#next").find("option:selected").text();
+            console.log("page = " + page);
+
+            var offset = $("#offset").find("option:selected").text();
+            console.log("offset = " + offset);
+
+            initConferenceMessage(page, offset);
+
+        });
+    });
+    function initConferenceMessage(page,offset) {
+        $.ajax({
+            type: "post",
+            url: "../conference/queryLatestCount.do",
+            data: {offset: offset},
+            success : function (data) {
+                var len = data.number / 8;
+
+                var pageSelect = $("#next");
+                pageSelect.find("option").remove();
+
+                for (var i = 0; i < len; i++) {
+                    var option = $("<option>"+(i+1)+"</option>").attr("value", (i+1));
+                    option.appendTo(pageSelect);
+                }
+            }
+        });
+
+        $.ajax({
+            type: "post",
+            url: "../conference/latest.do",
+            data: {days: offset , page: page},
+            success: function (data) {
+
+                if (data instanceof Array) {
+                    $("#meetings").find("tr:gt(0)").remove();
+
+                    data.forEach(function visit(table, index) {
+                        console.log(data[index]);
+                        table = $("#meetings");
+                        var cid = data[index].id;
+
+                        var row = $("<tr></tr>").attr("id", cid);
+                        var name = data[index].cnName;
+                        if (name == null) {
+                            name = data[index].enName;
+                        }
+
+                        table.append(row);
+
+                        var td1 = $("<td></td>").text(data[index].id);
+                        var td2 = $("<td></td>").text(name);
+                        var td3 = $("<td></td>").text(data[index].tag);
+                        var td4 = $("<td></td>").text(data[index].startdate);
+
+                        var td5 = $("<td></td>");
+                        var btn1 = $("<button></button>").attr("name", "praiseBtn")
+                                .attr("class", "btn btn-info").attr("value", 1);
+
+                        btn1.appendTo(td5);
+
+                        $.ajax({
+                            type: "post",
+                            url: "../perference/queryCount.do",
+                            data: {cid: cid},
+                            success: function (data) {
+                                var number = data.number;
+                                btn1.text("点赞 (" + number + ")");
+                            }
+                        });
+
+                        btn1.click(function () {
+                            var tr = $(this).parent().parent();
+                            var tds = tr.children();
+
+                            var uid = $("#uid").find("option:selected").val();
+                            console.log("uid = " + uid);
+
+                            var id = tds.eq(0).text();
+                            console.log("id = " + id);
+
+                            var flag = $(this).val();
+                            console.log("flag = " + flag);
+                            /**
+                             *
+                             */
+                            $.ajax({
+                                type: "post",
+                                url: "../perference/checkIsAdmired.do",
+                                data: {conferenceid: id, uid: uid},
+                                success: function (data) {
+                                    if (!data.isSuccess) {
+                                        $.ajax({
+                                            type: "post",
+                                            url: "../perference/admire.do",
+                                            data: {conferenceid: id, uid: uid},
+                                            success: function (data) {
+                                                if (data.isSuccess) {
+                                                    $.ajax({
+                                                        type: "post",
+                                                        url: "../perference/queryCount.do",
+                                                        data: {cid: cid},
+                                                        success: function (data) {
+                                                            var number = data.number;
+                                                            btn1.text("已点赞 (" + number + ")");
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        });
+                                    } else {
+                                        $.ajax({
+                                            type: "post",
+                                            url: "../perference/unPraise.do",
+                                            data: {conferenceid: id, uid: uid},
+                                            success: function (data) {
+                                                if (data.isSuccess) {
+                                                    $.ajax({
+                                                        type: "post",
+                                                        url: "../perference/queryCount.do",
+                                                        data: {cid: cid},
+                                                        success: function (data) {
+                                                            var number = data.number;
+                                                            btn1.text("点赞 (" + number + ")");
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+
+                        });
+
+                        var td6 = $("<td></td>");
+                        var btn2 = $("<button></button>").attr("name", "collectBtn")
+                                .attr("class", "btn btn-info").text("收藏").attr("value", 1);
+
+                        $.ajax({
+                            type: "post",
+                            url: "../collect/queryCollectedNumber.do",
+                            data: {cid: cid},
+                            success: function (data) {
+                                var number = data.number;
+                                btn2.text("收藏 (" + number + ")");
+                            }
+                        });
+                        btn2.click(function () {
+                            var tr = $(this).parent().parent();
+                            var tds = tr.children();
+
+                            var uid = $("#uid").find("option:selected").val();
+                            console.log("uid = " + uid);
+
+                            var id = tds.eq(0).text();
+                            console.log("id = " + id);
+
+                            $.ajax({
+                                type: "post",
+                                url: "../collect/checkIsCollected.do",
+                                data: {cid: id, uid: uid},
+                                success: function (data) {
+                                    if (!data.isCollected) {
+                                        $.ajax({
+                                            type: "post",
+                                            url: "../collect/collectConference.do",
+                                            data: {cid: id, uid: uid},
+                                            success: function (data) {
+                                                if (data.isSuccess) {
+                                                    $.ajax({
+                                                        type: "post",
+                                                        url: "../collect/queryCollectedNumber.do",
+                                                        data: {cid: cid},
+                                                        success: function (data) {
+                                                            var number = data.number;
+                                                            btn2.text("已收藏 (" + number + ")");
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        });
+                                    } else {
+                                        $.ajax({
+                                            type: "post",
+                                            url: "../collect/cancelCollectConference.do",
+                                            data: {cid: id, uid: uid},
+                                            success: function (data) {
+                                                if (data.isSuccess) {
+                                                    $.ajax({
+                                                        type: "post",
+                                                        url: "../collect/queryCollectedNumber.do",
+                                                        data: {cid: cid},
+                                                        success: function (data) {
+                                                            var number = data.number;
+                                                            btn2.text("收藏 (" + number + ")");
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        });
+
+                        btn2.appendTo(td6);
+
+                        td1.appendTo(row);
+                        td2.appendTo(row);
+                        td3.appendTo(row);
+                        td4.appendTo(row);
+                        td5.appendTo(row);
+                        td6.appendTo(row);
+                    });
+                }
+            }
+        });
+    }
+    window.onload = function () {
+
+        $.ajax({
+            type: "post",
+            url: "../user/queryUser.do",
+            success: function (data) {
+                if(data instanceof Array){
+                    var userSelect = $("#uid");
+                    data.forEach(function visit(table,index){
+                        var option = $("<option>" + data[index].username + "</option>")
+                                .attr("value", data[index].uid);
+                        option.appendTo(userSelect);
+
+                    });
+                }
+            }
+        });
+        initConferenceMessage(1, 7);
+    }
+</script>
+</body>
+</html>

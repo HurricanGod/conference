@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hurrican.dao.IUserDao">
+
+    <insert id="insertOneUser" useGeneratedKeys="true">
+        insert into
+        UserSetting(username, userpwd, userrole, email)
+        values(#{username},#{userpwd},#{userrole},#{email})
+        <selectKey keyProperty="uid" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+    </insert>
+
+
+    <select id="queryAllUser" resultType="User">
+        select uid,username
+        from UserSetting
+    </select>
+
+    <select id="queryUserByNameAndPassword" resultType="java.lang.Integer">
+        select count(*)
+        from UserSetting
+        where username = #{username} and userpwd = #{pwd}
+        <if test="role != null">
+            and userrole = #{role}
+        </if>
+    </select>
+</mapper>
