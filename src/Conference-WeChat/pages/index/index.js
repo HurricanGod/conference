@@ -3,6 +3,10 @@ var util = require('../../utils/util.js')
 var base64 = require("../example/images/base64");
 //获取应用实例
 var app = getApp()
+
+//请求数据的主域名
+var reqUrl = app.globalData.reqUrl
+
 Page({
   data: {
     motto: '学术会议与学术活动',
@@ -14,7 +18,8 @@ Page({
     showMore: false,
     isLower: false,
     isEnd: false,
-    conferences: []
+    conferences: [],
+    conferenceString: ""
   },
   onLoad: function (options) {
     //console.log(options.type)
@@ -80,23 +85,66 @@ Page({
   },
   onScroll : function() {},
 
+  // 首页加载会议
   loadConferences : function() {
     var that = this;
-    that.setData({
-      conferences: util.conferences()
-    })    
+    wx.request({
+      url: reqUrl + "conference/conference/latest.do?",
+      data: {
+        days: '7',
+        page: '1'
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        var resData = res.data;
+        // 由于请求回来的数据中含有 "&", "?", "=", 这样navigatorTo的url会解析错误，所以要把 & 换成 and, 把 ? 换成 questionMark，把 = 换成 equalMark
+        var resDataStr = JSON.stringify(resData).replace(/\&/g, "andMark").replace(/\?/g, "questionMark").replace(/\=/g, "equalMark");
+        //console.log(resDataStr)
+        that.setData({
+          //conferences: util.conferences()
+          conferences: resData,
+          conferenceString: resDataStr
+        })
+      }
+    });    
   },
 
+  // 加载更多
   currentPage: 1, // current page
   loadMoreConferences : function() {
     var that = this
-    var page = that.currentPage++
-    var moreConferences = util.conferences('',page)
-    that.setData({
-      isLower: false,
-      isEnd: moreConferences.length==0,
-      conferences: that.data.conferences.concat(moreConferences)
-    })    
-    console.dir(page)
+    var page = ++that.currentPage
+    //var moreConferences = util.conferences('',page)
+    wx.request({
+      url: reqUrl + "conference/conference/latest.do?",
+      data: {
+        days: '7',
+        page: page
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        var resData = res.data;
+        var addNewResData = that.data.conferences.concat(resData);
+        // 由于请求回来的数据中含有 "&", "?", "=", 这样navigatorTo的url会解析错误，所以要把 & 换成 and, 把 ? 换成 questionMark，把 = 换成 equalMark
+        var addNewResDataStr = JSON.stringify(addNewResData).replace(/\&/g, "andMark").replace(/\?/g, "questionMark").replace(/\=/g, "equalMark");
+        //console.log(addNewResDataStr)
+        that.setData({
+          isLower: false,
+          isEnd: res.data.length == 0,
+          conferences: addNewResData,
+          conferenceString: addNewResDataStr
+        }) 
+      }      
+    });
+    // that.setData({
+    //   isLower: false,
+    //   isEnd: moreConferences.length==0,
+    //   conferences: that.data.conferences.concat(moreConferences)
+    // })    
+    console.dir(page)  //当前页数
   }
 })

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+        <!--当返回行的所有列都是空时，MyBatis默认返回null-->
+        <setting name="jdbcTypeForNull" value="NULL"/>
+
+        <!--cacheEnabled - 使全局的映射器启用或禁用缓存-->
+        <setting name="cacheEnabled" value="true"/>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="flase"/>
+
+    </settings>
+
+    <typeAliases>
+        <typeAlias type="beans.UserInfo" alias="UserInfo"/>
+        <package name="beans"></package>
+        <package name="testbeans"/>
+    </typeAliases>
+
+    <!-- 配置运行环境-->
+    <environments default="mysql">
+        <environment id="mysql">
+            <!-- MyBatis 中有两种事务管理器类型，分别是：-->
+            <!--1. type = "JDBC" (依赖于数据源得到的连接来管理事务范围)-->
+            <!--2. type = "MANAGED" (不提交或回滚连接，让容器来管理事务的整个周期)-->
+            <transactionManager type="JDBC"/>
+
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/conference"/>
+                <property name="username" value="root"/>
+                <property name="password" value="qwer123456"/>
+                <!--poolMaximumActiveConnections – 正在使用连接的数量。默认值:10 -->
+                <!--poolMaximumIdleConnections – 任意时间存在的空闲连接数-->
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="userinfoMapper.xml"/>
+        <mapper resource="conferenceInfoMapper.xml"/>
+        <mapper resource="securityGuaranteeMapper.xml"/>
+        <mapper resource="usrImageMapper.xml"/>
+    </mappers>
+
+</configuration>

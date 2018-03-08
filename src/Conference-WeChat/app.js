@@ -28,6 +28,7 @@ App({
     // 上传用户数据
   },
   globalData:{
-    userInfo:null
+    userInfo:null,
+    reqUrl: 'http://localhost:8080/'
   }
 })
