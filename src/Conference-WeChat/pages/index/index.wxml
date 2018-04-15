@@ -30,7 +30,7 @@
                 <!-- 循环显示会议 -->
                 <navigator url="/pages/conference/conference?conferenceString={{conferenceString}}&confId={{conf.id}}" wx:for="{{conferences}}" wx:for-item="conf" wx:key="enName" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
                     <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <!-- <image class="weui-media-box__thumb" src="../example/images/tags/{{conf.icon}}" /> -->
+                         <image class="weui-media-box__thumb" src="../example/images/tags/education.png" /> 
                     </view>
                     <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                         <view class="weui-media-box__title">{{conf.cnName||conf.enName}}</view>

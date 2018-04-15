@@ -99,9 +99,10 @@ Page({
       },
       success: function (res) {
         var resData = res.data;
+        //console.log(resData);
         // 由于请求回来的数据中含有 "&", "?", "=", 这样navigatorTo的url会解析错误，所以要把 & 换成 and, 把 ? 换成 questionMark，把 = 换成 equalMark
         var resDataStr = JSON.stringify(resData).replace(/\&/g, "andMark").replace(/\?/g, "questionMark").replace(/\=/g, "equalMark");
-        //console.log(resDataStr)
+        // console.log(resDataStr)
         that.setData({
           //conferences: util.conferences()
           conferences: resData,
