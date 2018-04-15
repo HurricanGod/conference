@@ -2,6 +2,21 @@
 var util = require('../../utils/util.js')
 var base64 = require("../example/images/base64");
 var app = getApp()
+
+//请求数据的主域名
+var reqUrl = app.globalData.reqUrl
+
+function findTheConf(conferences, confId){
+  console.log("我被调用了")
+  console.log(confId);
+  for(var i=0; i<conferences.length; i++) {
+    var conf = conferences[i];
+    if (conf.id == confId){
+      return conf;
+    }
+  }
+}
+
 Page({
   data:{
     key: '',
@@ -17,10 +32,16 @@ Page({
     icon: base64.icon20
   },
   onLoad:function(options){
-    var key = options.key;
-    var conf = util.conferences(key);    
+    //var key = options.key;
+    // 页间传送只能传字符串，不能传对象，这里的conferences是个字符串
+    var conferenceString = options.conferenceString.replace(/andMark/g, "&").replace(/questionMark/g, "?").replace(/equalMark/g, "=");
+    console.log("传过来的参数" + conferenceString);
+    var conferences = JSON.parse(conferenceString);
+    //var conf = util.conferences(key);
+    var conf = findTheConf(conferences, options.confId);
+    console.log(conf);    
     this.setData({
-      key: key,
+      //key: key,
       likes: conf.likes,
       favourites: conf.favourites,
       bannerImage: '../example/images/banner.jpg',

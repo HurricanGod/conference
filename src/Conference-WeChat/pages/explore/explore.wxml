@@ -24,20 +24,28 @@
 
         <view class="weui-cells__title">精选</view>
         <view class="weui-cells weui-cells_after-title">
-            <navigator url="/pages/index/popular?tag=深度学习" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd">深度学习</view>
+            <navigator url="/pages/index/popular?tag={{popTag[0].tag}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__bd">{{popTag[0].tag}}</view>
                 <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
-                    <view style="display: inline-block;vertical-align:middle; font-size: 17px;">24</view>
+                    <view style="display: inline-block;vertical-align:middle; font-size: 17px;">{{popTag[0].count}}</view>
                     <view class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></view>
                 </view>
             </navigator>
-            <navigator url="/pages/index/popular?tag=中国计算机学会" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd">中国计算机学会</view>
+            <navigator url="/pages/index/popular?tag={{popTag[1].tag}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__bd">{{popTag[1].tag}}</view>
                 <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
-                    <view style="display: inline-block;vertical-align:middle; font-size: 17px;">9</view>
+                    <view style="display: inline-block;vertical-align:middle; font-size: 17px;">{{popTag[1].count}}</view>
                 </view>
             </navigator>
-            <navigator url="/pages/explore/tags" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+
+            <navigator url="/pages/index/popular?tag={{popTag[2].tag}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__bd">{{popTag[2].tag}}</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
+                    <view style="display: inline-block;vertical-align:middle; font-size: 17px;">{{popTag[2].count}}</view>
+                </view>
+            </navigator>            
+
+            <navigator url="/pages/explore/tags?popTagString={{popTagString}}"  class="weui-cell weui-cell_access" hover-class="weui-cell_active">
                 <view class="weui-cell__bd">其他热门关键词</view>
                 <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
                     <view style="display: inline-block;vertical-align:middle; font-size: 17px;">每日更新</view>
