@@ -7,7 +7,9 @@ Page({
     tags: []
   },
   onLoad:function(options){
-    var tags = util.tags()
+    //var tags = util.tags()
+    var tags = JSON.parse(options.popTagString);
+    console.log(tags);
     var max = 0, min = 10000
     for(var i=0;i<tags.length;i++){
       if (tags.index > max) {
