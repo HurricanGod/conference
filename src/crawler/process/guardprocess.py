@@ -7,7 +7,7 @@ from multiprocessing import Value
 
 import psutil
 
-from src.process.worker import Saver
+from crawler.process.worker import Saver
 
 
 class GuardWorkerProcess(Process):

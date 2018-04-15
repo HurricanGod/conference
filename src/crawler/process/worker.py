@@ -5,12 +5,12 @@ from multiprocessing import Queue
 
 from multiprocessing import Value
 
-from src.dao.conferenceDao import saveConferenceSet
-from src.spider.logmanage import loadLogger
-from src.util.fileoperate import writeToJson, writeToFile
-from src.util.mongodbhelper import MongoDBCRUD
-from src.util.mysqlhelper import Mysql
-from src.util.typeconverter import Converter
+from crawler.dao.conferenceDao import saveConferenceSet
+from crawler.spider.logmanage import loadLogger
+from crawler.util.fileoperate import writeToJson, writeToFile
+from crawler.util.mongodbhelper import MongoDBCRUD
+from crawler.util.mysqlhelper import Mysql
+from crawler.util.typeconverter import Converter
 workerlogger = loadLogger('file/log/customlog.ini')
 
 

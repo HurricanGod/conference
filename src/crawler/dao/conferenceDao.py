@@ -1,6 +1,6 @@
-from src.util.formathelper import Conference
-from src.util.mongodbhelper import MongoDBCRUD
-from src.util.mysqlhelper import Mysql
+from crawler.util.formathelper import Conference
+from crawler.util.mongodbhelper import MongoDBCRUD
+from crawler.util.mysqlhelper import Mysql
 
 
 def queryAllConferenceFromMongo() -> set:

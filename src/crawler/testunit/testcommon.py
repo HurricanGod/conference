@@ -1,9 +1,9 @@
 import unittest
 
-from src.model.testmodel import Person
-from src.service.taghanldler import NPExtractor
-from src.util.formathelper import Conference
-from src.util.mysqlhelper import Mysql
+from crawler.model.testmodel import Person
+from crawler.service.taghanldler import NPExtractor
+from crawler.util.formathelper import Conference
+from crawler.util.mysqlhelper import Mysql
 
 
 class CommonTest(unittest.TestCase):

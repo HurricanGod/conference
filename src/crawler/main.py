@@ -3,18 +3,18 @@ import datetime
 
 from multiprocessing import Value
 
-from src.process.guardprocess import GuardWorkerProcess
-from src.process.worker import Saver
-from src.spider.logmanage import loadLogger
-from src.util.fileoperate import *
-from src.spider.analysesources import HtmlCodeHandler
-from src.spider.subpagehandle import readKeywordCongig, parseSubPage
+from crawler.process.guardprocess import GuardWorkerProcess
+from crawler.process.worker import Saver
+from crawler.spider.logmanage import loadLogger
+from crawler.util.fileoperate import *
+from crawler.spider.analysesources import HtmlCodeHandler
+from crawler.spider.subpagehandle import readKeywordCongig, parseSubPage
 from multiprocessing import Queue
 from multiprocessing import Pool
 import sys
 import time
 
-from src.util.mysqlhelper import Mysql
+from crawler.util.mysqlhelper import Mysql
 
 
 def put(dic: dict):

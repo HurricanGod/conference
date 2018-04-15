@@ -1,21 +1,24 @@
-2017-10-25 09:56:22 main.py INFO  主进程id为：	15768
-2017-10-25 10:02:30 main.py INFO  所有子进程执行完
-2017-10-25 10:02:30 main.py INFO  进程-process0 本次爬取250个网址
+2018-04-15 22:19:07 main.py INFO  主进程id为：	1380
+2018-04-15 22:20:11 main.py INFO  所有子进程执行完
+2018-04-15 22:20:11 main.py INFO  进程-process0 本次爬取250个网址
 
-2017-10-25 10:02:30 main.py INFO  进程-process0 未解析的URL的数量为：	0
-2017-10-25 10:02:30 main.py INFO  进程-process3 本次爬取18个网址
+2018-04-15 22:20:11 main.py INFO  进程-process0 未解析的URL的数量为：	12
+2018-04-15 22:20:11 main.py INFO  
+异常信息：'Response' object has no attribute 'split'
+ 
+2018-04-15 22:20:11 main.py INFO  进程-process1 本次爬取0个网址
 
-2017-10-25 10:02:30 main.py INFO  进程-process3 未解析的URL的数量为：	0
-2017-10-25 10:02:30 main.py INFO  进程-process4 本次爬取344个网址
+2018-04-15 22:20:11 main.py INFO  进程-process1 未解析的URL的数量为：	0
+2018-04-15 22:20:11 main.py INFO  进程-process4 本次爬取299个网址
 
-2017-10-25 10:02:30 main.py INFO  进程-process4 未解析的URL的数量为：	0
-2017-10-25 10:02:30 main.py INFO  进程-process2 本次爬取319个网址
+2018-04-15 22:20:11 main.py INFO  进程-process4 未解析的URL的数量为：	94
+2018-04-15 22:20:11 main.py INFO  进程-process3 本次爬取16个网址
 
-2017-10-25 10:02:30 main.py INFO  进程-process2 未解析的URL的数量为：	0
-2017-10-25 10:02:30 main.py INFO  进程-process1 本次爬取310个网址
+2018-04-15 22:20:11 main.py INFO  进程-process3 未解析的URL的数量为：	0
+2018-04-15 22:20:11 main.py INFO  进程-process2 本次爬取178个网址
 
-2017-10-25 10:02:30 main.py INFO  进程-process1 未解析的URL的数量为：	20
-2017-10-25 10:02:33 main.py INFO  守护saver的进程： pid = 16908 is start
-2017-10-25 10:06:03 main.py INFO  		抓取数据的进程任务结束
+2018-04-15 22:20:11 main.py INFO  进程-process2 未解析的URL的数量为：	0
+2018-04-15 22:20:13 main.py INFO  守护saver的进程： pid = 16048 is start
+2018-04-15 22:25:12 main.py INFO  		抓取数据的进程任务结束
 
-2017-10-25 10:06:03 main.py INFO  程序总共运行时间为 0:09:40.885622
+2018-04-15 22:25:14 main.py INFO  程序总共运行时间为 0:06:07.928144

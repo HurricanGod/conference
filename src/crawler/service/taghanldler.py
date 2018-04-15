@@ -1,8 +1,8 @@
 import nltk
 import jieba.analyse
 
-from src.service import bigram_tagger, cfg
-from src.util.commonutils import stringNotContainsChinese
+from crawler.service import bigram_tagger, cfg
+from crawler.util.commonutils import stringNotContainsChinese
 
 
 class NPExtractor(object):

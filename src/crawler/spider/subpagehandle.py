@@ -8,11 +8,11 @@ from random import randint
 import jieba.analyse
 from pyquery import PyQuery as Pq
 
-from src.service.taghanldler import extractTagFiles
-from src.spider.analysesources import getHtmlCore
-from src.util.fileoperate import *
-from src.util.urllibhelper import SpiderApi
-from src.util.urllibhelper import Urldeal
+from crawler.service.taghanldler import extractTagFiles
+from crawler.spider.analysesources import getHtmlCore
+from crawler.util.fileoperate import *
+from crawler.util.urllibhelper import SpiderApi
+from crawler.util.urllibhelper import Urldeal
 
 
 def parseSubPage(subpagecfg: dict, keydic: dict, domainname: str, processname,
