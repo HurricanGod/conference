@@ -50,7 +50,7 @@ public class JavaEmailSender {
         msg.setFrom(new InternetAddress("1257164130@qq.com"));
 
         Transport transport = session.getTransport();
-        transport.connect("smtp.qq.com", "1257164130@qq.com", "mztjruqupgleibeb");
+        transport.connect("smtp.qq.com", "1257164130@qq.com", "eekahtymjorkhged");
         //发送消息
         transport.sendMessage(msg, new Address[]{new InternetAddress(toEmailAddress)});
         transport.close();

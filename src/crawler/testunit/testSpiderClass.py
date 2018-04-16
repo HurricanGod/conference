@@ -1,8 +1,8 @@
 import unittest
 
-from src.spider.analysesources import HtmlCodeHandler
-from src.util.fileoperate import readConfig
-from src.util.mysqlhelper import Mysql
+from crawler.spider.analysesources import HtmlCodeHandler
+from crawler.util.fileoperate import readConfig
+from crawler.util.mysqlhelper import Mysql
 
 
 class TestSpider(unittest.TestCase):

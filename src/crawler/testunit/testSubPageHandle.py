@@ -4,8 +4,8 @@ import unittest
 import jieba.analyse
 import jieba.posseg
 
-from src.spider.subpagehandle import parseSubPage, readKeywordCongig
-from src.util.fileoperate import readConfig, readDictionary, readSectionsInConfig
+from crawler.spider.subpagehandle import parseSubPage, readKeywordCongig
+from crawler.util.fileoperate import readConfig, readDictionary, readSectionsInConfig
 from multiprocessing import Queue
 
 

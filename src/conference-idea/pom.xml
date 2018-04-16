@@ -8,6 +8,10 @@
   <name>conference Maven Webapp</name>
   <url>http://maven.apache.org</url>
 
+  <properties>
+    <!-- 设置默认编码 -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
   <dependencies>
 
     <dependency>
@@ -410,6 +414,7 @@
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
+          <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
     </plugins>

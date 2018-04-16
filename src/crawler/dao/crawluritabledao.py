@@ -1,6 +1,6 @@
 import traceback
 
-from src.util.mysqlhelper import Mysql
+from crawler.util.mysqlhelper import Mysql
 
 
 class CrawledURLDao(object):

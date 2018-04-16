@@ -1,7 +1,7 @@
 import unittest
 
-from src.spider.analysesources import initConfigForm, pageParsing, readDictionary
-from src.util.fileoperate import readConfig
+from crawler.spider.analysesources import initConfigForm, pageParsing
+from crawler.util.fileoperate import readConfig, readDictionary
 
 
 class TestMethodInFileOPerateModule(unittest.TestCase):

@@ -3,10 +3,10 @@ from bs4 import BeautifulSoup
 
 from pyquery import PyQuery as Pq
 
-from src.dao.crawluritabledao import CrawledURLDao
-from src.util.fileoperate import *
-from src.util.mysqlhelper import Mysql
-from src.util.urllibhelper import SpiderApi
+from crawler.dao.crawluritabledao import CrawledURLDao
+from crawler.util.fileoperate import *
+from crawler.util.mysqlhelper import Mysql
+from crawler.util.urllibhelper import SpiderApi
 from multiprocessing import Process
 from multiprocessing import Queue
 
