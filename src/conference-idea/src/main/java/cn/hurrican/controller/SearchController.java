@@ -13,7 +13,7 @@ import java.util.List;
  *
  */
 @Controller
-@RequestMapping(value = "/advanced")
+@RequestMapping(value = "/conference/advanced")
 public class SearchController {
 
 

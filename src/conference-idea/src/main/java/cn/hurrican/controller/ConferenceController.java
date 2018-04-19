@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping(value = "/conference")
+@RequestMapping(value = "/conference/conference/")
 public class ConferenceController {
 
     @Autowired

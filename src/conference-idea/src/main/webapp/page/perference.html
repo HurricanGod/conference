@@ -110,7 +110,7 @@
     function initConferenceMessage(page,offset) {
         $.ajax({
             type: "post",
-            url: "../conference/queryLatestCount.do",
+            url: "../conference/conference/queryLatestCount.do",
             data: {offset: offset},
             success : function (data) {
                 var len = data.number / 8;
@@ -127,7 +127,7 @@
 
         $.ajax({
             type: "post",
-            url: "../conference/latest.do",
+            url: "../conference/conference/latest.do",
             data: {days: offset , page: page},
             success: function (data) {
 
@@ -160,7 +160,7 @@
 
                         $.ajax({
                             type: "post",
-                            url: "../perference/queryCount.do",
+                            url: "../conference/perference/queryCount.do",
                             data: {cid: cid},
                             success: function (data) {
                                 var number = data.number;
@@ -185,19 +185,19 @@
                              */
                             $.ajax({
                                 type: "post",
-                                url: "../perference/checkIsAdmired.do",
+                                url: "../conference/perference/checkIsAdmired.do",
                                 data: {conferenceid: id, uid: uid},
                                 success: function (data) {
                                     if (!data.isSuccess) {
                                         $.ajax({
                                             type: "post",
-                                            url: "../perference/admire.do",
+                                            url: "../conference/perference/admire.do",
                                             data: {conferenceid: id, uid: uid},
                                             success: function (data) {
                                                 if (data.isSuccess) {
                                                     $.ajax({
                                                         type: "post",
-                                                        url: "../perference/queryCount.do",
+                                                        url: "../conference/perference/queryCount.do",
                                                         data: {cid: cid},
                                                         success: function (data) {
                                                             var number = data.number;
@@ -210,13 +210,13 @@
                                     } else {
                                         $.ajax({
                                             type: "post",
-                                            url: "../perference/unPraise.do",
+                                            url: "../conference/perference/unPraise.do",
                                             data: {conferenceid: id, uid: uid},
                                             success: function (data) {
                                                 if (data.isSuccess) {
                                                     $.ajax({
                                                         type: "post",
-                                                        url: "../perference/queryCount.do",
+                                                        url: "../conference/perference/queryCount.do",
                                                         data: {cid: cid},
                                                         success: function (data) {
                                                             var number = data.number;
@@ -238,7 +238,7 @@
 
                         $.ajax({
                             type: "post",
-                            url: "../collect/queryCollectedNumber.do",
+                            url: "../conference/collect/queryCollectedNumber.do",
                             data: {cid: cid},
                             success: function (data) {
                                 var number = data.number;
@@ -257,19 +257,19 @@
 
                             $.ajax({
                                 type: "post",
-                                url: "../collect/checkIsCollected.do",
+                                url: "../conference/collect/checkIsCollected.do",
                                 data: {cid: id, uid: uid},
                                 success: function (data) {
                                     if (!data.isCollected) {
                                         $.ajax({
                                             type: "post",
-                                            url: "../collect/collectConference.do",
+                                            url: "../conference/collect/collectConference.do",
                                             data: {cid: id, uid: uid},
                                             success: function (data) {
                                                 if (data.isSuccess) {
                                                     $.ajax({
                                                         type: "post",
-                                                        url: "../collect/queryCollectedNumber.do",
+                                                        url: "../conference/collect/queryCollectedNumber.do",
                                                         data: {cid: cid},
                                                         success: function (data) {
                                                             var number = data.number;
@@ -282,13 +282,13 @@
                                     } else {
                                         $.ajax({
                                             type: "post",
-                                            url: "../collect/cancelCollectConference.do",
+                                            url: "../conference/collect/cancelCollectConference.do",
                                             data: {cid: id, uid: uid},
                                             success: function (data) {
                                                 if (data.isSuccess) {
                                                     $.ajax({
                                                         type: "post",
-                                                        url: "../collect/queryCollectedNumber.do",
+                                                        url: "../conference/collect/queryCollectedNumber.do",
                                                         data: {cid: cid},
                                                         success: function (data) {
                                                             var number = data.number;
@@ -320,7 +320,7 @@
 
         $.ajax({
             type: "post",
-            url: "../user/queryUser.do",
+            url: "../conference/user/queryUser.do",
             success: function (data) {
                 if(data instanceof Array){
                     var userSelect = $("#uid");

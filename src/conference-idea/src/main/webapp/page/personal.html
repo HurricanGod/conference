@@ -174,7 +174,7 @@
 
             $.ajax({
                 type: "post",
-                url: "../collect/queryMyCollectionCount.do",
+                url: "../conference/collect/queryMyCollectionCount.do",
                 data:{uid:uid},
                 success: function (data) {
                     var len = data.number;
@@ -206,7 +206,7 @@
             var offset = $("#offset").find("option:selected").text();
             var startTime = $("#startDate").val();
 
-            var url = "../collect/queryMyCollections.do";
+            var url = "../conference/collect/queryMyCollections.do";
             $.ajax({
                 type: "post",
                 url: url,
@@ -268,7 +268,7 @@
 
         $.ajax({
             type: "post",
-            url: "../user/queryUser.do",
+            url: "../conference/user/queryUser.do",
             success: function (data) {
                 if(data instanceof Array){
                     var userSelect = $("#uid");

@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 
 @Controller
-@RequestMapping(value = "/perference")
+@RequestMapping(value = "/conference/perference")
 public class PraiseConferenceController {
 
     @Resource(name = "givenPraiseService")

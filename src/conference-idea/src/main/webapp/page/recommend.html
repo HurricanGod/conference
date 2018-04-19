@@ -67,7 +67,7 @@
 
         $.ajax({
             type: "get",
-            url: "../conference/getTag.do",
+            url: "../conference/conference/getTag.do",
 //            data:{top:40},
             success: function (data) {
                 var tags = [];
@@ -116,7 +116,7 @@
 
         $.ajax({
             type: "post",
-            url: "../conference/getHotConference.do",
+            url: "../conference/conference/getHotConference.do",
 //            contentType: "application/json;charset=UTF-8",
             data: {tagsString:text, days:2, page: page},
             success: function (data) {

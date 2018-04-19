@@ -352,9 +352,7 @@ class HtmlCodeHandler(Process):
         rows = rowsoup.select(rowselector)  # 得到1个包含表格每行的list集合
         keyinfo = []
         for row in rows:
-            index = 0
-            mapper = {}
-            xxx = []
+            index = 0;mapper = {};xxx = []
             for cell in row.children:
                 cellstr = str(cell)
                 if cellstr != '\n' and len(cellstr) > 8:

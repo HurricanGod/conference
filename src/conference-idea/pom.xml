@@ -42,7 +42,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
-      <version>4.1.3.RELEASE</version>
+      <version>4.3.5.RELEASE</version>
       <scope>test</scope>
     </dependency>
     <!-- SpringMvc 单元测试 (end)-->
@@ -144,13 +144,13 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
-      <version>4.2.1.RELEASE</version>
+      <version>4.3.5.RELEASE</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
-      <version>4.2.1.RELEASE</version>
+      <version>4.3.5.RELEASE</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
@@ -158,7 +158,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context-support</artifactId>
-      <version>4.2.1.RELEASE</version>
+      <version>4.3.5.RELEASE</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
@@ -166,14 +166,14 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
-      <version>4.2.1.RELEASE</version>
+      <version>4.3.5.RELEASE</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
-      <version>4.2.1.RELEASE</version>
+      <version>4.3.5.RELEASE</version>
     </dependency>
 
 
@@ -182,14 +182,14 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-beans</artifactId>
-      <version>4.2.1.RELEASE</version>
+      <version>4.3.5.RELEASE</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.springframework/spring-aop -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-aop</artifactId>
-      <version>4.2.1.Release</version>
+      <version>4.3.5.RELEASE</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/aopalliance/aopalliance -->
@@ -203,7 +203,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-aspects</artifactId>
-      <version>4.2.1.RELEASE</version>
+      <version>4.3.5.RELEASE</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
@@ -217,7 +217,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-expression</artifactId>
-      <version>4.2.1.RELEASE</version>
+      <version>4.3.5.RELEASE</version>
     </dependency>
 
 
@@ -243,7 +243,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-tx</artifactId>
-      <version>4.2.1.RELEASE</version>
+      <version>4.3.5.RELEASE</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/com.mchange/c3p0 -->
@@ -258,14 +258,14 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
-      <version>4.2.1.RELEASE</version>
+      <version>4.3.5.RELEASE</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>
-      <version>4.2.1.RELEASE</version>
+      <version>4.3.5.RELEASE</version>
     </dependency>
 
 
@@ -389,8 +389,10 @@
     <dependency>
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-mongodb</artifactId>
-      <version>1.10.6.RELEASE</version>
+      <version>1.9.6.RELEASE</version>
     </dependency>
+
+
     <!-- MongoDb 依赖的jar包 end-->
 
 

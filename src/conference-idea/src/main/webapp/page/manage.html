@@ -169,7 +169,7 @@
 
         $.ajax({
             type :"post",
-            url : "../feedback/queryErrorInfoCount.do",
+            url : "../conference/feedback/queryErrorInfoCount.do",
             success: addPageOption,
             complete: function (XMLHttpRequest, textStatus) {
                 console.log("textStatus = " + textStatus);
@@ -178,7 +178,7 @@
 
         $.ajax({
             type :"post",
-            url : "../feedback/querySuggestCount.do",
+            url : "../conference/feedback/querySuggestCount.do",
             success: function (data) {
                 var count = data.number;
                 console.log("count = " + count);
@@ -284,7 +284,7 @@
                 }
             }
 
-            var url = "../feedback/queryErrorInfo.do";
+            var url = "../conference/feedback/queryErrorInfo.do";
             sendAjaxRequest(url,params, callback);
         })
 
@@ -295,7 +295,7 @@
 
             $.ajax({
                 type :"post",
-                url : "../feedback/querySuggestion.do",
+                url : "../conference/feedback/querySuggestion.do",
                 data : {page : page, number : perPage},
                 success : function (data) {
                     if (data instanceof Array){
