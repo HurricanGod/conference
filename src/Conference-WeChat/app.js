@@ -29,6 +29,6 @@ App({
   },
   globalData:{
     userInfo:null,
-    reqUrl: 'http://localhost:8080/'
+    reqUrl: 'https://conference.infoaas.com/conference/'
   }
 })
