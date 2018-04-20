@@ -178,7 +178,7 @@
             var errorConference = new Object();
             errorConference.conferenceid = cid;
             errorConference.errordetail = description;
-            var url = "../feedback/submitError.do";
+            var url = "../conference/feedback/submitError.do";
 
             function callback(data){
                 successCallBack(data);
@@ -205,7 +205,7 @@
         var top = 8;
         $.ajax({
             type: "post",
-            url: "../push/queryPopTag.do",
+            url: "../conference/push/queryPopTag.do",
             data:{startTime:startTime, offset:offset, top:top},
             success: function (data) {
                 var len = data.length;
@@ -243,7 +243,7 @@
 
         $.ajax({
             type: "get",
-            url: "../push/queryConferenceByTag.do",
+            url: "../conference/push/queryConferenceByTag.do",
             data: {tag:tag, startTime:startTime,
                 offsetTime:offset, page:page,
                 perPageNumber:perPage},
@@ -314,7 +314,7 @@
                 + tag + " 的会议共有 ";
         $.ajax({
             type: "post",
-            url: "../push/queryNumOfConferenceByTag.do",
+            url: "../conference/push/queryNumOfConferenceByTag.do",
             data: {tag:tag, startTime:startTime, offsetTime:offset},
 
             success: function(data){

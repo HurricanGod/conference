@@ -20,7 +20,7 @@ import java.util.Random;
  */
 
 @Controller
-@RequestMapping(value = "/publish")
+@RequestMapping(value = "/conference/publish")
 public class ConferencePublishController {
 
     @Resource(name = "publishService")

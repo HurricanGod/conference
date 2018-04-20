@@ -16,7 +16,7 @@ import java.io.Serializable;
  * Created by NewObject on 2017/10/30.
  */
 @Controller
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/conference/user")
 public class UserController {
 
     @Resource(name = "userService")

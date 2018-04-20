@@ -83,7 +83,11 @@ class Saver(Process):
         print("saver process exit!")
 
     def savecore(self, count, currentset):
-        #  对抓取的数据中去除与数据库重复部分
+        """
+        对抓取的数据中去除与数据库重复部分
+        :param count: 数据库中的总记录条数
+        :param currentset: 进程解析后得到的最终目标会议对象集合
+        """
         skip = 0  # skip表示每次跳过的数据条数
         crawlset = currentset
         while skip <= count:

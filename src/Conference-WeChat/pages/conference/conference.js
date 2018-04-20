@@ -118,7 +118,7 @@ Page({
       this.setData({
         isFavour : 0,
         iconFavour: 'star64.png',
-        favourites: favourites-1
+        favourites: isNaN(favourites) || (typeof (favourites) == "undefined")?0:favourites-1
       })
     } else { 
       // 保存收藏
@@ -126,7 +126,7 @@ Page({
       this.setData({
         isFavour : 1,
         iconFavour: 'star64_on.png',
-        favourites: favourites+1
+        favourites: isNaN(favourites) || (typeof (favourites) == "undefined") ? 1 :favourites+1
       })
     }
   },
@@ -141,7 +141,7 @@ Page({
       this.setData({
         isLike : 0,
         iconLike: 'like64.png',
-        likes: likes-1
+        likes: isNaN(likes)?0:likes-1
       })
     } else { 
       // 保存收藏
@@ -149,7 +149,7 @@ Page({
       this.setData({
         isLike : 1,
         iconLike: 'like64_on.png',
-        likes: likes+1
+        likes: isNaN(likes)? 1 :likes+1
       })
     }
   }
