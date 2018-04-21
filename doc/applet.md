@@ -30,7 +30,7 @@
 
 <a name="ResMessage">`ResMessage`对象</a>
 
-<img align="right" src=""/>
+<img align="right" src="https://github.com/HurricanGod/conference/blob/master/doc/img/ResMessage.png"/>
 
 + `log` —— 通常用于定位问题的日志信息
 
