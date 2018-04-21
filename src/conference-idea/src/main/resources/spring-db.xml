@@ -24,7 +24,7 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
     <!--</bean>-->
 
     <!-- c3p0数据源(properties文件配置)-->
-    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>
     <bean id="c3p0Datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${jdbc.driver}"/>
         <property name="jdbcUrl" value="${jdbc.url}"/>
