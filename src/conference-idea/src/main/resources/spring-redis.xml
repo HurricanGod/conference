@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--<bean id="propertyConfigurer"-->
+    <!--class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">-->
+    <!--&lt;!&ndash;<property name="nullValue" value="@null" />&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="localOverride" value="true" />&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="ignoreResourceNotFound" value="true" />&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash; 指定配置文件优先级online >> local >> test >> 默认properties &ndash;&gt;&ndash;&gt;-->
+    <!--<property name="locations">-->
+    <!--<list>-->
+    <!--<value>classpath*:*.properties</value>-->
+    <!--</list>-->
+    <!--</property>-->
+    <!--<property name="order" value="0" />-->
+    <!--<property name="fileEncoding" value="UTF-8"/>-->
+    <!--</bean>-->
+
+    <!-- 开启导入properties文件 -->
+    <context:property-placeholder location="classpath:redis.properties" ignore-unresolvable="true"/>
+    <bean id="coreRedisPoolConfig" class="org.apache.commons.pool2.impl.GenericObjectPoolConfig">
+        <property name="maxTotal" value="${redis.maxActive}"/>
+        <property name="maxIdle" value="${redis.maxIdle}"/>
+        <property name="minIdle" value="${redis.minIdle}"/>
+        <!-- 默认需要test on borrow -->
+        <property name="testOnBorrow" value="${redis.testOnBorrow:true}"/>
+        <property name="timeBetweenEvictionRunsMillis"
+                  value="${redis.timeBetweenEvictionRunsMillis}"/>
+        <property name="numTestsPerEvictionRun" value="${redis.numTestsPerEvictionRun}"/>
+    </bean>
+
+    <!-- redis 配置 -->
+    <bean id="coreJedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg name="host" value="${redis.host}"/>
+        <constructor-arg name="port" value="${redis.port}"/>
+        <constructor-arg name="password" value="${redis.auth}"/>
+        <constructor-arg name="poolConfig" ref="coreRedisPoolConfig"/>
+        <constructor-arg name="database" value="${redis.default.db}"/>
+        <constructor-arg name="timeout" value="${redis.timeout}"/>
+    </bean>
+
+    <bean id="redisExecutor2" class="cn.hurrican.redis.JedisExecutor" primary="true">
+        <constructor-arg ref="coreJedisPool"/>
+    </bean>
+
+</beans>

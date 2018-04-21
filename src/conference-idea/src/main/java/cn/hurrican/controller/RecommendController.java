@@ -92,6 +92,7 @@ public class RecommendController {
         Integer top = topParam != null ? Integer.valueOf(topParam) > 10 ? 10 : Integer.valueOf(topParam): 5;
         List<String> tags = new ArrayList<>();
         List<ConferenceTag> tagList = (List<ConferenceTag>)servletContext.getAttribute("tags");
+        tagList = tagList != null ? tagList : new ArrayList<>();
         List<String> popTagList = service.queryLatestMostPopularOfTagBePraisedService(startTime, offset, top);
         popTagList.stream().limit(3).forEach(tags::add);
         tagList.stream().limit(top-3).forEach(cTag -> tags.add(cTag.getTag()));

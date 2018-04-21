@@ -1,8 +1,10 @@
 package cn.hurrican.controller;
 
 import cn.hurrican.beans.PublishMessage;
+import cn.hurrican.cache.CommonConfigCache;
 import cn.hurrican.service.ConferencePublishService;
 import cn.hurrican.service.JavaEmailSender;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,9 @@ public class ConferencePublishController {
 
     @Resource(name = "publishService")
     private ConferencePublishService service;
+
+    @Autowired
+    private CommonConfigCache configCache;
 
 
     /**
@@ -76,7 +81,8 @@ public class ConferencePublishController {
         emailContent.append("请勿回复此邮件，验证码为：").append(verificationCode);
         emailContent.append(",验证码3分钟内有效，如不是本人操作请检查邮箱有没有被盗！");
 
-        JavaEmailSender.sendEmail(email, "邮箱验证", emailContent.toString());
+        String pwd = configCache.getEmailServerToken();
+        JavaEmailSender.sendEmail(email, "邮箱验证", emailContent.toString(), pwd);
         session.setAttribute("code", verificationCode.toString());
         session.setMaxInactiveInterval(60 * 3);
     }

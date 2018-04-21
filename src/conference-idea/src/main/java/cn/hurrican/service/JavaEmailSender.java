@@ -1,5 +1,6 @@
 package cn.hurrican.service;
 
+import cn.hurrican.utils.DateTimeUtils;
 import com.sun.mail.util.MailSSLSocketFactory;
 
 import javax.mail.Address;
@@ -8,6 +9,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.security.GeneralSecurityException;
 import java.util.Date;
 import java.util.Properties;
 
@@ -16,7 +18,31 @@ import java.util.Properties;
  */
 public class JavaEmailSender {
 
-    public static void sendEmail(String toEmailAddress,String emailTitle,String emailContent)throws Exception{
+
+    public static void sendEmail(String toEmailAddress,String emailTitle,
+                                 String emailContent, String password)throws Exception{
+        Properties props = buildEmailProperties();
+        //创建会话
+        Session session = Session.getInstance(props);
+
+        //发送的消息，基于观察者模式进行设计的
+        Message msg = new MimeMessage(session);
+        msg.setSubject(emailTitle);
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("\n"+emailContent);
+        builder.append("\n时间 " + DateTimeUtils.format(new Date()));
+        msg.setText(builder.toString());
+        msg.setFrom(new InternetAddress("1257164130@qq.com"));
+
+        Transport transport = session.getTransport();
+        transport.connect("smtp.qq.com", "1257164130@qq.com", password);
+        //发送消息
+        transport.sendMessage(msg, new Address[]{new InternetAddress(toEmailAddress)});
+        transport.close();
+    }
+
+    private static Properties buildEmailProperties() throws GeneralSecurityException {
         Properties props = new Properties();
 
         // 开启debug调试
@@ -35,24 +61,6 @@ public class JavaEmailSender {
         sf.setTrustAllHosts(true);
         props.put("mail.smtp.ssl.enable", "true");
         props.put("mail.smtp.ssl.socketFactory", sf);
-
-        //创建会话
-        Session session = Session.getInstance(props);
-
-        //发送的消息，基于观察者模式进行设计的
-        Message msg = new MimeMessage(session);
-        msg.setSubject(emailTitle);
-
-        StringBuilder builder = new StringBuilder();
-        builder.append("\n"+emailContent);
-        builder.append("\n时间 " + new Date());
-        msg.setText(builder.toString());
-        msg.setFrom(new InternetAddress("1257164130@qq.com"));
-
-        Transport transport = session.getTransport();
-        transport.connect("smtp.qq.com", "1257164130@qq.com", "mztjruqupgleibeb");
-        //发送消息
-        transport.sendMessage(msg, new Address[]{new InternetAddress(toEmailAddress)});
-        transport.close();
+        return props;
     }
 }
