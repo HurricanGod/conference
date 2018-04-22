@@ -698,6 +698,7 @@ public class ConferenceMsg {
 + `email`  (**必选**)：字符串型，发布者联系邮箱
 + `organization`(**可选**)：字符串型，发布机构
 + `description`(**可选**)：字符串型，其它描述信息
++ `verificationCode（必选）` ：邮箱验证码
 
 
 

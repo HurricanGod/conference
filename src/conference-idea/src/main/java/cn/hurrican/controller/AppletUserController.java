@@ -36,8 +36,10 @@ public class AppletUserController {
 
     @RequestMapping(value = "/weixinLogin.do", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ResMessage weixinLogin(String code, String nickname, String headimg, HttpServletRequest request){
+    public ResMessage weixinLogin(String code, HttpServletRequest request){
         ResMessage resMessage = ResMessage.creator();
+        String nickname = request.getParameter("nickname");
+        String headimg = request.getParameter("headimg");
         List<String> appToken = tokenService.getAppToken();
 
         Map<String, String> params  = new HashMap<>();

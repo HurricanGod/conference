@@ -10,37 +10,37 @@ public class ResMessage {
     private static ResMessage response = new ResMessage();
 
     public static ResMessage creator() {
-        return response;
+        return new ResMessage();
     }
 
     public ResMessage retCodeEqual(Integer retCode) {
-        response.retCode = retCode;
-        return response;
+        this.retCode = retCode;
+        return this;
     }
 
     public ResMessage logIs(String log) {
-        response.log = log;
-        return response;
+        this.log = log;
+        return this;
     }
 
     public ResMessage msg(String msg) {
-        response.message = msg;
-        return response;
+        this.message = msg;
+        return this;
     }
 
     public ResMessage model(Map<String, Object> model) {
-        response.model = model;
-        return response;
+        this.model = model;
+        return this;
     }
 
     public ResMessage put(String key, Object value) {
-        response.model.put(key, value);
-        return response;
+        this.model.put(key, value);
+        return this;
     }
 
     public ResMessage putAll(Map<String, Object> model) {
-        response.model.putAll(model);
-        return response;
+        this.model.putAll(model);
+        return this;
     }
 
     /**
