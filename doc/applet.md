@@ -9,6 +9,9 @@
 
 + <a href="#setAppid">设置小程序appid和appsecret</a>
 
+
++ <a href="#emailCheck">获取邮箱校验验证码</a>
+
 -----
 
 ### <a name="save">保存小程序用户openid</a>
@@ -44,7 +47,6 @@
 + `model` —— 用于存放各种不同类型数据的集合
 
 
-
 ------
 
 ### <a name="setAppid">设置小程序appid和appsecret</a>
@@ -71,4 +73,25 @@
 
 
 ------
+
+<a name="emailCheck">获取邮箱校验验证码</a>
+
+***Url*** ：`/conference/publish/checkEmail.do`
+
+
+
+
+
+**请求参数** ：
+
+| 必要参数 |  参数名  |   类型   |  描述  |
+| :--: | :---: | :----: | :--: |
+|  是   | email | String | 邮箱地址 |
+|      |       |        |      |
+
+**说明** ：
+
+**目前使用的是QQ邮箱发送验证码，需要定期生成授权码，若没有收到邮件可能是授权码过期了！**
+
+-----
 

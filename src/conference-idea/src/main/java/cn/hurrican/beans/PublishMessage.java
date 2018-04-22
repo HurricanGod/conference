@@ -10,6 +10,7 @@ public class PublishMessage {
     private String email;
     private Integer iscrawled;
     private String organization;
+    /** 邮箱验证码 **/
     private String verificationCode;
 
 
