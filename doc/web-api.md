@@ -553,7 +553,7 @@ public class ConferenceMsg {
 
 **请求参数**：
 
-- `conferenceid` (**必选**) ：整型，会议id
+- `cid` (**必选**) ：整型，会议id
 
 
 
