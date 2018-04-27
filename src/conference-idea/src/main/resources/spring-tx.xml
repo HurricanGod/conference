@@ -17,7 +17,7 @@
     <!-- 注册事务管理器 -->
     <bean id="transactionManager"
           class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="c3p0Datasource"/>
+        <property name="dataSource" ref="innerDataSource"/>
     </bean>
 
 

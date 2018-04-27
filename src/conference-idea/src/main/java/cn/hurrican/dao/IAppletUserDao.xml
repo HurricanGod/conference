@@ -16,8 +16,8 @@
 
     <update id="updateAppletUserUidByOpenid">
         update AppletUser
-        set uid = #{uid}
-        where openid = #{openid}
+        set uid = #{1}
+        where openid = #{0}
     </update>
 
 </mapper>

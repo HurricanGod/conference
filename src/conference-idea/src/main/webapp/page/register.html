@@ -50,7 +50,7 @@
 
         $.ajax({
             type: "post",
-            url: "../user/init.do",
+            url: "../conference/user/init.do",
             data:{username:username, userpwd:password, email:email},
             success: function (data) {
                 alert(data.id);
