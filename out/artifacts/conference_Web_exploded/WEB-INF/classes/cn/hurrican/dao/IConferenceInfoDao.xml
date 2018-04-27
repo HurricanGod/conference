@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hurrican.dao.IConferenceInfoDao">
+    <insert id="addConferenceInfo" parameterType="ConferenceInfo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into conferenceinfo
+        <choose>
+
+            <when test="
+            cnName != null and location != null and
+            website != null and startdate != null and
+            tag != null and enddate != null and
+            enName != null">
+                (cnName, location,startdate,website,enddate,tag,enName)
+                values(#{cnName},#{location},#{startdate},#{website},#{enddate},#{tag},#{enName})
+            </when>
+
+            <when test="
+            cnName != null and location != null and
+            website != null and startdate != null and
+            tag != null and enddate != null and
+            sponsor != null">
+                (cnName, location,startdate,website,enddate,tag,sponsor)
+                values(#{cnName},#{location},#{startdate},#{website},#{enddate},#{tag},#{sponsor})
+            </when>
+
+            <when test="
+            cnName != null and location != null and
+            website != null and startdate != null and
+            tag != null and sponsor != null">
+                (cnName, location,startdate,website,tag,sponsor)
+                values(#{cnName},#{location},#{startdate},#{website},#{tag},#{sponsor})
+            </when>
+
+            <when test="
+            cnName != null and location != null and
+            website != null and startdate != null and
+            tag != null and enddate != null">
+                (cnName, location,startdate,website,enddate,tag)
+                values(#{cnName},#{location},#{startdate},#{website},#{enddate},#{tag})
+            </when>
+
+            <when test="
+            cnName != null and location != null and
+            website != null and startdate != null">
+                (cnName, location,startdate,website)
+                values(#{cnName},#{location},#{startdate},#{website})
+            </when>
+        </choose>
+
+    </insert>
+
+    <select id="queryConferenceInfoByIf" resultType="ConferenceInfo">
+        select id,cnName,tag,location,sponsor,startdate,enddate,website
+        from conferenceinfo
+        <where>
+
+            <if test="location != null">
+                location = #{location}
+            </if>
+
+            <if test="id != null">
+                and id > #{id}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryConferenceInfoByForEach" resultType="ConferenceInfo">
+        select id,cnName,tag,location,sponsor,startdate,enddate,website
+        from conferenceinfo
+        <if test="array.length > 0">
+            where location in
+            <foreach collection="array" open="(" separator="," close=")" item="city">
+                #{city}
+            </foreach>
+        </if>
+
+    </select>
+    
+    <select id="queryConferenceInfoByForEachList" resultType="ConferenceInfo">
+        select id,cnName,tag,location,sponsor,startdate,enddate,website
+        from conferenceinfo
+        <if test="list.size > 0 ">
+            where location in
+            <foreach collection="list" open="(" separator="," close=")" item="city">
+                #{city}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="queryLatestConferenceInfo" resultType="ConferenceInfo">
+        select cnName, enName, location, sponsor, startdate, enddate,
+            website, deadline, acceptance, tag, id
+        from ConferenceInfo
+        <![CDATA[ where startdate >= #{time} and startdate <= #{endTime}]]>
+        order by startdate
+        <if test=" offset != null and number != null">
+            limit #{offset}, #{number}
+        </if>
+    </select>
+
+    <select id="queryLatestConferenceInfoCount" resultType="java.lang.Integer">
+        select count(*)
+        from ConferenceInfo
+        <![CDATA[ where startdate >= #{startTime} and startdate <= #{endTime} ]]>
+    </select>
+
+    <select id="queryUnClassifyConferenceByTag" resultType="ConferenceInfo">
+        select id, tag, cnName, enName
+        from ConferenceInfo
+        where isClassify = 0
+    </select>
+
+
+    <!-- 使用动态 sql 语句进行拼接， locate()函数查找 tag 是否包含关键字-->
+    <select id="queryLatestConcernedConferenceInfo" resultType="ConferenceInfo">
+        select id, cnName, enName, location, sponsor, startdate, enddate,
+            website, deadline, acceptance, tag
+        from ConferenceInfo
+        <where>
+            <![CDATA[ startdate >= #{time} and startdate <= #{endTime}]]>
+            <if test="#{tags}.size > 0">
+                and (
+                <foreach collection="tags" item="t" separator=" ">
+                    <![CDATA[ locate(#{t},tag) > 0 or ]]>
+                </foreach>
+                 0 )
+            </if>
+        </where>
+
+        order by startdate
+        <if test=" offset != null and number != null">
+            limit #{offset}, #{number}
+        </if>
+    </select>
+
+    <update id="updateConferenceTag">
+        update ConferenceInfo
+        <set>
+            <if test= 'tag != ""'>
+                tag = #{tag},
+            </if>
+            isClassify = 1
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <select id="queryLatestTags" resultType="java.lang.String">
+        select tag
+        from ConferenceInfo
+        where tag is not NULL  and startdate > #{start}
+    </select>
+
+    <select id="queryGivenLikedTopConferenceByUser" resultType="ConferenceInfo">
+        select id, cnName, enName, location, sponsor, startdate, enddate,
+            website, deadline, acceptance, tag
+        from ConferenceInfo
+
+        where id in ( select * from
+                  (select conferenceid
+                   FROM FontConference
+                   group by(conferenceid)
+                   order by count(conferenceid) desc
+                   limit #{top})as t)
+        <![CDATA[and startdate >= #{startTime} and  startdate <= #{endTime} ]]>
+        order by startdate
+
+    </select>
+
+    <select id="queryLatestMostPopularOfTagBePraised" resultType="java.lang.String">
+        select tag
+        from ConferenceInfo
+
+        where id in ( select * from
+            (select conferenceid
+             FROM FontConference
+             group by(conferenceid)
+             order by count(conferenceid) desc
+             limit #{top})as t)
+        <![CDATA[and startdate >= #{startTime} and  startdate <= #{endTime} ]]>
+    </select>
+
+    <select id="queryPopularConferenceByTopTag" resultType="ConferenceInfo">
+        select id, cnName, enName, location, sponsor, startdate, enddate,
+            website, deadline, acceptance, tag
+        from ConferenceInfo
+        where <![CDATA[ startdate >= #{startTime} and startdate <= #{endTime}]]> and
+               <![CDATA[ locate(#{tag},tag) > 0 ]]>
+        order by startdate
+        limit #{skip},#{num}
+    </select>
+
+    <select id="queryPopularConferenceByTopTagCount" resultType="java.lang.Integer">
+        select count(id)
+        from ConferenceInfo
+        where  <![CDATA[ locate(#{tag},tag) > 0 ]]> and
+                <![CDATA[ startdate >= #{startTime} and startdate <= #{endTime}]]>
+    </select>
+
+    <select id="queryConferenceCountByWebsite" resultType="java.lang.Integer">
+        select count(*)
+        from ConferenceInfo
+        where website = #{website} and startdate >= #{currentTime}
+    </select>
+
+    <update id="updateConferenceInfo" parameterType="ConferenceInfo">
+        update ConferenceInfo
+        <set>
+            <if test="cnName != null">
+                cnName = #{cnName}
+            </if>
+            <if test="enName != null">
+                enName = #{enName}
+            </if>
+            <if test="location != null">
+                location = #{location}
+            </if>
+            <if test="sponsor != null">
+                sponsor = #{sponsor}
+            </if>
+
+            <if test="startdate != null">
+                startdate = #{startdate}
+            </if>
+            <if test="enddate != null">
+                enddate = #{enddate}
+            </if>
+            <if test="website != null">
+                website = #{website}
+            </if>
+            <if test="tag != null">
+                tag = #{tag}
+            </if>
+            <if test="acceptance != null">
+                acceptance = #{acceptance}
+            </if>
+            <if test="deadline != null">
+                deadline = #{deadline}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>

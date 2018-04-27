@@ -1,8 +1,8 @@
 import nltk
 import jieba.analyse
 
-from src.service import bigram_tagger, cfg
-from src.util.commonutils import stringNotContainsChinese
+from crawler.service import bigram_tagger, cfg
+from crawler.util.commonutils import stringNotContainsChinese
 
 
 class NPExtractor(object):
@@ -123,9 +123,7 @@ def extractTagFiles(tagkeyword: dict, keydic: dict, filterwords=None):
                 # 会议名称为英文
                 if stringNotContainsChinese(conferenceName):
                     keywords = NPExtractor.extractKeywords(conferenceName, filterwords=filterwords)
-                    print("使用 NLTK 提取Tag")
                     keydic["tag"] = ",".join(keywords)
-
                 else:
                     jieba.analyse.set_stop_words("file/txt/stop_words.txt")
                     keywords = jieba.analyse.extract_tags(conferenceName, 5)

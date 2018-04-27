@@ -28,6 +28,7 @@ App({
     // 上传用户数据
   },
   globalData:{
-    userInfo:null
+    userInfo:null,
+    reqUrl: 'https://conference.infoaas.com/conference/'
   }
 })

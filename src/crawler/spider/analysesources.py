@@ -3,10 +3,10 @@ from bs4 import BeautifulSoup
 
 from pyquery import PyQuery as Pq
 
-from src.dao.crawluritabledao import CrawledURLDao
-from src.util.fileoperate import *
-from src.util.mysqlhelper import Mysql
-from src.util.urllibhelper import SpiderApi
+from crawler.dao.crawluritabledao import CrawledURLDao
+from crawler.util.fileoperate import *
+from crawler.util.mysqlhelper import Mysql
+from crawler.util.urllibhelper import SpiderApi
 from multiprocessing import Process
 from multiprocessing import Queue
 
@@ -352,9 +352,7 @@ class HtmlCodeHandler(Process):
         rows = rowsoup.select(rowselector)  # 得到1个包含表格每行的list集合
         keyinfo = []
         for row in rows:
-            index = 0
-            mapper = {}
-            xxx = []
+            index = 0;mapper = {};xxx = []
             for cell in row.children:
                 cellstr = str(cell)
                 if cellstr != '\n' and len(cellstr) > 8:

@@ -5,8 +5,7 @@ from multiprocessing import Queue
 import pymongo as pm
 from pymongo import MongoClient
 
-from src.util.formathelper import Conference
-
+from crawler.util.formathelper import Conference
 
 class MongoDBCRUD(object):
     uri = "mongodb://root:root123@118.89.59.66:27017/test"

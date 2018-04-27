@@ -4,10 +4,10 @@ import sys
 
 from datetime import date, datetime
 
-from src.spider.logmanage import loadLogger
-from src.util.fileoperate import readDictionary
-from src.util.formathelper import DateFormatHelper, Conference
-from src.util.mongodbhelper import MongoDBCRUD
+from crawler.spider.logmanage import loadLogger
+from crawler.util.fileoperate import readDictionary
+from crawler.util.formathelper import DateFormatHelper, Conference
+from crawler.util.mongodbhelper import MongoDBCRUD
 
 
 def saveObject(obj: object):

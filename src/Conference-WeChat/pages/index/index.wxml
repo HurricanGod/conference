@@ -28,12 +28,12 @@
         <view class="weui-panel weui-panel_access">
             <view class="weui-panel__bd">
                 <!-- 循环显示会议 -->
-                <navigator url="/pages/conference/conference?key={{conf.enName}}" wx:for="{{conferences}}" wx:for-item="conf" wx:key="enName" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                <navigator url="/pages/conference/conference?conferenceString={{conferenceString}}&confId={{conf.id}}" wx:for="{{conferences}}" wx:for-item="conf" wx:key="enName" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
                     <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb" src="../example/images/tags/{{conf.icon}}" />
+                         <image class="weui-media-box__thumb" src="../example/images/tags/education.png" /> 
                     </view>
                     <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">{{conf.cnName}}</view>
+                        <view class="weui-media-box__title">{{conf.cnName||conf.enName}}</view>
                         <view class="weui-media-box__desc">{{conf.startDate}} {{conf.location}} </view>
                         <view class="weui-media-box__desc">{{conf.website}}</view>
                     </view>

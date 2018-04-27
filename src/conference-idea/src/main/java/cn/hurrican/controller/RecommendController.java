@@ -22,7 +22,7 @@ import java.util.List;
  * Created by NewObject on 2017/10/5.
  */
 @Controller
-@RequestMapping(value = "/push")
+@RequestMapping(value = "/conference/push")
 public class RecommendController {
 
     @Autowired
@@ -74,30 +74,28 @@ public class RecommendController {
     }
 
 
+    /**
+     * @decription: 推荐每日最受欢迎的会议 Tag，最受欢迎的Tag由两部分组成
+     *                 第1部分：被点赞次数排名靠前的会议所属的 Tag
+     *                 第2部分：将要召开会议中，所属Tag排名靠前的
+     * @param request
+     * @param startTime
+     * @param offset
+     * @return: java.lang.Object
+     */
     @RequestMapping(value = "/queryPopTag.do", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public Object queryPopularTopTag(HttpServletRequest request,
-                                     String startTime, Integer offset) throws ParseException {
-        /**
-         * @decription: 推荐每日最受欢迎的会议 Tag，最受欢迎的Tag由两部分组成
-         *                 第1部分：被点赞次数排名靠前的会议所属的 Tag
-         *                 第2部分：将要召开会议中，所属Tag排名靠前的
-         * @param request
-         * @param startTime
-         * @param offset
-         * @return: java.lang.Object
-         */
+    public Object queryPopularTopTag(HttpServletRequest request, String startTime, Integer offset)
+            throws ParseException {
         ServletContext servletContext = request.getSession().getServletContext();
         String topParam = request.getParameter("top");
         Integer top = topParam != null ? Integer.valueOf(topParam) > 10 ? 10 : Integer.valueOf(topParam): 5;
-
         List<String> tags = new ArrayList<>();
         List<ConferenceTag> tagList = (List<ConferenceTag>)servletContext.getAttribute("tags");
+        tagList = tagList != null ? tagList : new ArrayList<>();
         List<String> popTagList = service.queryLatestMostPopularOfTagBePraisedService(startTime, offset, top);
-
         popTagList.stream().limit(3).forEach(tags::add);
         tagList.stream().limit(top-3).forEach(cTag -> tags.add(cTag.getTag()));
         return tags;
-
     }
 }

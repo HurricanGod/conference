@@ -50,7 +50,7 @@ public class PraiseAndCollectRequestParams {
 
         queryParams.perPageNumber = param.getPerPageNumber();
         queryParams.uid = param.getUid();
-        queryParams.skip = param.getPage() > 0 ? (queryParams.perPageNumber * (param.getPage()-1)) : 0;
+        queryParams.skip = param.getPage() != null && param.getPage() > 0 ? (queryParams.perPageNumber * (param.getPage()-1)) : 0;
         return queryParams;
     }
 

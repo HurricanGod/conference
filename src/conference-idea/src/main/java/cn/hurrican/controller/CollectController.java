@@ -16,7 +16,7 @@ import java.text.ParseException;
  */
 
 @Controller
-@RequestMapping(value = "/collect")
+@RequestMapping(value = "/conference/collect")
 public class CollectController {
 
     @Resource(name = "collectService")

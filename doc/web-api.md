@@ -553,7 +553,7 @@ public class ConferenceMsg {
 
 **请求参数**：
 
-- `conferenceid` (**必选**) ：整型，会议id
+- `cid` (**必选**) ：整型，会议id
 
 
 
@@ -698,6 +698,7 @@ public class ConferenceMsg {
 + `email`  (**必选**)：字符串型，发布者联系邮箱
 + `organization`(**可选**)：字符串型，发布机构
 + `description`(**可选**)：字符串型，其它描述信息
++ `verificationCode（必选）` ：邮箱验证码
 
 
 

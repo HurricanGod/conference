@@ -20,7 +20,7 @@ import java.io.Serializable;
  *  反馈控制器，主要处理小程序用户的反馈意见及纠错会议信息
  */
 @Controller
-@RequestMapping(value = "/feedback")
+@RequestMapping(value = "/conference/feedback")
 public class FeedBackController {
 
     @Resource(name = "feedbackService")
