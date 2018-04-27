@@ -174,5 +174,5 @@
 
 备注 ：
 
-- `sessionIsExpired`b表示会话是否过期
+- `sessionIsExpired`表示会话是否过期
 
