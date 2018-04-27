@@ -36,9 +36,9 @@
     -->
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/feedback/**"/>
-            <mvc:exclude-mapping path="/feedback/submitError.do"/>
-            <mvc:exclude-mapping path="/feedback/submitSuggestion.do"/>
+            <mvc:mapping path="/conference/feedback/**"/>
+            <mvc:exclude-mapping path="/conference/feedback/submitError.do"/>
+            <mvc:exclude-mapping path="/conference/feedback/submitSuggestion.do"/>
             <bean class="cn.hurrican.filter.AuthorityInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

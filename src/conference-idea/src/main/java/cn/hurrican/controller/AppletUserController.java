@@ -2,6 +2,7 @@ package cn.hurrican.controller;
 
 
 import cn.hurrican.beans.AppletUser;
+import cn.hurrican.constant.AppConfig;
 import cn.hurrican.constant.BusinessCode;
 import cn.hurrican.dtl.ResMessage;
 import cn.hurrican.service.AppletTokenService;
@@ -29,10 +30,14 @@ public class AppletUserController {
     /**  获取openid需要传递的 grant_type **/
     private static final String GRANT_TYPE = "authorization_code";
 
-    private static Logger logger = LogManager.getLogger(AppletUserController.class);
+
+//    private static Logger logger = LogManager.getLogger(AppletUserController.class);
 
     @Autowired
     private AppletTokenService tokenService;
+
+    @Autowired
+    private AppConfig appConfig;
 
     @RequestMapping(value = "/weixinLogin.do", produces = "application/json;charset=utf-8")
     @ResponseBody
@@ -40,15 +45,21 @@ public class AppletUserController {
         ResMessage resMessage = ResMessage.creator();
         String nickname = request.getParameter("nickname");
         String headimg = request.getParameter("headimg");
-        List<String> appToken = tokenService.getAppToken();
 
         Map<String, String> params  = new HashMap<>();
-        params.put("appid", appToken.get(0));
-        params.put("secret", appToken.get(1));
+        params.put("appid", appConfig.getAppid());
+        params.put("secret", appConfig.getAppSecret());
         params.put("js_code", code);
         params.put("grant_type", GRANT_TYPE);
-        ResMessage wxCallResult = HttpClientUtils.sendHttpsGetRequest(WX_OPENID_API, params);
-        logger.info("wechat call api result is：\n{}", wxCallResult.toString());
+        ResMessage wxCallResult = null;
+
+        try{
+            wxCallResult = HttpClientUtils.sendHttpsGetRequest(WX_OPENID_API, params);
+        }catch(Exception e){
+            return ResMessage.creator().retCodeEqual(BusinessCode.ServerError.getCode())
+                    .logIs(e.getMessage());
+        }
+//        logger.info("wechat call api result is：\n{}", wxCallResult.toString());
 
         if(wxCallResult.getRetCode() == 200){
             JSONObject jsonObject = JSONObject.fromObject(wxCallResult.getMessage());
@@ -61,6 +72,14 @@ public class AppletUserController {
             resMessage.retCodeEqual(BusinessCode.NetworkError.getCode()).msg(wxCallResult.getMessage()).logIs(BusinessCode.NetworkError.getMsg());
         }
         return resMessage;
+    }
+
+    @RequestMapping(value = "/checkSession.do", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public ResMessage checkSession(Integer uid){
+        Boolean sessionIsExpired = tokenService.sessionIsExpired(uid);
+        return ResMessage.creator().retCodeEqual(BusinessCode.Ok.getCode())
+                .put("sessionIsExpired", sessionIsExpired);
     }
 
     private void apiCallExceptionHandle(ResMessage resMessage, JSONObject jsonObject) {
@@ -76,30 +95,18 @@ public class AppletUserController {
         String openid = jsonObject.getString("openid");
         String existUid = tokenService.existUid(openid);
         Integer uid = null;
+        String session_key = jsonObject.getString("session_key");
         if(existUid == null){
             AppletUser appletUser = AppletUser.build().openidEqual(openid)
                     .nicknameEqual(nickname).headimgEqual(headimg)
-                    .sessionKeyEqual(jsonObject.getString("session_key"));
+                    .sessionKeyEqual(session_key);
             uid = tokenService.saveOpenId(appletUser);
         }else{
             uid = Integer.parseInt(existUid);
+            tokenService.setExpireSessionKey(uid, session_key);
         }
         request.getSession().setAttribute("name", uid.toString());
         resMessage.retCodeEqual(BusinessCode.Ok.getCode()).put("uid", uid).msg("成功保存用户openid并返回小程序在系统中的唯一标志uid");
     }
 
-
-    /**
-     *
-     * @param appid
-     * @param secret
-     * @return
-     */
-    @RequestMapping(value = "/setAppletConfig.do", produces = "application/json;charset=utf-8")
-    @ResponseBody
-    public ResMessage setAppletConfig(String appid, String secret){
-        tokenService.setAppid(appid);
-        tokenService.setAppSecret(secret);
-        return ResMessage.creator().msg("success");
-    }
 }
