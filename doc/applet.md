@@ -280,7 +280,7 @@
 
 <a name="uservo">`UserVo实体`</a>
 
-![uservo]()
+![uservo](https://github.com/HurricanGod/conference/blob/master/doc/img/UserVo.png)
 
 
 
@@ -298,7 +298,7 @@
 
 **修改小程序个人设置活动图如下所示** ：
 
-![修改个人设置]()
+![修改个人设置](https://github.com/HurricanGod/conference/blob/master/doc/img/%E4%BF%AE%E6%94%B9%E4%B8%AA%E4%BA%BA%E8%AE%BE%E7%BD%AE.jpg)
 
 
 
