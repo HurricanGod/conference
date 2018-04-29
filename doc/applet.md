@@ -1,4 +1,4 @@
-## 小程序相关接口文档
+## <a name="top">小程序相关接口文档</a>
 
 **更新时间** ： `2018年4月27日 16:01:25`
 
@@ -17,6 +17,16 @@
 
 
 + <a href="#checkSessionl">**检查是否需要调用wx.login()接口**</a>
+
+
++ <a href="#init">**小程序初始化接口**</a>
+
+
++ <a href="#updateUserSetting">**修改小程序个人设置**</a>
+
+
+
+
 
 -----
 
@@ -44,7 +54,7 @@
 + `log` —— 通常用于定位问题的日志信息
 
 
-+ `retCode` —— 状态码，一般情况下0表示正常返回
++ `retCode` —— 状态码，0表示正常返回
 
 
 + `message` —— 返回给服务端的提示信息
@@ -52,6 +62,10 @@
 
 + `model` —— 用于存放各种不同类型数据的集合
 
+
+
+
+<p align="right"><a href="#top">返回顶部</a></p>
 
 ------
 
@@ -78,6 +92,8 @@
 
 
 
+<p align="right"><a href="#top">返回顶部</a></p>
+
 ------
 
 <a name="emailCheck">获取邮箱校验验证码</a>
@@ -95,9 +111,9 @@
 |  是   | email | String | 邮箱地址 |
 |      |       |        |      |
 
-**说明** ：
 
-**目前使用的是QQ邮箱发送验证码，需要定期生成授权码，若没有收到邮件可能是授权码过期了！**
+
+<p align="right"><a href="#top">返回顶部</a></p>
 
 -----
 
@@ -140,6 +156,9 @@
 
 
 
+
+<p align="right"><a href="#top">返回顶部</a></p>
+
 ----
 
 <a name="checkSessionl">**检查是否需要调用wx.login()接口**</a>
@@ -175,4 +194,117 @@
 备注 ：
 
 - `sessionIsExpired`表示会话是否过期
+
+
+
+
+<p align="right"><a href="#top">返回顶部</a></p>
+
+-----
+
+<a name="init">**小程序初始化接口**</a>
+
+***Url*** ：`/conference/common/init.do`
+
+**此接口将会成为小程序端获取大部分数据的重量级接口**
+
+
+
+**请求参数** ：
+
+| 必要参数 | 参数名  |   类型    |  描述  |
+| :--: | :--: | :-----: | :--: |
+|  是   | uid  | Integer |      |
+|      |      |         |      |
+
+**响应** ：
+
+<a href="#ResMessage">`ResMessage`对象</a>
+
+**样例** ：
+
+```json
+{
+    "retCode": 0,
+    "message": null,
+    "log": null,
+    "model": {
+        "conferenceType": [
+            "人工智能",
+            "网络与信息安全",
+            "物联网",
+            "计算机网络",
+            "计算机软件"
+        ],
+        "userSetting": {
+            "uid": 66,
+            "username": null,
+            "userpwd": null,
+            "userrole": 2,
+            "email": null,
+            "followType": null,
+            "extendJson": null,
+            "lastUpdateTime": 1524940617087
+        }
+    }
+}
+```
+
+**主要字段说明** ：（设服务端返回的`ResMessage`对象的变量名为data）
+
+|             字段              | 描述                                       |
+| :-------------------------: | :--------------------------------------- |
+| `data.model.conferenceType` | 会议类型，相当于会议实体的Tag，列表类型                    |
+|  `data.model.userSetting`   | 用户个人设置实体<br/>`followType`：感兴趣的会议类型，可以有多个，以`,`隔开<br/>`email`：用户设置的验证邮箱，每次修改邮箱变更后需要进行邮箱验证<br/>`extendJson`：`json`格式字符串，用户设置里面如果想保存更多的设置信息可以存到这个字段里<br/>`uid`：小程序用户唯一ID |
+|                             |                                          |
+|                             |                                          |
+
+
+
+<p align="right"><a href="#top">返回顶部</a></p>
+
+----
+
+<a name="updateUserSetting">**修改小程序个人设置**</a>
+
+***Url*** ：`/conference/user/updateUserSetting.do`
+
+
+
+**请求参数** ：
+
+| 必要参数 | 参数名  |               类型               |  描述  |
+| :--: | :--: | :----------------------------: | :--: |
+|  是   | user | <a href="#uservo">`UserVo`</a> |      |
+|      |      |                                |      |
+
+<a name="uservo">`UserVo实体`</a>
+
+![uservo](https://github.com/HurricanGod/conference/blob/master/doc/img/UserVo.png)
+
+
+
+**响应** ：
+
+<a href="#ResMessage">`ResMessage`对象</a>， `retCode`为0表示成功
+
+**返回样例** ：
+
+```json
+{"retCode":0,"message":"成功保存个人设置","log":null,"model":{}}
+```
+
+
+
+**修改小程序个人设置活动图如下所示** ：
+
+![修改个人设置](https://github.com/HurricanGod/conference/blob/master/doc/img/%E4%BF%AE%E6%94%B9%E4%B8%AA%E4%BA%BA%E8%AE%BE%E7%BD%AE.jpg)
+
+
+
+<p align="right"><a href="#top">返回顶部</a></p>
+
+
+
+------
 
