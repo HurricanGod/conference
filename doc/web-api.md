@@ -686,7 +686,7 @@ public class ConferenceMsg {
 
 ### 发布会议
 
-
+**最近修改时间** ：`2018年4月29日 13:25:32`
 
 **请求URL**  `http://localhost:8080/conference/publish/savePublishConference.do`
 
@@ -695,16 +695,17 @@ public class ConferenceMsg {
 **请求参数**：
 
 + `uri` (**必选**)：字符串型，要发布会议的网址
-+ `email`  (**必选**)：字符串型，发布者联系邮箱
++ `email`  (**必选**)：字符串型，发布者联系邮箱（**小程序端不需要此字段**）
 + `organization`(**可选**)：字符串型，发布机构
 + `description`(**可选**)：字符串型，其它描述信息
-+ `verificationCode（必选）` ：邮箱验证码
++ `verificationCode（必选）` ：邮箱验证码（**小程序端不需要此字段**）
++ `uid`：小程序用户唯一标志（**web端不需要此字段**）
 
 
 
-**建议** ：
+**要求** ：
 
-建议使用`post`请求
+只能使用`post`请求
 
 
 
