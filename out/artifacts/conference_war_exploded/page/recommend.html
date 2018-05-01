@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>近期热门会议</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../css/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../css/icon.css">
+    <!-- <script type="text/javascript" src="../js/jquery.min.js"></script> -->
+    <!--<script type="text/javascript" src="../js/bootstrap.min.js"></script>-->
+    <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+</head>
+<body>
+
+<div style="width:100%;background:#fafafa;padding:10px;" id="div">
+    <div style="padding:3px 2px;border-bottom:1px solid #ccc">近期热门会议</div>
+    <form id="register" >
+        <table style="margin-top: 15px;">
+            <tr>
+                <td>
+                    <select id="TagSelect" class="easyui-combotree"
+                            style="width: 350px; height: 34px;">
+                    </select>
+                </td>
+                <td><button class="btn btn-success" id="push" style="margin-left: 10px">获取</button></td>
+            </tr>
+
+
+            <tr>
+                <td id="res"></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li>第 <input class="form-control" style="display: inline-block;width: 70px" type="text" id="page" value="1"/> 页</li>
+                        </ul>
+                    </nav>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<hr style="margin-top: 0;margin-bottom: 10px;">
+
+<table class="table table-striped" id="meetings">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>tag</th>
+            <th>startDate</th>
+        </tr>
+    </thead>    
+</table>
+
+<script type="text/javascript">
+    $(function () {
+
+        $.ajax({
+            type: "get",
+            url: "../conference/conference/getTag.do",
+//            data:{top:40},
+            success: function (data) {
+                var tags = [];
+                for(var i=0; i<data.length; i++){
+                    var t = {"id": i+2, "text": data[i].tag};
+                    tags.push(t);
+                }
+
+                $('#TagSelect').combotree({
+                    valueField: "id", //Value字段
+                    textField: "text", //Text字段
+                    multiple: true,
+                    data:   [{
+                                "id": 1, "text": "All",
+                                "children": tags
+                            }],
+                    //  url: "tree_data2.json", //数据源
+                    onCheck: function (node, checked) {
+                        //让全选不显示
+                        $('#TagSelect').combotree("setText", $('#TagSelect')
+                                .combobox("getText").toString().replace("全选,", ""));
+                    },
+                    onClick: function (node, checked) {
+                        //让全选不显示
+                        $('#TagSelect').combotree("setText", $('#TagSelect')
+                                .combobox("getText").toString().replace("全选,", ""));
+                    }
+                });
+
+            }
+        });
+
+
+
+    });
+
+
+
+    $("#push").click(function(event){
+        event.preventDefault();
+
+        var text =  $("#TagSelect").combobox("getText");
+        var page = $("#page").val();
+        console.log(text);
+        console.log("page = " + page);
+
+        $.ajax({
+            type: "post",
+            url: "../conference/conference/getHotConference.do",
+//            contentType: "application/json;charset=UTF-8",
+            data: {tagsString:text, days:2, page: page},
+            success: function (data) {
+
+                var table = $("#meetings");
+
+                if(data instanceof Array){
+
+                    table.find("tr:gt(0)").remove();
+                    data.forEach(function visit(table,index){
+                        console.log(data[index]);
+                        var r = "row" + index;
+                        var row = $("<tr></tr>").attr("id", r);
+                        table = $("#meetings");
+                        table.append(row);
+
+                        var  name = data[index].cnName;
+                        if (name == null) {
+                            name = data[index].enName;
+                        }
+
+                        var td1 = $("<td></td>").text(data[index].id);
+                        var td2 = $("<td></td>");
+
+                        var url = $('<a style="text-decoration:none"></a>')
+                                .attr("href", data[index].website).text(name);
+                        url.appendTo(td2);
+
+                        var td3 = $("<td></td>").text(data[index].tag);
+                        var td4 = $("<td></td>").text(data[index].startdate);
+
+                        td1.appendTo(row);
+                        td2.appendTo(row);
+                        td3.appendTo(row);
+                        td4.appendTo(row);
+                    })
+                }
+
+            }
+        })
+
+
+
+    });
+</script>
+
+</body>
+</html>

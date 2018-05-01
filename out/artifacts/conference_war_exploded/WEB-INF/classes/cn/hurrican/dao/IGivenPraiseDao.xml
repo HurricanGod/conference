@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hurrican.dao.IGivenPraiseDao">
+
+    <insert id="insertOneBeAdmiredConference">
+        insert into
+        FontConference(uid, conferenceid)
+        values(#{uid}, #{conferenceid})
+    </insert>
+
+    <delete id="deleteOneBeAdmiredConference">
+        delete
+        from  FontConference
+        where uid = #{uid} and conferenceid = #{conferenceid}
+
+    </delete>
+
+    <select id="queryBeAdmiredConferenceByUid" resultType="ConferenceInfo">
+        select ConferenceInfo.id, cnName, enName, tag, location,sponsor,website,startdate
+        from ConferenceInfo,FontConference
+        <where>
+            uid = #{uid} and conferenceid = ConferenceInfo.id
+
+            <if test="startTime != null">
+                <![CDATA[ and startdate >= #{startTime} ]]>
+            </if>
+            <if test="endTime != null">
+                <![CDATA[ and startdate <= #{endTime} ]]>
+            </if>
+        </where>
+        order by startdate
+        <choose>
+            <when test="skip != null and pageNumber != null">
+                limit #{skip},#{pageNumber}
+            </when>
+            <when test="skip == null and pageNumber != null">
+                limit #{pageNumber}
+            </when>
+        </choose>
+
+    </select>
+
+
+    <select id="queryTheNumberOfBeAdmiredConferenceByCid" resultType="java.lang.Integer">
+        select count(*)
+        from FontConference
+        where conferenceid = #{cid}
+    </select>
+
+    <select id="selectConferenceIsBePraised" resultType="java.lang.Integer">
+        select count(*)
+        from FontConference
+        where uid = #{uid} and conferenceid = #{cid}
+    </select>
+
+    <select id="queryUserHadAdmiredConferenceCount" resultType="java.lang.Integer">
+        select count(*)
+        from FontConference,ConferenceInfo
+        <where>
+            uid = #{uid} and conferenceid = ConferenceInfo.id
+            <if test="startTime!=null">
+                <![CDATA[and startdate >= #{startTime}]]>
+            </if>
+            <if test="endTime != null">
+                <![CDATA[and startdate <= #{endTime}]]>
+            </if>
+        </where>
+    </select>
+
+</mapper>

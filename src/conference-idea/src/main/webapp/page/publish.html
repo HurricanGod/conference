@@ -4,18 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>我要发布会议</title>
-    <link type="text/css" href="../css/bootstrap.min.css"/>
+<!--     <link type="text/css" href="../css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="../css/easyui.css">
     <link rel="stylesheet" type="text/css" href="../css/icon.css">
 
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script type="text/javascript" src="../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="../js/jsutils.js"></script>
+    <script type="text/javascript" src="../js/jsutils.js"></script> -->
+
+   <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/pageStyle/formPage.css"> 
+
 </head>
 <body>
 
-<div style="width:330px;background:#fafafa;padding:10px;" >
+<!-- <div style="width:330px;background:#fafafa;padding:10px;" >
     <div style="padding:3px 2px;border-bottom:1px solid #ccc">我要发布会议</div>
     <form  method="post">
         <table class="table table-striped">
@@ -70,8 +76,34 @@
             </tr>
         </table>
     </form>
-</div>
+</div> -->
 
+<div class="white-box cms-box">
+
+    <div class="cms-box-title">
+      <h3>我要发布</h3>
+      <h4>PUBLIC</h4>
+    </div>
+    
+    <form class="cms-box-form form-horizontal" Mmethod="post">
+      <div class="login-input">
+        <input type="text" id="url" class="form-control" placeholder="会议网址">
+        <input type="email" id="email" class="form-control" placeholder="邮箱">
+        <div>
+            <button type="button" class="btn btn-success" id="checkBtn">
+                点击获取验证码
+            </button>
+            <input class="form-control" type="text" id="code" placeholder="请输入正确的验证码">
+        </div>
+        <input type="text" id="remark" class="form-control" placeholder="备注">
+        <input class="form-control" type="text" id="organization" placeholder="举办机构">
+      </div>
+      <p class="warning-info-red" style="color: #b74d46;background-color: #fff0f0;" id="res"></p>
+    </form>
+    <div class="enter-button">
+        <button class="btn btn-orange" id="submit">提交</button>
+    </div>
+</div>
 
 
 <script>
@@ -91,8 +123,20 @@
                 alert("您发布的会议已进入审核阶段！审核通过后我们会在第一时间通知您，请留意邮件");
                 window.location.href = "../index.html";
             }
-
-            sendAjaxRequest(url,object,callback);
+            
+            if (object.uri == "") {
+                $('#res').text("会议网址不能为空");
+            } else {
+                // 邮件格式判断
+                var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/; 
+                var isEmailRight = reg.test(object.email);
+                if (!isEmailRight) {
+                    $('#res').text("请填入正确的邮箱");                                
+                } else {
+                    $('#res').text("");
+                    sendAjaxRequest(url,object,callback);
+                }
+            }
 
         });
 

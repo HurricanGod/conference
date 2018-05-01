@@ -9,8 +9,7 @@ import redis.clients.jedis.exceptions.JedisException;
 
 
 public class JedisExecutor implements RedisExecutor {
-
-//    private static Logger logger = LogManager.getLogger(JedisExecutor.class);
+  //private static Logger logger = LogManager.getLogger(JedisExecutor.class);
 
     private JedisPool jedisPool;
 

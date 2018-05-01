@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>用户反馈</title>
-    <link type="text/css" href="../css/bootstrap.min.css"/>
+<!--     <link type="text/css" href="../css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="../css/easyui.css">
     <link rel="stylesheet" type="text/css" href="../css/icon.css">
 
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script type="text/javascript" src="../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="../js/jsutils.js"></script>
+    <script type="text/javascript" src="../js/jsutils.js"></script> -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/pageStyle/formPage.css">  
 </head>
 <body>
-<div style="width:330px;background:#fafafa;padding:10px;" >
+<!-- <div style="width:330px;background:#fafafa;padding:10px;" >
     <div style="padding:3px 2px;border-bottom:1px solid #ccc">我要反馈</div>
     <form  method="post">
         <table class="table table-striped">
@@ -41,6 +45,29 @@
         </table>
         <p id="res" style="color: #3e8f3e"></p>
     </form>
+</div> -->
+
+<div class="white-box cms-box">
+    <!-- cms-box-title -->
+    <div class="cms-box-title">
+      <h3>我要反馈</h3>
+      <h4>FEEDBACK</h4>
+    </div>
+    <!-- cms-box-title end -->
+    
+    <!-- cms-box-form -->
+    <form class="cms-box-form form-horizontal" method="post">
+      <div class="login-input">
+        <input type="text" id="email" class="form-control" placeholder="邮箱">
+        <p class="warning-info" style="color: #b74d46;background-color: #fff0f0;" id="emailRes"></p>
+        <input type="text" id="description" class="form-control" placeholder="备注">
+        <p class="warning-info-red" id="res"></p>
+      </div>
+    </form>
+    <div class="enter-button">
+        <button class="btn btn-orange" id="submit">提交</button>
+    </div>
+    <!-- cms-box-form end -->   
 </div>
 
 <script>
@@ -69,6 +96,10 @@
             console.log("email = " + email);
             console.log("description = " + description);
 
+            // 邮件格式判断
+            var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/; 
+            var isEmailRight = reg.test(email);
+
             var object = {};
             object.email = email;
             object.uid = uid;
@@ -81,8 +112,13 @@
                 }
             }
             var url = "../conference/feedback/submitSuggestion.do";
-            sendAjaxRequest(url,object,success);
-
+            
+            if (isEmailRight) {  // 邮件格式正确，提交表单
+                $('#emailRes').text('');
+                sendAjaxRequest(url,object,success);
+            } else {  // 邮件格式错误，显示提示信息
+                $('#emailRes').text('请输入合法的邮件地址');
+            }
         })
     });
 </script>

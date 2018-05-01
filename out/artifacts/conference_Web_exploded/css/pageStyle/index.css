@@ -1,0 +1,150 @@
+/* 
+------------------------------ 
+filename: index.css
+create: mjz
+data: 2018/4/20
+------------------------------
+ */
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.index-navbar {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 1fr;
+  grid-template-areas: 
+    ". . . . . t t . . . w .";
+  justify-items: center;
+  align-items: center;
+}
+
+.index-title {
+  grid-area: t;
+  font-weight: bold;
+  font-size: 30px;
+  color: #fff;
+  text-shadow: 0px 0px 15px #111;
+}
+
+.about-wechat {
+  grid-area: w;
+  display: block;
+  text-decoration: none;
+  color: #fff;
+  float: right;
+}
+
+.index-container {
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 80px 1fr; 
+  grid-template-areas:
+    "h h h h h h h h h h h h"
+    "m m m m m m m m m m m m"; 
+}
+
+.index-navbar {
+  grid-area: h;
+  background: #29a4d7;
+  box-shadow: 2px 2px 5px #4c5158;
+}
+
+.index-menu {
+  grid-area: m;
+  background: #d7eef8;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 10px 1fr 1fr 1fr 10px;
+  grid-gap: 15px;
+  grid-template-areas: 
+    ". . . . . . . . . . . ."
+    ". . . i1 i1 i2 i2 i3 i3 . . ."
+    ". . . i4 i4 i5 i5 i6 i6 . . ."
+    ". . . i7 i7 i8 i8 i9 i9 . . ."
+    ". . . . . . . . . . . .";
+}
+
+.index-menu > a {
+  display: block;
+  text-decoration:none;
+  background: #dee0e1;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px #aaa;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s;
+}
+
+.index-menu > a:hover {
+  box-shadow: 0px 0px 30px #aaa;
+  cursor: pointer;
+  transform: translateY(-5px);
+}
+
+.item-title {
+  background: #3bacf1;
+  height: 40%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.item-icon {
+  height: 60%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center; 
+  color: #8c9092;
+}
+
+.index-menu-item-1 {
+  grid-area: i1;
+}
+
+.index-menu-item-2 {
+  grid-area: i2;
+}
+
+.index-menu-item-3 {
+  grid-area: i3;
+}
+
+.index-menu-item-4 {
+  grid-area: i4;
+}
+
+.index-menu-item-5 {
+  grid-area: i5;
+}
+
+.index-menu-item-6 {
+  grid-area: i6;
+}
+
+.index-menu-item-7 {
+  grid-area: i7;
+}
+
+.index-menu-item-8 {
+  grid-area: i8;
+}
+
+.index-menu-item-9 {
+  grid-area: i9;
+}

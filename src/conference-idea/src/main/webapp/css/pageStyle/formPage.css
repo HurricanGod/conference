@@ -1,0 +1,183 @@
+/* 
+------------------------------ 
+filename: formPage.css
+create: mjz
+data: 2018/4/20
+------------------------------
+ */
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  background: #f4f3ef;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+html, body {
+  margin: 0;
+}
+
+/*container*/
+.white-box {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0px 3px 3px #bebebe;
+  margin-bottom: 100px;
+}
+
+.container {
+  width: 100%;
+  padding: 30px;
+}
+
+caption p {
+  font-size: 14px;
+  margin: 0;
+  padding-left: 10px;
+}
+
+caption{
+  font-size: 18px;
+}
+
+.dow-list{
+  margin: 0;
+  padding: 0;
+}
+
+.dow-list li{
+  list-style: none;
+  float: left;
+  width: 23%;
+  margin-right: 24px;
+  border: 1px solid transparent;
+}
+
+.dow-list .white-box:hover{
+  border: 1px solid #2e6da4;
+}
+
+.clearmr{
+  margin-right: 0 !important;
+}
+
+.line{
+  height: 1px;
+  background-color: #bebebe;
+  width: 100%;
+  margin: 0 auto 10px;
+}
+
+.text-type{
+  font-size: 14px;
+}
+.text-name{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
+/*container end */
+
+/* .cms-box */
+.cms-box {
+  width: 25%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+}
+/* .cms-box end */
+
+/* cms-box-title */
+.cms-box-title {
+  position: relative;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.cms-box-title:before {
+  content: '';
+  width: 100%;
+  position: absolute;
+  border-top: 1px solid #EEE;
+  top: 30px;
+  left: 0;
+  z-index: 0;
+}
+
+.cms-box-title h3 {
+  display: inline-block;
+  position: relative;
+  margin-bottom: 5px;
+  padding: 0 10px;
+  background-color: #fff;
+  color: #666;
+  font-weight: 100;
+  font-size: 20px;
+  z-index: 1;
+}
+
+.cms-box-title h4 { 
+  margin-top: 0;
+  color: #DDD;
+  font-weight: 100;
+  font-size: 12px;
+  clear: both;
+}
+/* cms-box-title */
+
+/* cms-box-form */
+.login-input input {
+  margin: 20px 0;
+  height: 45px;
+}
+
+.login-input input:hover,
+.login-input input:focus {
+  border-color: #29a4d7;
+  -o-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px #29a4d7;
+  -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px #29a4d7;  
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px #29a4d7;
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px #29a4d7;  
+}
+
+.login-input .warning-info-green {
+  color: #00cc66;
+  background-color: #e8ffea;
+  text-align: center;
+}
+
+.login-input .warning-info-red {
+  color: #b74d46;
+  background-color: #fff0f0;
+  text-align: center;
+}
+
+a.forget-password {
+  float: right;
+  margin-bottom: 20px;
+}
+
+.enter-button {
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.enter-button > button {
+  width: 100%;
+  height: 40px;
+  color: white;
+  background-color: #29a4d7;
+}
+
+.enter-button > button:hover,
+.enter-button > button:focus {
+  color: white;
+  background-color: #3bacf1;
+}
+/* cms-box-form end */

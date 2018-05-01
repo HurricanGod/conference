@@ -30,7 +30,6 @@ public class AppletUserController {
     /**  获取openid需要传递的 grant_type **/
     private static final String GRANT_TYPE = "authorization_code";
 
-
 //    private static Logger logger = LogManager.getLogger(AppletUserController.class);
 
     @Autowired
@@ -38,14 +37,13 @@ public class AppletUserController {
 
     @Autowired
     private AppConfig appConfig;
-
+  
     @RequestMapping(value = "/weixinLogin.do", produces = "application/json;charset=utf-8")
     @ResponseBody
     public ResMessage weixinLogin(String code, HttpServletRequest request){
         ResMessage resMessage = ResMessage.creator();
         String nickname = request.getParameter("nickname");
         String headimg = request.getParameter("headimg");
-
         Map<String, String> params  = new HashMap<>();
         params.put("appid", appConfig.getAppid());
         params.put("secret", appConfig.getAppSecret());

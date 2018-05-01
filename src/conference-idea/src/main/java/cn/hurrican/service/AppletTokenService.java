@@ -32,7 +32,7 @@ public class AppletTokenService {
     private static final int SESSION_KEY_EXPIRE_TIME = 60 * 90;
 
     private static final String THIRD_SESSION_PREFIX_KEY = "session_3rd_uid:";
-
+  
     @Autowired
     private RedisExecutor redisExecutor;
 
@@ -110,7 +110,6 @@ public class AppletTokenService {
     public Boolean sessionIsExpired(Integer uid){
         return redisExecutor.doInRedis(instance -> instance.get(THIRD_SESSION_PREFIX_KEY + uid) != null);
     }
-
     /**
      * 判断是否保存过小程序用户的openid
      * @param openid 小程序用户openid

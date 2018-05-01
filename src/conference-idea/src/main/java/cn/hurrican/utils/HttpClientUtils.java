@@ -41,7 +41,6 @@ import java.util.*;
 public class HttpClientUtils {
 
 //    private static Logger logger = LogManager.getLogger(HttpClientUtils.class);
-
     private static HttpClientContext context = HttpClientContext.create();
     private static RequestConfig requestConfig = RequestConfig.custom()
                         .setConnectTimeout(120000)
