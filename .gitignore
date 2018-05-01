@@ -11,3 +11,7 @@ src/spider/__pycache__/
 src/testunit/*.log
 src/model/
 src/test*.py
+src/conference-idea/target/
+src/conference-idea/conference.iml
+src/crawler/process/__pycache__/
+

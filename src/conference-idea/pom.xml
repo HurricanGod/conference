@@ -71,6 +71,11 @@
       <artifactId>mail</artifactId>
       <version>1.4.4</version>
     </dependency>
+    <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>mailapi</artifactId>
+      <version>1.5.5</version>
+    </dependency>
 
 
     <dependency>
@@ -402,11 +407,11 @@
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-commons-core -->
-    <dependency>
-      <groupId>org.springframework.data</groupId>
-      <artifactId>spring-data-commons-core</artifactId>
-      <version>1.4.0.RELEASE</version>
-    </dependency>
+    <!--<dependency>-->
+      <!--<groupId>org.springframework.data</groupId>-->
+      <!--<artifactId>spring-data-commons-core</artifactId>-->
+      <!--<version>1.4.0.RELEASE</version>-->
+    <!--</dependency>-->
 
     <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-mongodb -->
     <dependency>
@@ -434,7 +439,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
+        <version>3.1</version>
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
@@ -446,11 +451,18 @@
     <resources>
       <resource>
         <directory>src/main/java</directory>
-
         <includes>
           <include>**/*.xml</include>
         </includes>
+        <filtering>true</filtering>
+      </resource>
 
+      <resource>
+        <directory>src/main/resources</directory>
+            <includes>
+              <include>**/*.properties</include>
+              <include>**/*.xml</include>
+            </includes>
         <filtering>true</filtering>
       </resource>
 
