@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hurrican.dao.IConferenceTypeDao">
+
+
+    <select id="queryAllConferenceType" resultMap="conferenceTypes">
+        select rdid, directionName
+        from ResearchDirection
+    </select>
+
+    <resultMap id="conferenceTypes" type="ConferenceType">
+        <id column="rdid" property="typeId" javaType="java.lang.Integer"/>
+        <result column="directionName" property="typeName" javaType="java.lang.String"/>
+    </resultMap>
+</mapper>

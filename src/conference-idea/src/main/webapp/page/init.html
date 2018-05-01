@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小程序初始化页面</title>
+
+    <link type="text/css" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../css/icon.css">
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <!--<script type="text/javascript" src="../js/bootstrap.min.js"></script>-->
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/jsutils.js"></script>
+</head>
+<body>
+<div style="width:630px;background:#fafafa;padding:10px;" id="div">
+    <div style="padding:3px 2px;border-bottom:1px solid #ccc">小程序初始化页面</div>
+    <form>
+        <table>
+            <tr>
+                <td>选择页数</td>
+                <td>
+                    <select class="js-example-basic-single" name="state" id="page"
+                            style="width: 173px; text-align:center;">
+                    </select>
+                </td>
+
+            </tr>
+
+
+            <tr>
+                <td>设置每页数据量</td>
+                <td>
+                    <select class="js-example-basic-single" name="state" id="perPage"
+                            style="width:173px; text-align:center;">
+                        <option>3</option>
+                        <option>4</option>
+                        <option selected="selected">5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                    </select>
+                </td>
+
+            </tr>
+
+        </table>
+    </form>
+</div>
+<hr/>
+
+<div class="panel panel-success">
+    <div class="panel-heading">选择 uid</div>
+    <div class="panel-body">
+        <select class="js-example-basic-single" name="state" id="uid"
+                style="width:173px; text-align:center;">
+        </select>
+    </div>
+</div>
+<br/>
+
+<div class="panel panel-success">
+    <div class="panel-heading">邮箱</div>
+    <div class="panel-body">
+        <input type="email" id="email" class="form-control"/>
+        <input type="email" id="oldEmail" class="form-control" hidden="hidden"/>
+    </div>
+</div>
+<br/>
+
+<div class="panel panel-success" id="code-div" style="display:none">
+    <div class="panel-heading">邮箱验证码</div>
+    <div class="panel-body">
+        <button type="button" class="btn btn-success" id="sendCodeBtn">
+            <span class="glyphicon glyphicon-search" aria-hidden="true">获取邮箱验证码</span>
+        </button>
+        <input type="email" id="verify-code" class="form-control"/>
+    </div>
+</div>
+<br/>
+
+<div class="panel panel-info">
+    <div class="panel-heading">会议类别</div>
+    <div class="panel-body">
+        <select class="js-example-basic-single" name="state" id="types"
+                style="width:173px; text-align:center;">
+        </select>
+    </div>
+</div>
+<br/>
+<div class="panel panel-success">
+    <div class="panel-heading">感兴趣的会议类型</div>
+    <div class="panel-body">
+        <input type="text" id="followType" class="form-control" style="width: 450px"/>
+    </div>
+</div>
+<br/>
+<div class="panel panel-success">
+    <div class="panel-heading">其它</div>
+    <div class="panel-body">
+        <input type="text" id="remark" class="form-control"/>
+    </div>
+</div>
+<br/>
+<div class="panel panel-primary">
+    <div class="panel-heading"></div>
+    <div class="panel-body">
+        <button type="button" class="btn btn-success" id="saveBtn">
+            <span class="glyphicon glyphicon-search" aria-hidden="true">保存</span>
+        </button>
+    </div>
+</div>
+
+</body>
+<script>
+
+    $(function () {
+        $("#types").change(function () {
+            var type = $(this).find("option:selected").text();
+            console.log("type = " + type);
+            var followTypeInput = $("#followType");
+            if (followTypeInput.val() === ""){
+                followTypeInput.val(type)
+            }else{
+                var oldVal = followTypeInput.val();
+                followTypeInput.val(oldVal + "," + type);
+            }
+        });
+
+        $("#uid").change(function () {
+            var data = {};
+            var uid = $(this).find("option:selected").val();
+            console.log("uid = \t" + uid);
+            data.uid = uid;
+            $("#email").attr("name", uid);
+            $.ajax({
+                type: "post",
+                url: "../conference/common/init.do",
+                data:data,
+                success: function (data) {
+                    var userSetting = data.model.userSetting;
+                    var conferenceType = data.model.conferenceType;
+                    if (typeof(userSetting) === "undefined"){
+                        console.log("data.model.userSetting对象为undefined")
+                    }else{
+                        $("#email").val(userSetting.email);
+                        $("#oldEmail").val(userSetting.email);
+                        $("#followType").val(userSetting.followType);
+                    }
+                    if (typeof(conferenceType) !== "undefined" && conferenceType instanceof Array){
+                        var typeSelect = $("#types");
+                        conferenceType.forEach(function visit(table,index){
+                            var option = $("<option>" + conferenceType[index] + "</option>")
+                                .attr("value", conferenceType[index]);
+                            option.appendTo(typeSelect);
+
+                        });
+                    }
+                }
+            });
+        });
+
+        /**
+         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+         *
+         */
+        $("#saveBtn").click(function () {
+            var email = $("#email").val();
+            var verifyCode = $.trim($("#verify-code").val());
+            var oldEmail = $("#oldEmail").val();
+            var codeDiv = $("#code-div");
+            var data = {};
+            var url = "../conference/user/updateUserSetting.do";
+
+            console.log("验证码div是否隐藏？"+ codeDiv.attr("style") +
+                "\t类型： " + typeof (codeDiv.attr("style")));
+            console.log("验证码：\t" + verifyCode);
+            if(email !== oldEmail && "display:none" == codeDiv.attr("style")){
+                console.log("邮箱已变更，需重新进行验证！");
+                codeDiv.attr("style", "display:block");
+                alert("邮箱已变更，需重新进行验证！");
+                return;
+            }else if (email !== oldEmail && verifyCode == ""){
+                alert("邮箱验证码不允许为空！");
+                return;
+            }else if (email !== oldEmail && verifyCode !== ""){
+                data.verificationCode = verifyCode;
+                data.action = 100;
+            }
+            var uid = $("#email").attr("name");
+            console.log("请求 updateUserSetting.do 接口传递的 uid = " + uid);
+            data.email = email;
+            data.followType = $("#followType").val();
+            data.uid = uid;
+
+            sendSimpleAjaxRequest(url, "get", data, successUpdateUserSetting);
+        });
+    });
+
+    function successUpdateUserSetting(data) {
+        if(typeof (data) !== "undefined"){
+            console.log(data.msg);
+            alert("msg = " + data.message + "\nretCode =" + data.retCode);
+        }
+
+    }
+
+    function successQueryUser(data) {
+        var userlist = data.model.users;
+        if(userlist instanceof Array){
+            var userSelect = $("#uid");
+            userlist.forEach(function visit(table,index){
+                var option = $("<option>" + userlist[index].username + "</option>")
+                    .attr("value", userlist[index].uid);
+                option.appendTo(userSelect);
+
+            });
+        }
+    }
+    window.onload = function () {
+        var params = {};
+        params.role = 2;
+        sendSimpleAjaxRequest("../conference/user/queryUserByRole.do", "get", params, successQueryUser)
+
+
+    }
+</script>
+</html>

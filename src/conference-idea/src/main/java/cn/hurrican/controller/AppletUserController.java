@@ -105,7 +105,7 @@ public class AppletUserController {
             uid = Integer.parseInt(existUid);
             tokenService.setExpireSessionKey(uid, session_key);
         }
-        request.getSession().setAttribute("name", uid.toString());
+        request.getSession().setAttribute("uid", uid.toString());
         resMessage.retCodeEqual(BusinessCode.Ok.getCode()).put("uid", uid).msg("成功保存用户openid并返回小程序在系统中的唯一标志uid");
     }
 

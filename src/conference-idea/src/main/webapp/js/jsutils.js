@@ -33,7 +33,7 @@ function sendAjaxRequest(url, obj, successCallback){
             type :"post",
             url : url,
             dataType : "json",
-            contentType : "application/json", // 指定这个协议很重要
+            contentType : "application/json;charset=utf-8", // 指定这个协议很重要
             success: successCallback
         });
     } else {
@@ -41,7 +41,7 @@ function sendAjaxRequest(url, obj, successCallback){
             type :"post",
             url : url,
             dataType : "json",
-            contentType : "application/json", // 指定这个协议很重要
+            contentType : "application/json;charset=utf-8", // 指定这个协议很重要
             data : JSON.stringify(obj),
             success: successCallback
         });
@@ -49,6 +49,31 @@ function sendAjaxRequest(url, obj, successCallback){
 
 }
 
+/**
+ *  请求SpringMVC后台没有@RequestBody注解的方法
+ * @param url
+ * @param obj
+ * @param requestMethod 请求方法(get,post)
+ * @param successCallback 成功后的回调函数
+ */
+function sendSimpleAjaxRequest(url, requestMethod, obj, successCallback) {
+    if (obj == null) {
+        $.ajax({
+            type :requestMethod,
+            url : url,
+            dataType : "json",
+            success: successCallback
+        });
+    } else {
+        $.ajax({
+            type :requestMethod,
+            url : url,
+            dataType : "json",
+            data : obj,
+            success: successCallback
+        });
+    }
+}
 
 function sendAjaxRequestUnassignProtocol(url, obj, successCallback){
 

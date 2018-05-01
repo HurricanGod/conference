@@ -12,7 +12,16 @@ public class PublishMessage {
     private String organization;
     /** 邮箱验证码 **/
     private String verificationCode;
+    /** 小程序用户唯一标志 **/
+    private Integer uid;
 
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
+    }
 
     public PublishMessage() {
     }

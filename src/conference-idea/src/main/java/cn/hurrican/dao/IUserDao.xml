@@ -13,6 +13,31 @@
         </selectKey>
     </insert>
 
+   <update id="updateUserSetting">
+       update UserSetting
+       <set>
+           <if test="email != null">
+               email = #{email},
+           </if>
+           <if test="followType != null">
+               follow_type = #{followType},
+           </if>
+           <if test="lastUpdateTime != null">
+               last_update_time = #{lastUpdateTime},
+           </if>
+           <if test="extendJson != null">
+               extend_json = #{extendJson}
+           </if>
+       </set>
+       where uid = #{uid}
+   </update>
+
+    <select id="selectUserSetting" resultType="User">
+        select email, follow_type, extend_json, userrole
+        from UserSetting
+        where uid = #{uid} and userrole = #{role}
+    </select>
+
 
     <select id="queryAllUser" resultType="User">
         select uid,username
@@ -26,5 +51,11 @@
         <if test="role != null">
             and userrole = #{role}
         </if>
+    </select>
+
+    <select id="queryUserByRole" resultType="User">
+        select uid, username, email
+        from UserSetting
+        where userrole = #{0}
     </select>
 </mapper>

@@ -22,7 +22,7 @@ public class PraiseConferenceController {
     @Resource(name = "givenPraiseService")
     private GivenPraiseService service;
 
-    @RequestMapping(value = "/admire.do")
+    @RequestMapping(value = "/admire.do", produces = "application/json;charset=utf-8")
     @ResponseBody
     public Object givePraiseToConference(GivenPraiseBean msg){
         /**
