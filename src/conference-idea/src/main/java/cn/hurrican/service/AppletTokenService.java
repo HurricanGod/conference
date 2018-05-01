@@ -83,10 +83,10 @@ public class AppletTokenService {
      * @return 小程序用户唯一id
      */
     public Integer saveOpenId(AppletUser appletUser){
-        appletUserDao.saveAppletUser(appletUser);
         User user = new User();
         user.setUsername(appletUser.getNickname());
         user.setUserrole(AppConstant.APPLET_USER_TYPE);
+        appletUserDao.saveAppletUser(appletUser);
         userDao.insertOneUser(user);
 
         Integer uid = user.getUid();

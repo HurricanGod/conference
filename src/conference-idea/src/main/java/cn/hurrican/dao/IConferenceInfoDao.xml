@@ -210,32 +210,32 @@
         update ConferenceInfo
         <set>
             <if test="cnName != null">
-                cnName = #{cnName}
+                cnName = #{cnName},
             </if>
             <if test="enName != null">
-                enName = #{enName}
+                enName = #{enName},
             </if>
             <if test="location != null">
-                location = #{location}
+                location = #{location},
             </if>
             <if test="sponsor != null">
-                sponsor = #{sponsor}
+                sponsor = #{sponsor},
             </if>
 
             <if test="startdate != null">
-                startdate = #{startdate}
+                startdate = #{startdate},
             </if>
             <if test="enddate != null">
-                enddate = #{enddate}
+                enddate = #{enddate},
             </if>
             <if test="website != null">
-                website = #{website}
+                website = #{website},
             </if>
             <if test="tag != null">
-                tag = #{tag}
+                tag = #{tag},
             </if>
             <if test="acceptance != null">
-                acceptance = #{acceptance}
+                acceptance = #{acceptance},
             </if>
             <if test="deadline != null">
                 deadline = #{deadline}

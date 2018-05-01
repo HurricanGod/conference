@@ -96,7 +96,7 @@ public class ConferenceController {
     }
 
 
-    @RequestMapping(value = "/getTag.do")
+    @RequestMapping(value = "/getTag.do", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object queryAllTags(HttpServletRequest request){
         /**

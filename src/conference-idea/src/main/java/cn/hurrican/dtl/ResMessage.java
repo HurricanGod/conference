@@ -46,7 +46,7 @@ public class ResMessage {
     /**
      * 状态码
      */
-    private int retCode;
+    private int retCode = 0;
 
     /**
      * 响应信息
@@ -77,6 +77,23 @@ public class ResMessage {
 
     public Map<String, Object> getModel() {
         return model;
+    }
+
+
+    public void setRetCode(int retCode) {
+        this.retCode = retCode;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setLog(String log) {
+        this.log = log;
+    }
+
+    public void setModel(Map<String, Object> model) {
+        this.model = model;
     }
 
     @Override

@@ -6,8 +6,8 @@
 
     <insert id="savePublishConferenceByUser" parameterType="PublishMessage">
         insert into
-        PublishConference(uri, description, email, organization)
-        values(#{uri},#{description},#{description},#{organization})
+        PublishConference(uri, description, email, organization, uid)
+        values(#{uri},#{description},#{description},#{organization}, #{uid})
     </insert>
 
     <select id="queryUnCraweldUrl" resultType="PublishMessage">

@@ -25,16 +25,16 @@
         <property name="port" value="465"/>
         <property name="protocol" value="smtp"/>
         <property name="username" value="wx@zsn.cc"/>
-        <property name="password" value="*********"/>
+        <property name="password" value="7213723Wx"/>
         <property name="enableSSL" value="true"/>
         <property name="openDebug" value="true"/>
-        <property name="senderNickname" value="小程序作者"/>
+        <property name="senderNickname" value="小程序后台运营中心"/>
     </bean>
 
 
     <bean id="appConfig" class="cn.hurrican.constant.AppConfig">
         <property name="appid" value="wx23beb15eed9c5f87"/>
-        <property name="appSecret" value="******************"/>
+        <property name="appSecret" value="9412367621b3a73c890bff166669006c"/>
     </bean>
 
     <context:component-scan base-package="cn.hurrican.service.*"/>

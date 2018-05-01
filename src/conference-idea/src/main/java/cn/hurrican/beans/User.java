@@ -1,6 +1,7 @@
 package cn.hurrican.beans;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by NewObject on 2017/8/10.
@@ -11,6 +12,14 @@ public class User implements Serializable{
     private String userpwd;
     private Integer userrole;
     private String email;
+    private String followType;
+    private String extendJson;
+    private Date lastUpdateTime = new Date();
+
+    public User uidEqual(Integer uid){
+        this.setUid(uid);
+        return this;
+    }
 
     public User() {
     }
@@ -73,5 +82,29 @@ public class User implements Serializable{
 
     public Integer getUserrole() {
         return userrole;
+    }
+
+    public String getFollowType() {
+        return followType;
+    }
+
+    public void setFollowType(String followType) {
+        this.followType = followType;
+    }
+
+    public String getExtendJson() {
+        return extendJson;
+    }
+
+    public void setExtendJson(String extendJson) {
+        this.extendJson = extendJson;
+    }
+
+    public Date getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(Date lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
     }
 }
