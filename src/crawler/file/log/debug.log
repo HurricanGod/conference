@@ -1,35 +1,3 @@
-2018-04-22 00:44:10 main.py INFO  主进程id为：	20188
-2018-04-22 00:44:10 main.py DEBUG  
-file/config/目录下的.conf文件有：
-['file/config//website1.conf', 'file/config//website2.conf', 'file/config//website3.conf', 'file/config//website4.conf', 'file/config//website5.conf']
 
-2018-04-22 00:44:10 main.py DEBUG  
-file/config/目录下的.txt文件有：
-['file/config//keyword1.txt', 'file/config//keyword2.txt', 'file/config//keyword3.txt', 'file/config//keyword4.txt', 'file/config//keyword5.txt']
-
-2018-04-22 00:45:13 main.py INFO  所有子进程执行完
-2018-04-22 00:45:14 main.py INFO  进程-process0 本次爬取275个网址
-
-2018-04-22 00:45:14 main.py INFO  进程-process0 未解析的URL的数量为：	0
-2018-04-22 00:45:14 main.py INFO  进程-process4 本次爬取292个网址
-
-2018-04-22 00:45:14 main.py INFO  进程-process4 未解析的URL的数量为：	0
-2018-04-22 00:45:14 main.py INFO  进程-process3 本次爬取16个网址
-
-2018-04-22 00:45:14 main.py INFO  进程-process3 未解析的URL的数量为：	0
-2018-04-22 00:45:14 main.py INFO  
-异常信息：'Response' object has no attribute 'split'
- 
-2018-04-22 00:45:14 main.py INFO  进程-process1 本次爬取0个网址
-
-2018-04-22 00:45:14 main.py INFO  进程-process1 未解析的URL的数量为：	0
-2018-04-22 00:45:14 main.py INFO  进程-process2 本次爬取184个网址
-
-2018-04-22 00:45:14 main.py INFO  进程-process2 未解析的URL的数量为：	0
-2018-04-22 00:45:15 main.py INFO  守护saver的进程： pid = 6372 is start
-2018-04-22 00:46:20 main.py INFO  		抓取数据的进程任务结束
-
-2018-04-22 00:46:22 main.py INFO  程序总共运行时间为 0:02:11.793257
-2018-04-22 00:46:22 main.py DEBUG  
 Done!
 

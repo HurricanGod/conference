@@ -24,10 +24,6 @@
 
 + <a href="#updateUserSetting">**修改小程序个人设置**</a>
 
-
-
-
-
 -----
 
 ### <a name="save">保存小程序用户openid</a>
@@ -63,10 +59,7 @@
 + `model` —— 用于存放各种不同类型数据的集合
 
 
-
-
 <p align="right"><a href="#top">返回顶部</a></p>
-
 ------
 
 ### <a name="setAppid">设置小程序appid和appsecret</a>
@@ -110,8 +103,6 @@
 | :--: | :---: | :----: | :--: |
 |  是   | email | String | 邮箱地址 |
 |      |       |        |      |
-
-
 
 <p align="right"><a href="#top">返回顶部</a></p>
 
@@ -307,4 +298,3 @@
 
 
 ------
-

@@ -9,21 +9,23 @@
     <link rel="stylesheet" type="text/css" href="../css/icon.css">
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <!--<script type="text/javascript" src="../js/bootstrap.min.js"></script>-->
+    <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
 </head>
 <body>
 
-<div style="width:630px;background:#fafafa;padding:10px;" id="div">
+<div style="width:100%;background:#fafafa;padding:10px;" id="div">
     <div style="padding:3px 2px;border-bottom:1px solid #ccc">近期热门会议</div>
     <form id="register" >
-        <table>
+        <table style="margin-top: 15px;">
             <tr>
                 <td>
                     <select id="TagSelect" class="easyui-combotree"
-                            style="width: 350px; height: 24px;">
+                            style="width: 350px; height: 34px;">
                     </select>
                 </td>
-                <td></td>
+                <td><button class="btn btn-success" id="push" style="margin-left: 10px">获取</button></td>
             </tr>
 
 
@@ -33,14 +35,10 @@
             </tr>
 
             <tr>
-                <td></td>
-                <td><input type="button" value="获取" id="push"></td>
-            </tr>
-            <tr>
                 <td>
                     <nav aria-label="Page navigation">
                         <ul class="pagination">
-                            <li>第<input type="text" id="page" value="1"/>页</li>
+                            <li>第 <input class="form-control" style="display: inline-block;width: 70px" type="text" id="page" value="1"/> 页</li>
                         </ul>
                     </nav>
                 </td>
@@ -50,16 +48,17 @@
     </form>
 </div>
 
-<hr>
+<hr style="margin-top: 0;margin-bottom: 10px;">
+
 <table class="table table-striped" id="meetings">
     <thead>
         <tr>
-            <td>id</td>
-            <td>name</td>
-            <td>tag</td>
-            <td>startDate</td>
+            <th>id</th>
+            <th>name</th>
+            <th>tag</th>
+            <th>startDate</th>
         </tr>
-    </thead>
+    </thead>    
 </table>
 
 <script type="text/javascript">
