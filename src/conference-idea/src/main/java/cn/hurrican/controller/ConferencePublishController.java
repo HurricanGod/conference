@@ -4,14 +4,18 @@ import cn.hurrican.beans.PublishMessage;
 import cn.hurrican.beans.User;
 import cn.hurrican.cache.CommonConfigCache;
 import cn.hurrican.cache.UserCache;
+import cn.hurrican.constant.AppConfig;
 import cn.hurrican.constant.AppConstant;
 import cn.hurrican.constant.BusinessCode;
 import cn.hurrican.constant.QQEmailConfig;
+import cn.hurrican.dtl.PublishConferenceQueryParams;
 import cn.hurrican.dtl.ResMessage;
 import cn.hurrican.service.ConferencePublishService;
 import cn.hurrican.service.JavaEmailSender;
 import cn.hurrican.service.UserService;
+import cn.hurrican.utils.CrawlerUtils;
 import cn.hurrican.utils.QQEmailUtils;
+import cn.hurrican.utils.RegexUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +31,7 @@ import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 /**
  * Created by NewObject on 2017/11/3.
@@ -35,6 +40,8 @@ import java.util.Random;
 @Controller
 @RequestMapping(value = "/conference/publish")
 public class ConferencePublishController {
+
+
 
     @Resource(name = "publishService")
     private ConferencePublishService service;
@@ -48,6 +55,9 @@ public class ConferencePublishController {
 
     @Autowired
     private QQEmailConfig qqEmailConfig;
+
+    @Autowired
+    private AppConfig appConfig;
     /**
      * 保存用户发布的会议，用户发布会议时需要先进行邮箱，验证操作为：
      * 用户填写邮箱后点击获取验证码按钮，服务器会向用户提供的邮箱发送
@@ -84,11 +94,22 @@ public class ConferencePublishController {
                     public boolean isSuccess = false;
                     public String msg = "请先到个人设置里进行邮箱绑定";
                 };
+            }else {
+                String uri = object.getUri();
+                if (appConfig.getNeedCheckUrl() && (uri == null || !RegexUtils.isLegalSimpleUrl(uri)) ){
+                    return new Serializable() {
+                        public boolean isSuccess = false;
+                        public String msg = "请检查会议网址是否正确";
+                    };
+                }
+                object.setEmail(user.getEmail());
+
+                object.setUri(CrawlerUtils.repairUrl(object.getUri()));
             }
-            object.setEmail(user.getEmail());
         }
 
         boolean res = service.savePublishConferenceService(object);
+        List<User> users = userService.queryAdminAccount();
         return new Serializable() {public boolean isSuccess = res;};
 
     }
@@ -148,8 +169,17 @@ public class ConferencePublishController {
         } else {
             list = service.queryUnCrawledUrl();
         }
-
-
         return list;
+    }
+
+    @RequestMapping(value = "/queryPublishConference.do", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public ResMessage queryPublishConferenceByCondition(PublishConferenceQueryParams args){
+        ResMessage resMessage = new ResMessage();
+
+        List<PublishMessage> publishConference = service.queryPublishConference(args.passCheck, args.isCrawled,
+                args.statusCode, args.offset, args.number);
+        resMessage.put("conferenceFromApplet", publishConference);
+        return resMessage;
     }
 }

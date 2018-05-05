@@ -79,4 +79,8 @@ public class UserService {
     public List<User> queryUserByRole(Integer roleType){
         return dao.queryUserByRole(roleType);
     }
+
+    public List<User>  queryAdminAccount(){
+        return dao.queryAdminAccount();
+    }
 }

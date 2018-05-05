@@ -63,4 +63,17 @@ public class ConferencePublishService {
         }
         return dao.queryUnCraweldUrl(map);
     }
+
+
+    public List<PublishMessage> queryPublishConference(Boolean passCheck, Boolean isCrawled,
+                                    Integer statusCode, Integer offset, Integer number){
+        HashMap<String, Object> args = new HashMap<>();
+        args.put("passCheck", passCheck);
+        args.put("isCrawled", isCrawled);
+        args.put("statusCode", statusCode);
+        args.put("offset", offset);
+        args.put("number", number);
+
+        return dao.queryPublishConferenceByCondition(args);
+    }
 }

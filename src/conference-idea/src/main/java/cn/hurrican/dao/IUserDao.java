@@ -46,4 +46,6 @@ public interface IUserDao {
     List<User> selectUserSetting(Map<String,Object> params);
 
     List<User> queryUserByRole(Integer roleType);
+
+    List<User>  queryAdminAccount();
 }

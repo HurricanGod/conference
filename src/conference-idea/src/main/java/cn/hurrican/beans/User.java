@@ -14,6 +14,8 @@ public class User implements Serializable{
     private String email;
     private String followType;
     private String extendJson;
+    private Boolean acceptNotice;
+    private Boolean isAdmin;
     private Date lastUpdateTime = new Date();
 
     public User uidEqual(Integer uid){
@@ -41,6 +43,12 @@ public class User implements Serializable{
                 ", username='" + username + '\'' +
                 ", userpwd='" + userpwd + '\'' +
                 ", userrole=" + userrole +
+                ", email='" + email + '\'' +
+                ", followType='" + followType + '\'' +
+                ", extendJson='" + extendJson + '\'' +
+                ", acceptNotice=" + acceptNotice +
+                ", isAdmin=" + isAdmin +
+                ", lastUpdateTime=" + lastUpdateTime +
                 '}';
     }
 
@@ -106,5 +114,21 @@ public class User implements Serializable{
 
     public void setLastUpdateTime(Date lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public Boolean getAcceptNotice() {
+        return acceptNotice;
+    }
+
+    public void setAcceptNotice(Boolean acceptNotice) {
+        this.acceptNotice = acceptNotice;
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
     }
 }

@@ -1,5 +1,6 @@
 package cn.hurrican.controller;
 
+import cn.hurrican.beans.PublishMessage;
 import cn.hurrican.beans.User;
 import cn.hurrican.cache.CommonConfigCache;
 import cn.hurrican.constant.AppConstant;
@@ -7,6 +8,7 @@ import cn.hurrican.constant.AppSwitchKey;
 import cn.hurrican.constant.BusinessCode;
 import cn.hurrican.constant.QQEmailConfig;
 import cn.hurrican.dtl.ResMessage;
+import cn.hurrican.service.ConferencePublishService;
 import cn.hurrican.service.ConferenceTypeService;
 import cn.hurrican.service.UserService;
 import cn.hurrican.utils.QQEmailUtils;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,6 +41,9 @@ public class CommonController {
 
     @Autowired
     private ConferenceTypeService  conferenceTypeService;
+
+    @Autowired
+    private ConferencePublishService conferencePublishService;
 
     @RequestMapping(value = "/sendEmail.do", produces = "application/json;charset=utf-8")
     @ResponseBody
@@ -78,8 +84,13 @@ public class CommonController {
         User userSetting = userService.queryUserSetting(uid, AppConstant.APPLET_USER_TYPE);
         resMessage.put("userSetting", userSetting);
 
-        Map<Integer, String> conferecneTypes = conferenceTypeService.queryAllConferenceType();
-        resMessage.put("conferenceType", conferecneTypes.values());
+        Map<Integer, String> conferenceTypes = conferenceTypeService.queryAllConferenceType();
+        resMessage.put("conferenceType", conferenceTypes.values());
+
+        List<PublishMessage> scholarRecommendConference = conferencePublishService.
+                queryPublishConference(true, null, 200, null, null);
+        resMessage.put("scholarRecommendConference", scholarRecommendConference);
+
         return resMessage;
     }
 }

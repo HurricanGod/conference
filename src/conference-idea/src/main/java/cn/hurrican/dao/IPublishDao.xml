@@ -4,10 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.hurrican.dao.IPublishDao">
 
-    <insert id="savePublishConferenceByUser" parameterType="PublishMessage">
+    <insert id="savePublishConferenceByUser" parameterType="PublishMessage"
+            useGeneratedKeys="true" keyProperty="id">
         insert into
         PublishConference(uri, description, email, organization, uid)
-        values(#{uri},#{description},#{description},#{organization}, #{uid})
+        values(#{uri},#{description},#{email},#{organization}, #{uid})
+        <selectKey keyProperty="id" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
     </insert>
 
     <select id="queryUnCraweldUrl" resultType="PublishMessage">
@@ -23,4 +27,75 @@
             </when>
         </choose>
     </select>
+
+    <update id="updatePublishConferenceSelective" parameterType="PublishMessage">
+        update publishconference
+        <set>
+            <if test="iscrawled != null">
+                iscrawled = #{iscrawled},
+            </if>
+            <if test="uri != null">
+                uri = #{uri},
+            </if>
+            <if test="statusCode != null">
+                status_code = #{statusCode},
+            </if>
+            <if test="cid != null">
+                cid = #{cid},
+            </if>
+            <if test="mainContent != null">
+                main_content = #{mainContent},
+            </if>
+            <if test="passCheck != null">
+                pass_check = #{passCheck},
+            </if>
+            <if test="organization != null">
+                organization = #{organization},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="extendJson != null">
+                extend_json = #{extendJson},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="queryPublishConferenceByCondition" resultMap="publishMessageMap">
+        select id, uri,  email, description, organization,
+        status_code,main_content,pass_check,iscrawled,extend_json
+        from PublishConference
+        <where>
+            <if test="passCheck != null">
+                pass_check = #{passCheck}
+            </if>
+            <if test="statusCode != null">
+                and status_code = #{statusCode}
+            </if>
+            <if test="isCrawled != null">
+                and iscrawled = #{isCrawled}
+            </if>
+
+        </where>
+        <if test=" offset != null and number != null">
+            limit #{offset}, #{number}
+        </if>
+    </select>
+    <resultMap id="publishMessageMap" type="PublishMessage">
+        <id column="id" property="id"/>
+        <result column="uri" property="uri"/>
+        <result column="email" property="email"/>
+        <result column="description" property="description"/>
+        <result column="organization" property="organization"/>
+        <result column="status_code" property="statusCode"/>
+        <result column="main_content" property="mainContent"/>
+        <result column="pass_check" property="passCheck"/>
+        <result column="iscrawled" property="iscrawled"/>
+        <result column="extend_json" property="extendJson"/>
+    </resultMap>
+
 </mapper>

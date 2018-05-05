@@ -35,6 +35,12 @@ public interface IConferenceInfoDao {
 
 
     /**
+     *
+     * @param map {"keywords": List,"offset": Integer,"number": Integer}
+     * @return
+     */
+    List<ConferenceInfo> queryConferenceByKeyWords(Map<String, Object> map);
+    /**
      *  查询刚爬取未归类的会议信息
      * @return
      */
@@ -98,4 +104,11 @@ public interface IConferenceInfoDao {
 
 
     void updateConferenceInfo(ConferenceInfo c);
+
+    /**
+     * 查询被置顶的会议
+     * @param params {"number":"int,置顶的会议条数"}
+     * @return
+     */
+    List<ConferenceInfo> queryConferenceByOrderLevel(Map<String, Object> params);
 }

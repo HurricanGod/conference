@@ -35,6 +35,11 @@
     <bean id="appConfig" class="cn.hurrican.constant.AppConfig">
         <property name="appid" value="wx23beb15eed9c5f87"/>
         <property name="appSecret" value="9412367621b3a73c890bff166669006c"/>
+        <property name="needCheckUrl" value="true" />
+    </bean>
+
+    <bean class="com.huaban.analysis.jieba.JiebaSegmenter" id="segmenter">
+
     </bean>
 
     <context:component-scan base-package="cn.hurrican.service.*"/>
