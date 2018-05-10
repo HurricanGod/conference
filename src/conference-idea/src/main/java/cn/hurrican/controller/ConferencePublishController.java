@@ -11,6 +11,7 @@ import cn.hurrican.constant.QQEmailConfig;
 import cn.hurrican.dtl.PublishConferenceQueryParams;
 import cn.hurrican.dtl.ResMessage;
 import cn.hurrican.service.ConferencePublishService;
+import cn.hurrican.service.CrawlerService;
 import cn.hurrican.service.JavaEmailSender;
 import cn.hurrican.service.UserService;
 import cn.hurrican.utils.CrawlerUtils;
@@ -52,6 +53,8 @@ public class ConferencePublishController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CrawlerService crawlerService;
 
     @Autowired
     private QQEmailConfig qqEmailConfig;
@@ -109,7 +112,9 @@ public class ConferencePublishController {
         }
 
         boolean res = service.savePublishConferenceService(object);
-        List<User> users = userService.queryAdminAccount();
+
+        // TODO 发送http请求访问发布者提供的会议网址
+        crawlerService.sendRequestObtainMainConferenceContent(object);
         return new Serializable() {public boolean isSuccess = res;};
 
     }
@@ -180,6 +185,14 @@ public class ConferencePublishController {
         List<PublishMessage> publishConference = service.queryPublishConference(args.passCheck, args.isCrawled,
                 args.statusCode, args.offset, args.number);
         resMessage.put("conferenceFromApplet", publishConference);
+        return resMessage;
+    }
+
+
+    @RequestMapping(value = "/updatePublishConference.do", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public ResMessage updatePublishConferenceSelective(){
+        ResMessage resMessage = new ResMessage();
         return resMessage;
     }
 }

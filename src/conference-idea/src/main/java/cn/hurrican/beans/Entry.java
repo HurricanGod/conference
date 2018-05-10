@@ -1,5 +1,7 @@
 package cn.hurrican.beans;
 
+import java.util.Objects;
+
 /**
  * @Author: Hurrican
  * @Description:
@@ -46,4 +48,17 @@ public class Entry<K, V> {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Entry)) return false;
+        Entry<?, ?> entry = (Entry<?, ?>) o;
+        return Objects.equals(getKey(), entry.getKey()) &&
+                Objects.equals(getValue(), entry.getValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getKey(), getValue());
+    }
 }

@@ -35,29 +35,27 @@ public class ConferenceInfoService {
         params.put("time", new Date());
         params.put("endTime", DateUtils.getBeforeOrAfterSomeDayFromToday(position));
 
-        List<ConferenceInfo> list = new ArrayList<>();
+        LinkedHashSet<ConferenceInfo> set = new LinkedHashSet<>();
+        HashMap<String, Object> args = new HashMap<>();
+        args.put("number", appConfig.getTopNumber());
+        List<ConferenceInfo> top = dao.queryConferenceByOrderLevel(args);
+        List<ConferenceInfo> pageList = dao.queryLatestConferenceInfo(params);
         if(offset == 0){
-            HashMap<String, Object> args = new HashMap<>();
-            args.put("number", appConfig.getTopNumber());
-            list.addAll(dao.queryConferenceByOrderLevel(args));
+            set.addAll(top);
+            set.addAll(pageList);
+        }else{
+            top.forEach(e -> {
+                if(pageList.contains(e)){
+                    pageList.remove(e);
+                }
+            });
+            set.addAll(pageList);
         }
-        list.addAll(dao.queryLatestConferenceInfo(params));
-        Set<Integer> repeatIndexSet = new HashSet<>();
-        Set<String> nameSet = new HashSet<>();
-        for (int i = 0; i < list.size(); i++) {
-            ConferenceInfo c = list.get(i);
-            boolean addSuccess = nameSet.add(Optional.ofNullable(c.getCnName()).orElse(c.getEnName()));
-            if(!addSuccess){
-                repeatIndexSet.add(i);
-            }
+        List<ConferenceMsg> conferenceMsgList = new ArrayList<>(set.size());
+        for (ConferenceInfo obj : set) {
+            conferenceMsgList.add(ConferenceMsg.convert(obj));
         }
-        repeatIndexSet.forEach(index -> { list.remove(index); });
-        List<ConferenceMsg> conferenceMsgs = new ArrayList<>(list.size());
-        for (int i = 0; i < list.size(); i++) {
-            conferenceMsgs.add(ConferenceMsg.convert(list.get(i)));
-
-        }
-        return conferenceMsgs;
+        return conferenceMsgList;
     }
 
     public List<ConferenceMsg> queryLatestConferenceByTag(Integer offset, Integer number,

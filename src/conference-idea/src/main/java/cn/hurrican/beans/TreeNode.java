@@ -2,9 +2,7 @@ package cn.hurrican.beans;
 
 import cn.hurrican.utils.StringUtil;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TreeNode{
@@ -15,8 +13,20 @@ public class TreeNode{
     public Boolean isDeleted = false;
     public Boolean hasStrongTag = false;
     public List<Entry<String, Entry<String,String>>> strongTagList = null;
+    public Map<String, List<String>> elementMap = new HashMap<>(4);
 
     public List<TreeNode> subNode = new ArrayList<>();
+
+    public TreeNode putHtmlElementToMap(String ele, String text){
+        if(this.elementMap.containsKey(ele)){
+            this.elementMap.get(ele).add(text);
+        }else{
+            ArrayList<String> list = new ArrayList<>(4);
+            list.add(text);
+            this.elementMap.put(ele,list);
+        }
+        return this;
+    }
 
     public Boolean getDeleted() {
         return isDeleted;
@@ -60,12 +70,12 @@ public class TreeNode{
      * @param root
      * @param debug
      */
-    public static void dfsTree(TreeNode root, Boolean...debug){
+    public static void simplifyTree(TreeNode root, Boolean...debug){
         if(root.subNode.size() == 0 && StringUtil.isEmpty(root.value)){
             root.isDeleted = true;
         }else if(root.subNode.size() > 0){
             for (int i = 0; i < root.subNode.size(); i++) {
-                dfsTree(root.subNode.get(i));
+                simplifyTree(root.subNode.get(i));
             }
             List<TreeNode> needDelete = root.subNode.stream()
                     .filter(TreeNode::getDeleted).collect(Collectors.toList());
@@ -120,6 +130,8 @@ public class TreeNode{
         }
         return list;
     }
+
+
 
     public static void main(String[] args) {
         ArrayDeque<Integer> deque = new ArrayDeque<>();

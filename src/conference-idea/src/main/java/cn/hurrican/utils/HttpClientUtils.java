@@ -1,5 +1,6 @@
 package cn.hurrican.utils;
 
+import cn.hurrican.constant.BusinessCode;
 import cn.hurrican.dtl.ResMessage;
 import net.sf.json.JSONArray;
 import org.apache.http.Consts;
@@ -118,7 +119,7 @@ public class HttpClientUtils {
      * @return
      * @throws IOException
      */
-    private static CloseableHttpResponse doHttpsPost(String url, List<NameValuePair> values) {
+    public static CloseableHttpResponse doHttpsPost(String url, List<NameValuePair> values) {
         enableSSL();
         Registry<ConnectionSocketFactory> socketFactoryRegistry =
                 RegistryBuilder.<ConnectionSocketFactory>create()
@@ -131,6 +132,7 @@ public class HttpClientUtils {
                 .setDefaultRequestConfig(requestConfig).build();
         HttpPost httpPost = new HttpPost(url);
         UrlEncodedFormEntity entity = new UrlEncodedFormEntity(values, Consts.UTF_8);
+
         httpPost.setEntity(entity);
         CloseableHttpResponse response = null;
         try {
@@ -141,6 +143,21 @@ public class HttpClientUtils {
         return response;
     }
 
+    /**
+     * 发送 https POST 请求
+     * @param url
+     * @param values
+     * @return
+     */
+    public static ResMessage sendHttpsPostRequest(String url, List<NameValuePair> values){
+        ResMessage resMessage = new ResMessage();
+        CloseableHttpResponse response = doHttpsPost(url, values);
+        if(response == null){
+            return resMessage.retCodeEqual(BusinessCode.SendRequestFail.getCode())
+                    .msg(BusinessCode.SendRequestFail.getMsg());
+        }
+        return resMessage.msg(toString(response));
+    }
     /**
      *  发送 Https Get 请求
      * @param baseUrl 不带请求参数的url

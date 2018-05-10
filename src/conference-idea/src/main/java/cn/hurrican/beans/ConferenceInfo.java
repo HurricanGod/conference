@@ -6,6 +6,7 @@ import cn.hurrican.utils.DateUtils;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Created by NewObject on 2017/8/14.
@@ -201,5 +202,21 @@ public class ConferenceInfo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ConferenceInfo)) return false;
+        ConferenceInfo that = (ConferenceInfo) o;
+        return Objects.equals(getCnName(), that.getCnName()) &&
+                Objects.equals(getEnName(), that.getEnName()) &&
+                Objects.equals(getWebsite(), that.getWebsite());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getCnName(), getEnName(), getWebsite());
     }
 }

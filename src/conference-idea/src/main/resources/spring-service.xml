@@ -36,6 +36,11 @@
         <property name="appid" value="wx23beb15eed9c5f87"/>
         <property name="appSecret" value="9412367621b3a73c890bff166669006c"/>
         <property name="needCheckUrl" value="true" />
+        <property name="topNumber" value="3" />
+        <property name="appletHomePage" value="pages/index/index"/>
+        <property name="width" value="560"/>
+        <property name="auto_color" value="true"/>
+        <property name="is_hyaline" value="false"/>
     </bean>
 
     <bean class="com.huaban.analysis.jieba.JiebaSegmenter" id="segmenter">

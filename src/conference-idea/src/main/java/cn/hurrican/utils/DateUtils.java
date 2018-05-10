@@ -48,8 +48,7 @@ public class DateUtils {
             return null;
         }
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        String dtstr = df.format(date);
-        return dtstr;
+        return df.format(date);
     }
 
 

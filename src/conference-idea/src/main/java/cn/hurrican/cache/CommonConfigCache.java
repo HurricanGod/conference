@@ -19,6 +19,8 @@ public class CommonConfigCache {
     /** 会议网站各种开关 **/
     private static final String APP_HASH_CONFIG_KEY = "conference:app:config:switch:hash";
 
+    private static final String APPLET_TOKEN_KEY = "conference:applet:token";
+
     @Autowired
     private RedisExecutor redis;
 
@@ -56,4 +58,16 @@ public class CommonConfigCache {
         return redis.doInRedis(instance -> instance.get(uid) != null);
     }
 
+
+    public void cacheAccessToken(String accessToken){
+        redis.doInRedis(instance -> {
+            instance.setex(APPLET_TOKEN_KEY, 7200, accessToken);
+        });
+    }
+
+    public String getAccessToken(){
+        return redis.doInRedis(instance -> {
+            return instance.get(APPLET_TOKEN_KEY);
+        });
+    }
 }

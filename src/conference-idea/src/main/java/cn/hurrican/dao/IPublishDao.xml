@@ -29,7 +29,7 @@
     </select>
 
     <update id="updatePublishConferenceSelective" parameterType="PublishMessage">
-        update publishconference
+        update PublishConference
         <set>
             <if test="iscrawled != null">
                 iscrawled = #{iscrawled},
