@@ -145,6 +145,76 @@
         </div>
     </div>
 </div>
+
+<!--从发布会议表中爬去回来的数据-->
+
+<div data-options="region:'center',title:'用户发布了但未爬回来的会议'" style="padding:5px;background:#aac5e7;">
+    <div style="background:#fafafa;padding:10px;" >
+        <form id="publishTag" >
+            <table>
+                <tr>
+                    <td>
+                        设置每页数据量
+                        <input type=text style="display:none" id="total-publish">
+                    </td>
+                    <td>
+                        <select class="js-example-basic-single" name="state" id="perPage-publish"
+                                style="width: 173px; text-align: center">
+                            <option>4</option>
+                            <option selected="selected">5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>选择页数</td>
+                    <td>
+                        第
+                        <select class="js-example-basic-single" name="state" id="page-publish"
+                                style="width: 139px; text-align: center">
+                        </select>
+                        页
+                    </td>
+
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <button type="button" class="btn btn-success" id="queryPublishBtn">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true">查询</span>
+                        </button>
+                    </td>
+                </tr>
+
+            </table>
+        </form>
+
+        <hr>
+
+        <div class="table-responsive">
+            <table class="table table-striped" id="publish-meetings">
+                <thead>
+                <tr>
+                    <!--<td>id</td>-->
+                    <td>uri</td>
+                    <td>description</td>
+                    <td>email</td>
+                    <td>举办机构</td>
+                    <!--<td>举办地点</td>
+                    <td>举办方</td>
+                    <td>错误报告</td>-->
+                </tr>
+                </thead>
+            </table>
+
+        </div>
+    </div>
+</div>
+
 <script>
     $(function () {
         function addPageOption (data){
@@ -320,6 +390,111 @@
             })
 
         });
+
+        /*
+        这是查询发布会议的Javascrip
+         */
+        //
+        // $.ajax({
+        //     type :"post",
+        //     url : "../conference/publish/queryUnCrawledConference.do",
+        //     success: function (data) {
+        //         var count = data.number;
+        //         console.log("count = " + count);
+        //         $("#suggestTotal").val(count);
+        //
+        //         if (count !== undefined) {
+        //             var select = $("#pageNo");
+        //
+        //             for (var i = 0; i < count / 5; i++) {
+        //                 var option = $("<option></option>").attr("value", (i + 1)).text(i + 1);
+        //                 option.appendTo(select)
+        //             }
+        //         } else {
+        //             alert("error");
+        //         }
+        //     },
+        //     complete: function (XMLHttpRequest, textStatus) {
+        //         console.log("textStatus = " + textStatus);
+        //     }
+        // });
+        //
+        // $("#perPage-publish").change(function () {
+        //     var perPageNumber = $(this).find("option:selected").text();
+        //     console.log("perPageNumber = " + perPageNumber);
+        //
+        //     var total = $("#total-publish").val();
+        //     var len = total / perPageNumber;
+        //     var pageSelect = $("#page-publish");
+        //     pageSelect.find("option").remove();
+        //
+        //     for (var i = 0; i < len ; i++) {
+        //         var option = $("<option>" + (i + 1) + "</option>");
+        //         option.appendTo(pageSelect);
+        //     }
+        // });
+        //
+        //
+        // $("#queryPublishBtn").click(function () {
+        //     var page = $("#page-publish").find("option:selected").text();
+        //     var perPage = $("#perPage-publish").find("option:selected").text();
+        //
+        //     var params = {};
+        //     params.page = page;
+        //     params.perPageNumber = perPage;
+        //
+        //     function callback (data){
+        //         if (data instanceof Array){
+        //             var length = data.length;
+        //
+        //             var table = $("#publish-meetings");
+        //             table.find("tr:gt(0)").remove();
+        //
+        //             for (var i = 0; i < length; i++) {
+        //                 console.log(data[i]);
+        //
+        //                 /*
+        //                 var eid = data[i].eid;
+        //                 var id = data[i].conference.id;
+        //                 var name = data[i].conference.cnName;
+        //                 var website = data[i].conference.website;
+        //
+        //                 if (name == null || name === undefined) {
+        //                     name = data[i].conference.enName;
+        //                 }
+        //                 */
+        //
+        //                 //var row = $("<tr></tr>").attr("id", eid);
+        //
+        //                 //row.appendTo(table);
+        //                 var website = data[i].conference.website;
+        //
+        //                 //var td1 = $("<td></td>").text(id).attr("value", eid);
+        //                 var td2 = $("<td></td>");
+        //                 var url = $('<a style="text-decoration:none"></a>')
+        //                     .attr("href", website).text(name);
+        //                 url.appendTo(td2);
+        //
+        //                 var td3 = $("<td></td>").text(data[i].conference.tag);
+        //                 var td4 = $("<td></td>").text(data[i].conference.startdate);
+        //                 var td5 = $("<td></td>").text(data[i].conference.location);
+        //                 var td6 = $("<td></td>").text(data[i].conference.sponsor);
+        //                 var td7 = $("<td></td>").text(data[i].errorDetail);
+        //
+        //
+        //                 //td1.appendTo(row);
+        //                 td2.appendTo(row);
+        //                 td3.appendTo(row);
+        //                 td4.appendTo(row);
+        //                 td5.appendTo(row);
+        //                 td6.appendTo(row);
+        //                 td7.appendTo(row);
+        //             }
+        //         }
+        //     }
+        //
+        // })
+        //
     })
 </script>
 </body>

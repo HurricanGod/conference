@@ -15,6 +15,7 @@
     <spring.version>4.3.5.RELEASE</spring.version>
     <lombok.version>1.16.4</lombok.version>
     <httpclient.version>4.5.2</httpclient.version>
+    <guava.version>19.0</guava.version>
   </properties>
   <dependencies>
 
@@ -25,6 +26,19 @@
       <version>${httpclient.version}</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+    <!--与爬虫相关的html解析插件-->
+    <dependency>
+      <groupId>org.jsoup</groupId>
+      <artifactId>jsoup</artifactId>
+      <version>1.10.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${guava.version}</version>
+    </dependency>
 
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -70,6 +84,11 @@
       <groupId>javax.mail</groupId>
       <artifactId>mail</artifactId>
       <version>1.4.4</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>mailapi</artifactId>
+      <version>1.5.5</version>
     </dependency>
 
 
@@ -376,6 +395,28 @@
       <version>2.8.8</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-xml</artifactId>
+      <version>2.8.8</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.huaban/jieba-analysis -->
+    <dependency>
+      <groupId>com.huaban</groupId>
+      <artifactId>jieba-analysis</artifactId>
+      <version>1.0.2</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.opennlp/opennlp-tools -->
+    <dependency>
+      <groupId>org.apache.opennlp</groupId>
+      <artifactId>opennlp-tools</artifactId>
+      <version>1.7.2</version>
+    </dependency>
+
+
 
     <!-- 使用文件上传依赖的jar包-->
     <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
@@ -402,11 +443,11 @@
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-commons-core -->
-    <dependency>
-      <groupId>org.springframework.data</groupId>
-      <artifactId>spring-data-commons-core</artifactId>
-      <version>1.4.0.RELEASE</version>
-    </dependency>
+    <!--<dependency>-->
+      <!--<groupId>org.springframework.data</groupId>-->
+      <!--<artifactId>spring-data-commons-core</artifactId>-->
+      <!--<version>1.4.0.RELEASE</version>-->
+    <!--</dependency>-->
 
     <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-mongodb -->
     <dependency>
@@ -434,7 +475,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
+        <version>3.1</version>
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
@@ -446,11 +487,18 @@
     <resources>
       <resource>
         <directory>src/main/java</directory>
-
         <includes>
           <include>**/*.xml</include>
         </includes>
+        <filtering>true</filtering>
+      </resource>
 
+      <resource>
+        <directory>src/main/resources</directory>
+            <includes>
+              <include>**/*.properties</include>
+              <include>**/*.xml</include>
+            </includes>
         <filtering>true</filtering>
       </resource>
 

@@ -13,6 +13,50 @@
         </selectKey>
     </insert>
 
+   <update id="updateUserSetting" parameterType="User">
+       update UserSetting
+       <set>
+           <if test="email != null">
+               email = #{email},
+           </if>
+           <if test="followType != null">
+               follow_type = #{followType},
+           </if>
+           <if test="lastUpdateTime != null">
+               last_update_time = #{lastUpdateTime},
+           </if>
+           <if test="extendJson != null">
+               extend_json = #{extendJson}
+           </if>
+           <if test="acceptNotice != null">
+               accept_publish_conference_notice = #{acceptNotice}
+           </if>
+       </set>
+       where uid = #{uid}
+   </update>
+
+    <select id="selectUserSetting" resultMap="userMap">
+        select uid, email, follow_type, extend_json, userrole,is_admin,accept_publish_conference_notice
+        from UserSetting
+        where uid = #{uid} and userrole = #{role}
+    </select>
+
+    <select id="queryAdminAccount" resultMap="userMap">
+        select uid, email, follow_type, extend_json, userrole,is_admin,accept_publish_conference_notice
+        from UserSetting
+        where is_admin=TRUE
+    </select>
+
+    <resultMap id="userMap" type="User">
+        <id property="uid" column="uid"/>
+        <result column="userrole" property="userrole"/>
+        <result column="email" property="email"/>
+        <result column="follow_type" property="followType"/>
+        <result column="extend_json" property="extendJson"/>
+        <result column="is_admin" property="isAdmin"/>
+        <result column="accept_publish_conference_notice" property="acceptNotice"/>
+    </resultMap>
+
 
     <select id="queryAllUser" resultType="User">
         select uid,username
@@ -26,5 +70,11 @@
         <if test="role != null">
             and userrole = #{role}
         </if>
+    </select>
+
+    <select id="queryUserByRole" resultType="User">
+        select uid, username, email
+        from UserSetting
+        where userrole = #{0}
     </select>
 </mapper>

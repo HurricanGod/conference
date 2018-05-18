@@ -17,7 +17,7 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
     <!-- 创建-SqlSessionFactory对象 -->
     <bean id="mysqlSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="configLocation" value="classpath:mybatis.xml"/>
-        <property name="dataSource" ref="c3p0Datasource"/>
+        <property name="dataSource" ref="innerDataSource"/>
     </bean>
 
 

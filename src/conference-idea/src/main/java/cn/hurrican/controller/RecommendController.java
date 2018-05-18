@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -96,6 +97,6 @@ public class RecommendController {
         List<String> popTagList = service.queryLatestMostPopularOfTagBePraisedService(startTime, offset, top);
         popTagList.stream().limit(3).forEach(tags::add);
         tagList.stream().limit(top-3).forEach(cTag -> tags.add(cTag.getTag()));
-        return tags;
+        return new HashSet<>(tags);
     }
 }

@@ -14,29 +14,29 @@ http://www.springframework.org/schema/aop/spring-aop.xsd
 http://www.springframework.org/schema/tx
 http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <!-- spring框架内置数据源-->
-
-    <!--<bean id="innerDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
-    <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"/>-->
-    <!--<property name="url" value="jdbc:mysql://localhost:3306/conference"/>-->
-    <!--<property name="username" value="root"/>-->
-    <!--<property name="password" value="qwer123456"/>-->
-    <!--</bean>-->
-
     <!-- c3p0数据源(properties文件配置)-->
     <context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>
-    <bean id="c3p0Datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="driverClass" value="${jdbc.driver}"/>
-        <property name="jdbcUrl" value="${jdbc.url}"/>
-        <property name="user" value="${jdbc.user}"/>
-        <property name="password" value="${jdbc.password}"/>
-        <property name="initialPoolSize" value="${jdbc.initialPoolSize}"/>
-        <property name="minPoolSize" value="${jdbc.minPoolSize}"/>
-        <property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
-        <property name="maxIdleTime" value="${jdbc.maxIdleTime}" />
-        <!--<property name="testConnectionOnCheckin" value="${jdbc.testConnectionOnCheckin}" />-->
+    <!--<context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>-->
+    <!-- spring框架内置数据源-->
 
+    <bean id="innerDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
     </bean>
+
+    <!--<bean id="c3p0Datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
+    <!--<property name="driverClass" value="${jdbc.driver}"/>-->
+    <!--<property name="jdbcUrl" value="${jdbc.url}"/>-->
+    <!--<property name="user" value="${jdbc.user}"/>-->
+    <!--<property name="password" value="${jdbc.password}"/>-->
+    <!--<property name="initialPoolSize" value="${jdbc.initialPoolSize}"/>-->
+    <!--<property name="minPoolSize" value="${jdbc.minPoolSize}"/>-->
+    <!--<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />-->
+    <!--<property name="maxIdleTime" value="${jdbc.maxIdleTime}" />-->
+    <!--&lt;!&ndash;<property name="testConnectionOnCheckin" value="${jdbc.testConnectionOnCheckin}" />&ndash;&gt;-->
+    <!--</bean>-->
 
 
 </beans>

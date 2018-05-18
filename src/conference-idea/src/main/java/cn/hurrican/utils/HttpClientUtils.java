@@ -40,8 +40,7 @@ import java.util.*;
 
 public class HttpClientUtils {
 
-    private static Logger logger = LogManager.getLogger(HttpClientUtils.class);
-
+//    private static Logger logger = LogManager.getLogger(HttpClientUtils.class);
     private static HttpClientContext context = HttpClientContext.create();
     private static RequestConfig requestConfig = RequestConfig.custom()
                         .setConnectTimeout(120000)
@@ -78,7 +77,7 @@ public class HttpClientUtils {
             sslContext.init(null, new TrustManager[]{manager}, null);
             socketFactory = new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE);
         } catch (NoSuchAlgorithmException | KeyManagementException e) {
-            logger.error("enableSSL()方法发生异常：\n{}", e);
+//            logger.error("enableSSL()方法发生异常：\n{}", e);
             e.printStackTrace();
         }
     }
@@ -105,7 +104,7 @@ public class HttpClientUtils {
         try {
             response = httpClient.execute(httpGet, context);
         } catch (Exception e) {
-            logger.error("doHttpsGet()方法出现异常：\n{}", e);
+//            logger.error("doHttpsGet()方法出现异常：\n{}", e);
             e.printStackTrace();
         }
         return response;
@@ -290,6 +289,7 @@ public class HttpClientUtils {
         System.out.println(response);
 
     }
+
 
     public static void main(String[] args) {
         String url = "http://118.89.59.66/conference/conference/push/queryPopTag.do";

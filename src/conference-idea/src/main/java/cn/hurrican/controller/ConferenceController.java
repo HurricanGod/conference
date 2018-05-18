@@ -1,5 +1,6 @@
 package cn.hurrican.controller;
 
+import cn.hurrican.beans.ConferenceInfo;
 import cn.hurrican.dtl.ConferenceMsg;
 import cn.hurrican.dtl.ConferenceTag;
 import cn.hurrican.service.ConferenceInfoService;
@@ -96,7 +97,7 @@ public class ConferenceController {
     }
 
 
-    @RequestMapping(value = "/getTag.do")
+    @RequestMapping(value = "/getTag.do", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object queryAllTags(HttpServletRequest request){
         /**
@@ -123,9 +124,23 @@ public class ConferenceController {
     }
 
 
-
     public void setMysqlService(ConferenceInfoService mysqlService) {
         this.mysqlService = mysqlService;
     }
 
+    //查询会议简介接口
+    @RequestMapping(value = "/getConferenceIntro.do" ,
+            produces = "application/json;charset=UTF-8",
+            method = RequestMethod.POST)
+    @ResponseBody
+    public Object getConferenceIntro(HttpServletRequest request){
+        ServletContext servletContext = request.getServletContext();
+        Integer id = (Integer) servletContext.getAttribute("id");
+        List<ConferenceInfo> conferenceInfos = mysqlService.getConferenceIntro(id);
+        System.out.println("会议简介");
+        for (int i=0 ; i < conferenceInfos.size() ;i++ ){
+            System.out.println(conferenceInfos.get(i));
+        }
+        return conferenceInfos;
+    }
 }

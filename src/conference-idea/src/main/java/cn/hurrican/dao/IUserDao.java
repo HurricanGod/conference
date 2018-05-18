@@ -4,6 +4,7 @@ import cn.hurrican.beans.User;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by NewObject on 2017/10/30.
@@ -38,4 +39,13 @@ public interface IUserDao {
      * @return 用户名存在且密码正确则返回 1，否则返回 0
      */
     Integer queryUserByNameAndPassword(HashMap<String,Object> map);
+
+
+    void updateUserSetting(User user);
+
+    List<User> selectUserSetting(Map<String,Object> params);
+
+    List<User> queryUserByRole(Integer roleType);
+
+    List<User>  queryAdminAccount();
 }
