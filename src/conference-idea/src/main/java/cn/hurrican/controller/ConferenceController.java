@@ -4,6 +4,8 @@ import cn.hurrican.beans.ConferenceInfo;
 import cn.hurrican.dtl.ConferenceMsg;
 import cn.hurrican.dtl.ConferenceTag;
 import cn.hurrican.service.ConferenceInfoService;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -13,7 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -130,17 +135,59 @@ public class ConferenceController {
 
     //查询会议简介接口
     @RequestMapping(value = "/getConferenceIntro.do" ,
-            produces = "application/json;charset=UTF-8",
-            method = RequestMethod.POST)
+            produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object getConferenceIntro(HttpServletRequest request){
+    public Object getConferenceIntro(HttpServletRequest request, HttpServletResponse response){
         ServletContext servletContext = request.getServletContext();
         Integer id = (Integer) servletContext.getAttribute("id");
-        List<ConferenceInfo> conferenceInfos = mysqlService.getConferenceIntro(id);
+//        if(id==null){
+//            id=4429;
+//        }
+        //下面的方法调用从数据库中获取对应会议简介
+        List<String> conferenceInfos = mysqlService.getConferenceIntro(id);
+        List<String> conferenceImage = mysqlService.getConferenceImage(id);
+
+        //以下开始变换返回的对象
+        JSONArray jsonArray = new JSONArray();
+        JSONObject jsonObject = new JSONObject();
+        int[] temp = {0,0,0};   //用来存放换行符位置
+        int p=0;
+        char[] arg0 = {};
+        String info1 = "";
+        String info2 = "";
+        String info3 = "";
         System.out.println("会议简介");
-        for (int i=0 ; i < conferenceInfos.size() ;i++ ){
-            System.out.println(conferenceInfos.get(i));
+//        for (int i=0 ; i < conferenceInfos.size() ;i++ )
+        arg0 = conferenceInfos.get(0).toCharArray();
+        for (int j = 0; j < arg0.length; j++) {
+            if(arg0[0] == '\n' || arg0[1] == '\n' || arg0[0] == '\r' || arg0[1] == '\r')
+                continue;
+            if (arg0[j] == '\n') {
+                temp[p] = j - 1;
+                p++;
+            }
         }
-        return conferenceInfos;
+        if (temp[0] != 0)
+            info1 = String.valueOf(arg0, 0, temp[0] + 1);
+        if (temp[1] != 0)
+            info2 = String.valueOf(arg0, temp[0] + 3, temp[1] - temp[0] - 2);
+        if (temp[2] != 0)
+            info2 = String.valueOf(arg0, temp[1] + 3, temp[2] - temp[1] - 2);
+        if (temp[0] == 0 && temp[1] == 0 && temp[2] == 0) {
+            info1 = String.valueOf(arg0);
+        }
+        jsonArray.add("info1");
+        if (!"".equals(info2))
+            jsonArray.add("info2");
+        if (!"".equals(info3))
+            jsonArray.add("info3");
+        jsonObject.put("infoKeys",jsonArray);
+        jsonObject.put("info1",info1);
+        if (!"".equals(info2))
+            jsonObject.put("info2",info2);
+        if (!"".equals(info3))
+            jsonObject.put("info3",info3);
+        jsonObject.put("banner",conferenceImage.get(0));
+        return jsonObject;
     }
 }

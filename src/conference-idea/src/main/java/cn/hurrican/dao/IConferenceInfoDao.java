@@ -115,6 +115,11 @@ public interface IConferenceInfoDao {
     /**
      * 查询会议的简介
      */
-    List<ConferenceInfo> getConferenceIntro(HashMap<String, Object> params);
+    List<String> getConferenceIntro(HashMap<String, Object> params);
+
+    /**
+     * 获取图片
+     */
+    List<String> getConferenceImage(HashMap<String, Object> params);
 
 }

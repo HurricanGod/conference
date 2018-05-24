@@ -274,8 +274,15 @@
     </update>
 
     <!--查询会议的简介-->
-    <select id="getConferenceIntro" parameterType="java.lang.String">
+    <select id="getConferenceIntro" parameterType="java.lang.Integer" resultType="java.lang.String">
         select introduce
+        from ConferenceInfo
+        where id = #{id}
+    </select>
+
+    <!--获取会议图片-->
+    <select id="getConferenceImage" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select image
         from ConferenceInfo
         where id = #{id}
     </select>

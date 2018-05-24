@@ -185,8 +185,8 @@ public class ConferenceInfoService {
     }
 
     //获取会议简介
-    public List<ConferenceInfo> getConferenceIntro(Integer id){
-        List<ConferenceInfo> list;
+    public List<String> getConferenceIntro(Integer id){
+        List<String> list;
         HashMap<String, Object> map = new HashMap<>();
         map.put("id", id);
         list = dao.getConferenceIntro(map);
@@ -198,6 +198,16 @@ public class ConferenceInfoService {
 ////                return true;
 ////            }
 ////        }).collect(Collectors.toList());
+        return list;
+    }
+
+    //获取会议图片
+    public List<String> getConferenceImage(Integer id) {
+        List<String> list;
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        list = dao.getConferenceImage(map);
+        list = list == null ? new ArrayList<>() : list ;
         return list;
     }
 }
